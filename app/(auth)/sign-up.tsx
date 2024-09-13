@@ -1,12 +1,16 @@
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import InputTextField from "@/components/InputTextField";
 
 const SignUp = () => {
-    return (
-        <SafeAreaView>
-            <Text>Sign Up</Text>
-        </SafeAreaView>  
-    );
+	return (
+		<SafeAreaView>
+			<InputTextField
+					label="Email"
+					placeholder="Enter email"
+			/>
+		</SafeAreaView>  
+	);
 };
 
 export default SignUp;
