@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import { onboarding } from "@/constants/index";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
@@ -41,16 +42,15 @@ const Onboarding = () => {
                 ))}
             </Swiper>
 
-            <TouchableOpacity 
-                className="bg-[#0286FF] w-11/12"
+            <CustomButton
+                title={isLastSlide ? "Get Started" : "Next"}
                 onPress={() => 
-                    isLastSlide 
-                        ? router.replace("/(auth)/sign-up") 
+                    isLastSlide
+                        ? router.replace("/(auth)/sign-up")
                         : swiperRef.current?.scrollBy(1)
-                }          
-            >
-                <Text>Next</Text>
-            </TouchableOpacity>
+                }
+                className="w-10/12 mt-10"
+            />
         </SafeAreaView>  
     );
 };
