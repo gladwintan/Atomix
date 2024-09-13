@@ -43,10 +43,10 @@ const Onboarding = () => {
 
 			<CustomButton
 				title={isLastSlide ? "Get Started" : "Next"}
-					onPress={() => 
-						isLastSlide
-							? router.replace("/(auth)/sign-up")
-							: swiperRef.current?.scrollBy(1)
+				onPress={() => 
+					isLastSlide
+						? router.replace("/(auth)/sign-up")
+						: swiperRef.current?.scrollBy(1)
 				}
 				className="w-10/12 mt-10"
 			/>
