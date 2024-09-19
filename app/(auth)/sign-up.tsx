@@ -1,15 +1,16 @@
 import { Link, router } from "expo-router";
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo"
 import { useState } from "react";
 import { ReactNativeModal } from "react-native-modal";
 
 import CustomButton from "@/components/CustomButton";
 import InputTextField from "@/components/InputTextField";
+import { icons, images } from "@/constants";
 
 const SignUp = () => {
 	const { isLoaded, signUp, setActive } = useSignUp()
-	const [showSuccessModal, setShowSuccessModal] = useState(false);
+	const [showSuccessModal, setShowSuccessModal] = useState(true);
 
 	const [form, setForm] = useState({
     name: "",
@@ -93,6 +94,7 @@ const SignUp = () => {
 							label="Name"
 							placeholder="Enter name"
 							onChangeText={(name) => setForm({ ...form, name: name })}
+							icon={icons.user}
 						/>
 
 						<InputTextField
@@ -100,6 +102,7 @@ const SignUp = () => {
 							placeholder="Enter email"
 							textContentType="emailAddress"
 							onChangeText={(email) => setForm({ ...form, email: email })}
+							icon={icons.email}
 						/>
 
 						<InputTextField
@@ -108,6 +111,7 @@ const SignUp = () => {
 							secureTextEntry={true}
 							textContentType="password"
 							onChangeText={(password) => setForm({ ...form, password: password })}
+							icon={icons.password}
 						/>
 
 						<CustomButton
@@ -150,6 +154,7 @@ const SignUp = () => {
 								onChangeText={(code) =>
 									setVerification({ ...verification, code })
 								}
+								icon={icons.password}
 							/>
 
 							{verification.error && (
@@ -169,10 +174,14 @@ const SignUp = () => {
 					{/* pop-up to indicate successful email verification */}
 					<ReactNativeModal isVisible={showSuccessModal}>
 						<View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+						  <Image 
+								source={images.verified}
+								className="w-[80px] h-[80px] mx-auto mb-5"
+							/>
 							<Text className="text-3xl font-bold text-center">
 								Verified
 							</Text>
-							<Text className="text-base text-slate-400 text-center mt-2">
+							<Text className="text-base text-slate-500 text-center mt-2">
 								You have successfully verified your account.
 							</Text>
 
@@ -182,7 +191,7 @@ const SignUp = () => {
 									setShowSuccessModal(false);
 									router.push(`/(root)/(tabs)/home`);
 								}}
-								className="mt-5"
+								className="mt-7"
 							/>
 						</View>
 					</ReactNativeModal>

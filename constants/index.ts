@@ -1,5 +1,10 @@
 import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
+import verified from "@/assets/images/verified.png";
+
+import email from "@/assets/icons/email.png"
+import password from "@/assets/icons/password.png"
+import user from "@/assets/icons/user.png"
 
 export const onboarding = [
     {
@@ -15,3 +20,13 @@ export const onboarding = [
         image: onboarding2,
     },
 ];
+
+export const icons = {
+    email,
+    password,
+    user
+}
+
+export const images = {
+    verified
+}

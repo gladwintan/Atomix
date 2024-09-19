@@ -5,6 +5,7 @@ import { Alert, Image, ScrollView, Text, View } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import InputTextField from "@/components/InputTextField";
+import { icons } from "@/constants";
 
 const SignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -52,6 +53,7 @@ const SignIn = () => {
             textContentType="emailAddress"
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
+						icon={icons.email}
           />
 
           <InputTextField
@@ -61,6 +63,7 @@ const SignIn = () => {
             textContentType="password"
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
+						icon={icons.password}
           />
 
           <CustomButton
