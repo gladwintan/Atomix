@@ -94,12 +94,14 @@ const SignUp = () => {
 							placeholder="Enter name"
 							onChangeText={(name) => setForm({ ...form, name: name })}
 						/>
+
 						<InputTextField
 							label="Email"
 							placeholder="Enter email"
 							textContentType="emailAddress"
 							onChangeText={(email) => setForm({ ...form, email: email })}
 						/>
+
 						<InputTextField
 							label="Password"
 							placeholder="Enter password"
@@ -107,11 +109,13 @@ const SignUp = () => {
 							textContentType="password"
 							onChangeText={(password) => setForm({ ...form, password: password })}
 						/>
+
 						<CustomButton
 							title="Sign Up"
 							className="mt-6"
 							onPress={onSignUpPress}
 						/>
+
 						<Link
 							href="/sign-in"
 							className="text-base text-center mt-10"
@@ -134,9 +138,11 @@ const SignUp = () => {
 							<Text className="font-semibold text-2xl mb-2">
 								Verification
 							</Text>
+
 							<Text className="mb-5">
 								We've sent a verification code to {form.email}.
 							</Text>
+
 							<InputTextField
 								label={"Code"}
  								placeholder={"123456"}
@@ -146,11 +152,13 @@ const SignUp = () => {
 									setVerification({ ...verification, code })
 								}
 							/>
+
 							{verification.error && (
 								<Text className="text-red-600 text-base mt-1">
 									{verification.error}
 								</Text>
 							)}
+
 							<CustomButton
 								title="Verify Email"
 								onPress={onPressVerify}
@@ -165,9 +173,11 @@ const SignUp = () => {
 							<Text className="text-3xl font-bold text-center">
 								Verified
 							</Text>
+
 							<Text className="text-base text-slate-400 text-center mt-2">
 								You have successfully verified your account.
 							</Text>
+							
 							<CustomButton
 								title="Browse Home"
 								onPress={() => {

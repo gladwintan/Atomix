@@ -1,5 +1,5 @@
 import CustomButton from "@/components/CustomButton";
-import { onboarding } from "@/constants/index";
+import { onboarding } from "@/constants";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
