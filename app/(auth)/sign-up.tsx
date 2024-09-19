@@ -138,7 +138,6 @@ const SignUp = () => {
 							<Text className="font-semibold text-2xl mb-2">
 								Verification
 							</Text>
-
 							<Text className="mb-5">
 								We've sent a verification code to {form.email}.
 							</Text>
@@ -173,11 +172,10 @@ const SignUp = () => {
 							<Text className="text-3xl font-bold text-center">
 								Verified
 							</Text>
-
 							<Text className="text-base text-slate-400 text-center mt-2">
 								You have successfully verified your account.
 							</Text>
-							
+
 							<CustomButton
 								title="Browse Home"
 								onPress={() => {
