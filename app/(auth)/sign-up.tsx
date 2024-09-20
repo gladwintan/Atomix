@@ -3,6 +3,7 @@ import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, Text, View } 
 import { useSignUp } from "@clerk/clerk-expo"
 import { useState } from "react";
 import { ReactNativeModal } from "react-native-modal";
+import { fetchAPI } from "@/lib/fetch";
 
 import CustomButton from "@/components/CustomButton";
 import InputTextField from "@/components/InputTextField";
@@ -10,7 +11,7 @@ import { icons, images } from "@/constants";
 
 const SignUp = () => {
 	const { isLoaded, signUp, setActive } = useSignUp()
-	const [showSuccessModal, setShowSuccessModal] = useState(true);
+	const [showSuccessModal, setShowSuccessModal] = useState(false);
 
 	const [form, setForm] = useState({
     name: "",
@@ -25,9 +26,8 @@ const SignUp = () => {
   });
 
   const onSignUpPress = async () => {
-    if (!isLoaded) {
-      return
-    }
+    if (!isLoaded) return
+    
 
     try {
       await signUp.create({
@@ -58,8 +58,21 @@ const SignUp = () => {
       })
 
       if (completeSignUp.status === 'complete') {
+				await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
+
         await setActive({ session: completeSignUp.createdSessionId })
-				setVerification({ ...verification, state: "success" })
+
+				setVerification({ 
+					...verification, 
+					state: "success" 
+				})
       } else {
 				setVerification({ 
 					...verification, 

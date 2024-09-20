@@ -23,11 +23,16 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": ""
     },
     "plugins": [
-      "expo-router"
+      [
+        "expo-router",
+        {
+          "origin": "https://atomix.dev/"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
