@@ -3,6 +3,7 @@ import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
 
 import email from "@/assets/icons/email.png"
+import google from "@/assets/icons/google.png"
 import password from "@/assets/icons/password.png"
 import user from "@/assets/icons/user.png"
 
@@ -23,6 +24,7 @@ export const onboarding = [
 
 export const icons = {
     email,
+    google,
     password,
     user
 }

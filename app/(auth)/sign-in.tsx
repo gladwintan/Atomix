@@ -5,6 +5,7 @@ import { Alert, Image, ScrollView, Text, View } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import InputTextField from "@/components/InputTextField";
+import OAuth from "@/components/OAuth";
 import { icons } from "@/constants";
 
 const SignIn = () => {
@@ -72,9 +73,11 @@ const SignIn = () => {
             className="mt-6"
           />
 
+          <OAuth />
+
           <Link
             href="/sign-up"
-            className="text-base text-center mt-10"
+            className="text-base text-center mt-8"
           >
             Don't have an account? &nbsp;
             <Text className="text-black font-semibold">Sign Up</Text>

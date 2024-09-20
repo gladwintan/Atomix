@@ -7,6 +7,7 @@ import { fetchAPI } from "@/lib/fetch";
 
 import CustomButton from "@/components/CustomButton";
 import InputTextField from "@/components/InputTextField";
+import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
 
 const SignUp = () => {
@@ -133,9 +134,11 @@ const SignUp = () => {
 							onPress={onSignUpPress}
 						/>
 
+						<OAuth />
+
 						<Link
 							href="/sign-in"
-							className="text-base text-center mt-10"
+							className="text-base text-center mt-8"
 						>
 							Already have an account? &nbsp;
 							<Text className="text-black font-semibold">Sign In</Text>
