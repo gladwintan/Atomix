@@ -8,7 +8,7 @@ export const tokenCache = {
     try {
       const item = await SecureStore.getItemAsync(key);
       if (item) {
-        console.log(`${key} was used\n`);
+        console.log(`${key} was used 🔐 \n`);
       } else {
         console.log("No values stored under key: " + key);
       }
@@ -22,7 +22,8 @@ export const tokenCache = {
   async saveToken(key: string, value: string) {
     try {
       return SecureStore.setItemAsync(key, value);
-    } catch (err) {
+    } catch (error) {
+      console.error("SecureStore save token error: ", error)
       return;
     }
   },
@@ -49,11 +50,7 @@ export const googleOAuth = async (startOAuthFlow: any) => {
           });
         }
 
-        return {
-          success: true,
-          code: "success",
-          message: "You have successfully signed in with Google",
-        };
+        return { success: true };
       }
     }
 
@@ -65,7 +62,6 @@ export const googleOAuth = async (startOAuthFlow: any) => {
     console.error(err);
     return {
       success: false,
-      code: err.code,
       message: err?.errors[0]?.longMessage,
     };
   }

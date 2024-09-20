@@ -1,12 +1,15 @@
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
+import CustomButton from '@/components/CustomButton'
+import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
 import { Link } from 'expo-router'
 import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function Home() {
   const { user } = useUser()
+  const { signOut } = useClerk()
 
   return (
-    <View>
+    <SafeAreaView>
       <SignedIn>
         <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
       </SignedIn>
@@ -18,6 +21,10 @@ export default function Home() {
           <Text>Sign Up</Text>
         </Link>
       </SignedOut>
-    </View>
+      <CustomButton 
+        title='Sign Out'
+        onPress={() => signOut({ redirectUrl: '/(root)/(tabs)/home' })}
+      />
+    </SafeAreaView>
   )
 }
