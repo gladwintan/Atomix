@@ -170,7 +170,7 @@ const SignUp = () => {
 								onChangeText={(code) =>
 									setVerification({ ...verification, code })
 								}
-								icon={icons.password}
+								icon={icons.code}
 							/>
 
 							{verification.error && (
