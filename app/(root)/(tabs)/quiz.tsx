@@ -1,12 +1,12 @@
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Course = () => {
+const Quiz = () => {
   return (
-    <SafeAreaView className="h-full bg-white">
-        <Text>Course</Text>
+    <SafeAreaView>
+        <Text>Quiz</Text>
     </SafeAreaView>  
   );
 }
 
-export default Course
+export default Quiz

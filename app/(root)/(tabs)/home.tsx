@@ -1,8 +1,9 @@
-import CustomButton from '@/components/CustomButton'
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
 import { Link } from 'expo-router'
 import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+import CustomButton from '@/components/CustomButton'
 
 export default function Home() {
   const { user } = useUser()

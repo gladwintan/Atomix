@@ -3,10 +3,13 @@ import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
 
 import code from "@/assets/icons/code.png"
+import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
 import google from "@/assets/icons/google.png"
+import home from "@/assets/icons/home.png"
 import password from "@/assets/icons/password.png"
-import user from "@/assets/icons/user.png"
+import profile from "@/assets/icons/profile.png"
+import quiz from "@/assets/icons/quiz.png"
 
 export const onboarding = [
     {
@@ -25,10 +28,13 @@ export const onboarding = [
 
 export const icons = {
     code,
+    course,
     email,
     google,
+    home,
     password,
-    user
+    profile,
+    quiz
 }
 
 export const images = {

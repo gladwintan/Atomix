@@ -108,7 +108,7 @@ const SignUp = () => {
 							label="Name"
 							placeholder="Enter name"
 							onChangeText={(name) => setForm({ ...form, name: name })}
-							icon={icons.user}
+							icon={icons.profile}
 						/>
 
 						<InputTextField
