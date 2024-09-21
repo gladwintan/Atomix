@@ -1,10 +1,22 @@
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useClerk, useUser } from '@clerk/clerk-expo'
+
+import CustomButton from "@/components/CustomButton";
+import { router } from "expo-router";
 
 const Profile = () => {
+  const { user } = useUser()
+  const { signOut } = useClerk()
+
   return (
-    <SafeAreaView>
-        <Text>Profile</Text>
+    <SafeAreaView className="h-full bg-white">
+      <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+      <CustomButton 
+        title='Sign Out'
+        onPress={() => signOut(() => router.replace("/(root)/(tabs)/home"))}
+        className="w-28 rounded-xl"
+      />
     </SafeAreaView>  
   );
 }

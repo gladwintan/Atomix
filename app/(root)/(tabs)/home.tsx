@@ -7,8 +7,6 @@ import CustomButton from '@/components/CustomButton'
 
 export default function Home() {
   const { user } = useUser()
-  const { signOut } = useClerk()
-
   return (
     <SafeAreaView>
       <SignedIn>
@@ -22,10 +20,6 @@ export default function Home() {
           <Text>Sign Up</Text>
         </Link>
       </SignedOut>
-      <CustomButton 
-        title='Sign Out'
-        onPress={() => signOut({ redirectUrl: '/(root)/(tabs)/home' })}
-      />
     </SafeAreaView>
   )
 }
