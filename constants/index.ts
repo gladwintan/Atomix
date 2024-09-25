@@ -2,6 +2,8 @@ import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
 
+import calendar from "@/assets/icons/calendar.png"
+import chemistry from "@/assets/icons/chemistry.png"
 import code from "@/assets/icons/code.png"
 import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
@@ -27,6 +29,8 @@ export const onboarding = [
 ];
 
 export const icons = {
+    calendar,
+    chemistry,
     code,
     course,
     email,
