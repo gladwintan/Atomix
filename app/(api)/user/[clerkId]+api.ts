@@ -11,7 +11,7 @@ export async function GET(request: Request, { clerkId }: Record<string, string>)
       );
     }
 
-    const response = await sql`SELECT name FROM users WHERE clerk_id = ${clerkId}`
+    const response = await sql`SELECT id, name FROM users WHERE clerk_id = ${clerkId}`
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {

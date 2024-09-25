@@ -6,6 +6,7 @@ export const fetchAPI = async (url: string, options?: RequestInit) => {
     if (!response.ok) {
       new Error(`HTTP error! status: ${response.status}`);
     }
+    console.log(response)
     return await response.json();
   } catch (error) {
     console.error("Fetch error:", error);
