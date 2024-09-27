@@ -24,4 +24,5 @@ declare interface Course {
   course_name: string;
   progress: string;
   updated_at: string;
+  href: string;
 }
