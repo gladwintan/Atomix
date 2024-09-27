@@ -16,14 +16,16 @@ function formatDate(date: string): string {
 const CourseCard = ({ 
   courseName,
   progress,
-  lastLesson 
+  lastLesson,
+  onPress
 } : { 
   courseName: string,
   progress: string,
-  lastLesson: string 
+  lastLesson: string,
+  onPress: () => void
 }) => {
   return (
-      <TouchableOpacity activeOpacity={0.5}>
+      <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
         <View className="w-[300px] p-4 px-6 rounded-xl shadow-sm shadow-neutral-200 bg-white border border-slate-100">
           <View className="flex-row w-full">
             <View className="bg-[#0286FF] p-2 rounded-xl">

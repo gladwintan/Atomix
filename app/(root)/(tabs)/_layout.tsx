@@ -52,7 +52,7 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="(courses)/course"
+        name="course"
         options={{
           title: "Course",
           headerShown: false,
@@ -62,7 +62,7 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="(quizzes)/quiz"
+        name="quiz"
         options={{
           title: "Quiz",
           headerShown: false,

@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { fetchAPI } from '@/lib/fetch'
@@ -60,6 +60,8 @@ export default function Home() {
                 courseName={item.course_name} 
                 lastLesson={item.updated_at} 
                 progress={item.progress}
+                //@ts-ignore
+                onPress={() => router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) }
               />
             }
             keyExtractor={(item, index) => index.toString()}
