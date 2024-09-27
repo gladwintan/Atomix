@@ -19,4 +19,9 @@ declare interface InputFieldProps extends TextInputProps {
   inputStyle?: string;
   iconStyle?: string;
 }
-  
+
+declare interface Course {
+  course_name: string;
+  progress: string;
+  updated_at: string;
+}
