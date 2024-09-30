@@ -3,8 +3,10 @@ import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
 
 import calendar from "@/assets/icons/calendar.png"
+import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
 import code from "@/assets/icons/code.png"
+import content from "@/assets/icons/content.png"
 import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
 import google from "@/assets/icons/google.png"
@@ -13,6 +15,8 @@ import lesson from "@/assets/icons/lesson.png"
 import password from "@/assets/icons/password.png"
 import profile from "@/assets/icons/profile.png"
 import quiz from "@/assets/icons/quiz.png"
+import start from "@/assets/icons/start.png"
+import time from "@/assets/icons/time.png"
 
 export const onboarding = [
     {
@@ -31,16 +35,20 @@ export const onboarding = [
 
 export const icons = {
     calendar,
+    check,
     chemistry,
     code,
     course,
+    content,
     email,
     google,
     home,
     lesson,
     password,
     profile,
-    quiz
+    quiz,
+    start,
+    time
 }
 
 export const images = {
