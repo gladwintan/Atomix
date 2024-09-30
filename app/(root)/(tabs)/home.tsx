@@ -13,7 +13,6 @@ export default function Home() {
   const userClerkId = user?.id
 
   const [username, setUsername] = useState("")
-  const [userId, setUserId] = useState("");
   const [courses, setCourses] = useState<Course[] | null>(null)
 
   useEffect(() => {
@@ -23,23 +22,22 @@ export default function Home() {
           method: "GET",
         })
         setUsername(name?.data[0]?.name)
-        setUserId(name?.data[0]?.id)
       }
       fetchUser()
     }
   }, [userClerkId])
 
   useEffect(() => {
-    if (userId) {
+    if (userClerkId) {
       const fetchCourses = async () => {
-        const courses = await fetchAPI(`/(api)/course/${userId}`, {
+        const courses = await fetchAPI(`/(api)/course/${userClerkId}`, {
           method: "GET"
         })
         setCourses(courses?.data)
       }
       fetchCourses()
     }
-  }, [userId])
+  }, [userClerkId])
 
   return (
     <SafeAreaView className="px-5 h-full bg-white">
@@ -68,13 +66,13 @@ export default function Home() {
             ItemSeparatorComponent={() => <View className='ml-5'/>}
             className='py-2 bg-white'
             horizontal
+            showsHorizontalScrollIndicator={false}
           />
 
           <View className="w-[100px] mt-5 mb-3 bg-slate-100 rounded-2xl p-3">
             <Text className="text-lg font-medium">Quizzes</Text>
           </View>
           
-
         </SignedIn>
         <SignedOut>
           <Link href="/(auth)/sign-in">

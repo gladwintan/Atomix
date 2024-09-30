@@ -15,15 +15,20 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
       SELECT 
         progress.progress,
         progress.updated_at,
-        courses.course_name
+        courses.course_name,
+        progress.lessons_completed
       FROM 
         progress
       JOIN
         courses
       ON 
         progress.course_id = courses.course_id
+      JOIN 
+        users
+      ON 
+        progress.user_id = users.id
       WHERE 
-        progress.user_id = ${userId}
+        users.clerk_id = ${userId}
       ORDER BY
         progress.updated_at DESC`
       

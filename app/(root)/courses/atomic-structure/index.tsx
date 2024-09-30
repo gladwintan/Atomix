@@ -1,8 +1,10 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 import LessonCard from '@/components/LessonCard'
+import { useUser } from '@clerk/clerk-expo'
+import { getCourseProgress } from '@/lib/utils'
 
 const lessons = [
   {
@@ -30,7 +32,22 @@ const lessons = [
     link: '/courses/atomic-structure/lesson-4'
   }
 ]
+
 const AtomicStructure = () => {
+  const { user } = useUser()
+  const userClerkId = user?.id
+  
+  const [lessonsCompleted, setLessonsCompleted] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const course = await getCourseProgress("Atomic Structure", userClerkId)
+      setLessonsCompleted(course[0]?.lessons_completed)
+      console.log(lessonsCompleted)
+    }
+    fetchData()
+  }, [userClerkId])
+
   return (
     <SafeAreaView className='h-full bg-white'>
       <Text>atomic-structure</Text>
@@ -41,6 +58,7 @@ const AtomicStructure = () => {
             id={item.id}
             title={item.title}
             description={item.description}
+            completed={lessonsCompleted ? item.id <= lessonsCompleted : false }
             //@ts-ignore
             onPress={() => router.push(item.link)}
           />
@@ -58,6 +76,7 @@ export default AtomicStructure
 
 const styles = StyleSheet.create({
   contentContainer: {
+    display: "flex",
     justifyContent: "center",
   }
 });
