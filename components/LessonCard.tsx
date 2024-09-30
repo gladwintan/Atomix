@@ -14,7 +14,7 @@ const LessonCard = ({
   onPress: () => void
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} className='w-10/12'>
+    <TouchableOpacity onPress={onPress} className='w-[350px]'>
       <View className="bg-slate-50 p-3 my-3">
         <Text>{id}</Text>
         <Text>{title}</Text>

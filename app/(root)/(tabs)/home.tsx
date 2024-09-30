@@ -40,14 +40,14 @@ export default function Home() {
   }, [userClerkId])
 
   return (
-    <SafeAreaView className="px-5 h-full bg-white">
+    <SafeAreaView className="h-full bg-white">
       <ScrollView>
         <SignedIn>
-          <Text className="text-2xl font-bold mt-3">Hi, {username}</Text>
-          <View className="h-[200px] bg-slate-100">
+          <Text className="text-2xl font-bold mt-3 ml-5">Hi, {username}</Text>
+          <View className="h-[200px] bg-slate-100 mx-5">
             <Text>Summary stats</Text>
           </View>
-          <View className="w-[180px] mt-5 mb-3 bg-slate-100 rounded-2xl p-3">
+          <View className="w-[180px] mt-5 mb-3 ml-5 bg-slate-100 rounded-2xl p-3">
             <Text className="text-lg font-medium">Ongoing courses</Text>
           </View>
           
@@ -67,9 +67,10 @@ export default function Home() {
             className='py-2 bg-white'
             horizontal
             showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
           />
 
-          <View className="w-[100px] mt-5 mb-3 bg-slate-100 rounded-2xl p-3">
+          <View className="w-[100px] mt-5 mb-3 ml-5 bg-slate-100 rounded-2xl p-3">
             <Text className="text-lg font-medium">Quizzes</Text>
           </View>
           
@@ -87,3 +88,9 @@ export default function Home() {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20
+  }
+})
