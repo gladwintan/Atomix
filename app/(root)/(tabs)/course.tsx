@@ -41,7 +41,6 @@ const CoursePage = () => {
           method: "GET"
         })
         setOngoingCourses(fetchData?.data)
-        
       }
       fetchCourses()
     }
@@ -50,7 +49,6 @@ const CoursePage = () => {
   useEffect(() => {
     if (ongoingCourses) {
       const ongoingCourseNames = ongoingCourses.map((course : any) => course.course_name)
-      console.log(ongoingCourseNames)
       setOtherCourses(courses.filter((course : any) => !ongoingCourseNames.includes(course.courseName)))
     }
   },[ongoingCourses])

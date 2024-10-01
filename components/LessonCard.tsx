@@ -47,19 +47,19 @@ const LessonCard = ({
 
         <View className='px-2 pb-3 flex-row w-full items-center justify-between'>
           <View className='p-1 flex-row items-center justify-center'>
-            <Text className='font-bold mr-1'>•</Text>
-            <Text className='ml-1 text-sm font-light'>Difficulty {difficulty}</Text>
+            <Text className='font-bold mr-1 text-gray-500'>•</Text>
+            <Text className='ml-1 text-sm text-gray-500'>Difficulty {difficulty}</Text>
           </View>
 
           <View className='p-1 flex-row items-center justify-center'>
-            <Text className='font-bold mr-1'>•</Text>
+            <Text className='font-bold mr-1 text-gray-500'>•</Text>
             <Image 
               source={icons.time} 
-              tintColor="black" 
+              tintColor="#6b7280" 
               resizeMode="contain" 
               className="w-5 h-5"
             />
-            <Text className='ml-1 text-sm font-light'>{time}</Text>
+            <Text className='ml-1 text-sm text-gray-500'>{time}</Text>
             
           </View>
 

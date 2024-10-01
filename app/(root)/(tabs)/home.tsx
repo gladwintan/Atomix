@@ -33,7 +33,8 @@ export default function Home() {
         const courses = await fetchAPI(`/(api)/course/${userClerkId}`, {
           method: "GET"
         })
-        setCourses(courses?.data)
+        console.log(courses)
+        setCourses(courses?.data?.filter((course: Course) => !(parseFloat(course.progress) == 1.0)))
       }
       fetchCourses()
     }

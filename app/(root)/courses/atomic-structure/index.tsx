@@ -1,5 +1,5 @@
 import { Image, View, Text, FlatList, StyleSheet } from 'react-native'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 import LessonCard from '@/components/LessonCard'
@@ -50,8 +50,8 @@ const AtomicStructure = () => {
   const { user } = useUser()
   const userClerkId = user?.id
   
-  //value of -1 indicates course not started yet
-  const [lessonsCompleted, setLessonsCompleted] = useState(-1)
+  //value of -1 indicates course not started yet; -2 for loading courses
+  const [lessonsCompleted, setLessonsCompleted] = useState(-2)
   const [courseProgress, setCourseProgress] = useState(null)
 
   useEffect(() => {
@@ -59,6 +59,8 @@ const AtomicStructure = () => {
       const course = await getCourseProgress("Atomic Structure", userClerkId)
       if (course[0]?.lessons_completed >= 0) {
         setLessonsCompleted(course[0]?.lessons_completed)
+      } else {
+        setLessonsCompleted(-1)
       }
       //setCourseProgress(course[0]?.progress)
     }
