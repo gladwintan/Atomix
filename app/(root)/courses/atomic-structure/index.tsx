@@ -4,8 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 import LessonCard from '@/components/LessonCard'
 import { useUser } from '@clerk/clerk-expo'
-import { getCourseProgress } from '@/lib/utils'
+import { getCourseProgress, startNewCourse } from '@/lib/utils'
 import { icons } from '@/constants'
+import CustomButton from '@/components/CustomButton'
 
 const lessons = [
   {
@@ -49,17 +50,18 @@ const AtomicStructure = () => {
   const { user } = useUser()
   const userClerkId = user?.id
   
-  const [lessonsCompleted, setLessonsCompleted] = useState(null)
+  //value of -1 indicates course not started yet
+  const [lessonsCompleted, setLessonsCompleted] = useState(-1)
   const [courseProgress, setCourseProgress] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       const course = await getCourseProgress("Atomic Structure", userClerkId)
-      setLessonsCompleted(course[0]?.lessons_completed)
+      setLessonsCompleted(course[0]?.lessons_completed && lessonsCompleted)
       //setCourseProgress(course[0]?.progress)
     }
     if (userClerkId) fetchData()
-  }, [userClerkId])
+  }, [userClerkId, lessonsCompleted])
 
   return (
     <SafeAreaView className='h-full bg-white'>
@@ -79,6 +81,7 @@ const AtomicStructure = () => {
           />
         </View>
       </View>
+      
       <View className='border-b-2 border-slate-200 mt-5 mx-3 mb-2 pb-1 flex-row items-center'>
         <Image 
             source={icons.lesson} 
@@ -95,7 +98,8 @@ const AtomicStructure = () => {
             id={item.id}
             title={item.title}
             description={item.description}
-            completed={lessonsCompleted ? item.id <= lessonsCompleted : false }
+            lessonsCompleted={lessonsCompleted}
+            
             time={item.time}
             difficulty={item.difficulty}
             lastLesson={item.lastLesson}
@@ -107,6 +111,16 @@ const AtomicStructure = () => {
         contentContainerStyle={styles.contentContainer}
       />
 
+      {lessonsCompleted == -1 && 
+        <CustomButton
+          title='Start course'
+          onPress={() => {
+            startNewCourse("Atomic Structure", userClerkId);
+            setLessonsCompleted(0)
+          }}
+          className='w-1/2 self-center'
+        />
+      }
     </SafeAreaView>
     
   )

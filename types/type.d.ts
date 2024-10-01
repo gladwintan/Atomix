@@ -21,8 +21,9 @@ declare interface InputFieldProps extends TextInputProps {
 }
 
 declare interface Course {
+  id?: number;
   course_name: string;
   progress: string;
   updated_at: string;
-  href: string;
+  href?: string;
 }

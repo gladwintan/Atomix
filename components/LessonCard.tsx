@@ -11,7 +11,7 @@ const LessonCard = ({
   description,
   time,
   difficulty,
-  completed,
+  lessonsCompleted,
   lastLesson,
   onPress
 } : {
@@ -20,7 +20,7 @@ const LessonCard = ({
   description: string,
   time: string,
   difficulty: number,
-  completed: boolean,
+  lessonsCompleted: number,
   lastLesson?: boolean
   onPress: () => void
 }) => {
@@ -63,7 +63,7 @@ const LessonCard = ({
             
           </View>
 
-          {completed ?
+          {(lessonsCompleted != -1) && id <= lessonsCompleted ?
             <TouchableOpacity
               onPress={() => setShowRestartMenu(true)} 
               className='bg-[#add0b3] w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
@@ -76,7 +76,7 @@ const LessonCard = ({
                   className="ml-1 w-5 h-5"
               />
             </TouchableOpacity>
-            :
+            : id == (lessonsCompleted + 1) ?
             <TouchableOpacity
               onPress={onPress} 
               className='bg-[#0286FF]/80 w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
@@ -89,6 +89,18 @@ const LessonCard = ({
                   className="ml-1 w-5 h-5"
               />
             </TouchableOpacity>
+            :
+            <View
+              className='bg-[#0286FF]/50 w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
+            >
+              <Text className='text-white font-medium'>Locked</Text>
+              <Image 
+                  source={icons.lock} 
+                  tintColor="white" 
+                  resizeMode="contain" 
+                  className="ml-1 w-5 h-5"
+              />
+            </View>
           }
 
           {showRestartMenu && 
@@ -117,7 +129,7 @@ const LessonCard = ({
       
       {!lastLesson && 
         <View 
-          className={`${completed ? "border-[#0286FF]" : "border-slate-300"} 
+          className={`${(id <= lessonsCompleted) ? "border-[#0286FF]" : "border-slate-300"} 
             ml-4 h-10 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
