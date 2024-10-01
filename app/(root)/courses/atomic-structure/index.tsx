@@ -57,7 +57,9 @@ const AtomicStructure = () => {
   useEffect(() => {
     const fetchData = async () => {
       const course = await getCourseProgress("Atomic Structure", userClerkId)
-      setLessonsCompleted(course[0]?.lessons_completed && lessonsCompleted)
+      if (course[0]?.lessons_completed >= 0) {
+        setLessonsCompleted(course[0]?.lessons_completed)
+      }
       //setCourseProgress(course[0]?.progress)
     }
     if (userClerkId) fetchData()

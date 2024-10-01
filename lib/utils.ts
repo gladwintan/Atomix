@@ -34,3 +34,27 @@ export const startNewCourse = async (courseName : string, userClerkId: string | 
     return { success: false }
   }
 }
+
+export const updateCourseProgress = async (courseName: string, lessonCompleted: number, userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated")
+    return;
+  }
+
+  try {
+    await fetchAPI("/(api)/course/update-progress", {
+      method: "PUT",
+      body: JSON.stringify({
+        courseName: courseName,
+        lessonCompleted: lessonCompleted,
+        clerkId: userClerkId,
+      }),
+    });
+    
+    return { success: true }
+  } catch(error) {
+    console.error("Error saving progress to database")
+    return { success: false }
+  }
+
+}
