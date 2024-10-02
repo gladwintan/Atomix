@@ -1,7 +1,7 @@
 import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
-
+import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png"
 import calendar from "@/assets/icons/calendar.png"
 import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
@@ -55,4 +55,8 @@ export const icons = {
 
 export const images = {
     verified
+}
+
+export const atomicStructureImages = {
+    dOrbitals
 }

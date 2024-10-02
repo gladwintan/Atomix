@@ -9,7 +9,7 @@ const Page3 = () => {
       <Text>page3</Text>
       <CustomButton
         title='next'
-        onPress={() => router.push('/(root)/courses/atomic-structure/lesson-1/page4')}
+        onPress={() => router.replace('/(root)/courses/atomic-structure/lesson-1/page4')}
       />
     </SafeAreaView>
   )
