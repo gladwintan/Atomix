@@ -21,16 +21,28 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 		case "primary":
 			return "text-black";
 		case "secondary":
-			return "text-gray-100";
+			return "text-white text-xs";
 		case "danger":
 			return "text-red-100";
 		case "success":
 			return "text-green-100";
+		case "boolean": 
+			return "text-slate-700 font-medium text-base";
 		default:
 			return "text-white";
   }
 };
 
+const getButtonStyle = (type: ButtonProps["type"]) => {
+	switch (type) {
+		case "continue":
+			return "w-5/6 self-center";
+		case "boolean":
+			return "w-36 bg-white border border-slate-200 rounded-2xl shadow-2xs";
+		default:
+			return "";
+	}
+}
 const CustomButton = ({
 	onPress,
 	title,
@@ -39,13 +51,14 @@ const CustomButton = ({
 	IconLeft,
 	IconRight,
 	className,
+	type,
 	...props
 }: ButtonProps) => {
   return (
 		<TouchableOpacity
 			onPress={onPress}
 			className={`w-full rounded-full p-3 flex flex-row justify-center items-center shadow-sm shadow-neutral-400/70 
-				${getBgVariantStyle(bgVariant)} ${className}`}
+				${getBgVariantStyle(bgVariant)} ${getButtonStyle(type)} ${className}`}
 			{...props}
 		>
 			{IconLeft && <IconLeft />}
