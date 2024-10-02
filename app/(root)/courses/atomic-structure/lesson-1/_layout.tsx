@@ -19,12 +19,67 @@ const Layout = () => {
         />
       </View>
 
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false, gestureEnabled: false }} />
-        <Stack.Screen name="page1" options={{ headerShown: false, gestureEnabled: false }} />
-        <Stack.Screen name="page2" options={{ headerShown: false, gestureEnabled: false }} />
-        <Stack.Screen name="page3" options={{ headerShown: false, gestureEnabled: false }} />
-        <Stack.Screen name="page4" options={{ headerShown: false, gestureEnabled: false }} />
+      <Stack screenOptions={{ contentStyle: { backgroundColor: "transparent" }}}>
+        <Stack.Screen 
+          name="index" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            }
+          }} 
+        />
+        <Stack.Screen 
+          name="page1" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            } 
+          }} 
+        />
+        <Stack.Screen 
+          name="page2" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            } 
+          }} 
+        />
+        <Stack.Screen 
+          name="page3" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            } 
+          }} 
+        />
+        <Stack.Screen 
+          name="page4" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            } 
+          }} 
+        />
+        <Stack.Screen 
+          name="completed" 
+          options={{ 
+            headerShown: false, 
+            gestureEnabled: false, 
+            contentStyle: { 
+              backgroundColor: "transparent"
+            } 
+          }} 
+        />
       </Stack>
     </SafeAreaView>
       

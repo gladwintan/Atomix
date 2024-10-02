@@ -7,15 +7,11 @@ import ReactNativeModal from 'react-native-modal'
 const AnswerVerification = ({ 
   correctAnswer, 
   message,
-  nextPageUrl,
-  lastPage,
-  setAnswered
+  onPress
 } : {
   correctAnswer: boolean,
   message: string,
-  nextPageUrl?: string,
-  lastPage?: boolean,
-  setAnswered: (answered : boolean) => void
+  onPress: () => void
 }) => {
   return (
     correctAnswer ?
@@ -29,11 +25,7 @@ const AnswerVerification = ({
           <CustomButton
             title='continue'
             type='continue'
-            onPress={() => {
-              setAnswered(false);
-              //@ts-ignore
-              router.push(nextPageUrl)
-            }}
+            onPress={onPress}
           />
         </View>
       </ReactNativeModal>
@@ -48,9 +40,7 @@ const AnswerVerification = ({
           <CustomButton
             title='Try again'
             type='continue'
-            onPress={() => {
-              setAnswered(false);
-            }}
+            onPress={onPress}
           />
         </View>
       </ReactNativeModal>

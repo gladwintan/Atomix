@@ -28,6 +28,8 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 			return "text-green-100";
 		case "boolean": 
 			return "text-slate-700 font-medium text-base";
+		case "answer":
+			return "text-slate-800 font-normal text-base"
 		default:
 			return "text-white";
   }
@@ -39,6 +41,8 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
 			return "w-5/6 self-center";
 		case "boolean":
 			return "w-36 bg-white border border-slate-200 rounded-2xl shadow-2xs";
+		case "answer":
+			return "bg-white rounded-xl py-1.5 ml-2"
 		default:
 			return "";
 	}
@@ -57,7 +61,7 @@ const CustomButton = ({
   return (
 		<TouchableOpacity
 			onPress={onPress}
-			className={`w-full rounded-full p-3 flex flex-row justify-center items-center shadow-sm shadow-neutral-400/70 
+			className={`rounded-full p-3 flex flex-row justify-center items-center shadow-sm shadow-neutral-400/70 
 				${getBgVariantStyle(bgVariant)} ${getButtonStyle(type)} ${className}`}
 			{...props}
 		>
