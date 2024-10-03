@@ -29,7 +29,9 @@ export async function PUT(request: Request) {
         AND
         users.clerk_id = ${clerkId} 
         AND
-        courses.course_name = ${courseName}  
+        courses.course_name = ${courseName}
+        AND
+        progress.lessons_completed < ${lessonCompleted} 
     `;
 
     return Response.json({ data: response }, { status: 201 });
