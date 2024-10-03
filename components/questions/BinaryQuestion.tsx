@@ -3,30 +3,32 @@ import React, { useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import { Href, router } from 'expo-router'
 import { atomicStructureImages } from '@/constants'
-import AnswerVerification from '@/components/AnswerVerification'
+import AnswerVerification from '@/components/questions/AnswerVerification'
 
 const BinaryQuestion = ({
   nextPageUrl,
-  imageSrc,
   question,
   answer,
+  imageSrc
 } : {
   nextPageUrl: string,
-  imageSrc: ImageSourcePropType,
   question: string,
   answer: boolean,
+  imageSrc?: ImageSourcePropType,
 }) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false)
   const [answered, setAnswered] = useState(false)
 
   return (
-    <View className='bg-white'>
+    <View className='bg-white p-3'>
       <View>
-        <Image
-          source={imageSrc}
-          className='self-center w-[350px]'
-          resizeMode='contain'
-        />
+        {imageSrc && 
+          <Image
+            source={imageSrc}
+            className='self-center w-[350px]'
+            resizeMode='contain'
+          />
+        }
         <Text className='text-center text-base px-10'>
           {question}
         </Text>

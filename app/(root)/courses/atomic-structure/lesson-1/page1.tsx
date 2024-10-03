@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import { router } from 'expo-router'
 import { atomicStructureImages } from '@/constants'
-import BinaryQuestion from '@/components/BinaryQuestion'
+import BinaryQuestion from '@/components/questions/BinaryQuestion'
 
 const Page1 = () => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false)

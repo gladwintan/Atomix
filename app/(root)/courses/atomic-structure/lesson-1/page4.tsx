@@ -4,7 +4,7 @@ import CustomButton from '@/components/CustomButton'
 import { router } from 'expo-router'
 import { updateCourseProgress } from '@/lib/utils'
 import { useUser } from '@clerk/clerk-expo'
-import BinaryQuestion from '@/components/BinaryQuestion'
+import BinaryQuestion from '@/components/questions/BinaryQuestion'
 import { atomicStructureImages } from '@/constants'
 
 const Page4 = () => {
