@@ -7,6 +7,7 @@ import { router } from "expo-router";
 
 import CourseCard from "@/components/CourseCard";
 import { Course } from "@/types/type";
+import { getUncompletedCourses } from "@/lib/utils";
 
 const courses = [
   {
@@ -37,7 +38,7 @@ const CoursePage = () => {
   useEffect(() => {
     if (userClerkId) {
       const fetchCourses = async () => {
-        const fetchData = await fetchAPI(`/(api)/course/${userClerkId}`, {
+        const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
           method: "GET"
         })
         setOngoingCourses(fetchData?.data)
@@ -47,11 +48,14 @@ const CoursePage = () => {
   }, [userClerkId])
 
   useEffect(() => {
-    if (ongoingCourses) {
-      const ongoingCourseNames = ongoingCourses.map((course : any) => course.course_name)
-      setOtherCourses(courses.filter((course : any) => !ongoingCourseNames.includes(course.courseName)))
+  if (userClerkId) {
+    const fetchCourses = async () => {
+      const fetchData = await getUncompletedCourses(userClerkId)
+      setOtherCourses(fetchData)
     }
-  },[ongoingCourses])
+    fetchCourses()
+  }
+}, [userClerkId])
 
   return (
     <SafeAreaView className="h-full bg-white">
@@ -78,7 +82,7 @@ const CoursePage = () => {
         data={otherCourses}
         renderItem={({ item }) => 
           <CourseCard 
-            courseName={item.courseName} 
+            courseName={item.course_name} 
             lastLesson="2 dec 2017"
             progress="0.1"
             //@ts-ignore

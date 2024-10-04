@@ -13,13 +13,24 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
 
     const response = await sql`
       SELECT 
-        courses.course_id,
+        progress.progress,
+        progress.updated_at,
         courses.course_name,
-        courses.description
+        progress.lessons_completed
       FROM 
+        progress
+      JOIN
         courses
+      ON 
+        progress.course_id = courses.course_id
+      JOIN 
+        users
+      ON 
+        progress.user_id = users.id
+      WHERE 
+        users.clerk_id = ${userId}
       ORDER BY
-        courses.course_id ASC`
+        progress.updated_at DESC`
       
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {

@@ -30,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     if (userClerkId) {
       const fetchCourses = async () => {
-        const courses = await fetchAPI(`/(api)/course/${userClerkId}`, {
+        const courses = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
           method: "GET"
         })
         console.log(courses)

@@ -29,3 +29,9 @@ declare interface Course {
   lessons_completed: number;
   href?: string;
 }
+
+declare interface AvailableCourse {
+  id: number;
+  course_name: string;
+  description: string;
+}
