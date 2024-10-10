@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchAPI } from "@/lib/fetch";
 import { router } from "expo-router";
 
-import CourseCard from "@/components/CourseCard";
+import OngoingCourseCard from "@/components/OngoingCourseCard";
 import { Course, OngoingCourse } from "@/types/type";
 import { getCoursesByCompletionStatus } from "@/lib/utils";
 
@@ -70,7 +70,7 @@ const CoursePage = () => {
       <FlatList
         data={ongoingCourses}
         renderItem={({ item }) => 
-          <CourseCard 
+          <OngoingCourseCard 
             courseName={item.course_name} 
             lastLesson={item.updated_at} 
             progress={item.progress}
@@ -89,7 +89,7 @@ const CoursePage = () => {
       <FlatList
         data={completedCourses}
         renderItem={({ item }) => 
-          <CourseCard 
+          <OngoingCourseCard 
             courseName={item.course_name} 
             lastLesson="2 dec 2017"
             progress="0.1"
@@ -110,7 +110,7 @@ const CoursePage = () => {
       <FlatList
         data={otherCourses}
         renderItem={({ item }) => 
-          <CourseCard 
+          <OngoingCourseCard 
             courseName={item.course_name} 
             lastLesson="2 dec 2017"
             progress="0.1"

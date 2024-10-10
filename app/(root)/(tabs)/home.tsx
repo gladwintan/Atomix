@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { fetchAPI } from '@/lib/fetch'
 import CustomButton from '@/components/CustomButton'
-import CourseCard from '@/components/CourseCard'
+import OngoingCourseCard from '@/components/OngoingCourseCard'
 import { useEffect, useState } from 'react'
 import { OngoingCourse } from '@/types/type'
 import { getOngoingCourses } from '@/lib/utils'
@@ -54,7 +54,7 @@ export default function Home() {
           <FlatList
             data={ongoingCourses}
             renderItem={({ item }) => 
-              <CourseCard 
+              <OngoingCourseCard 
                 courseName={item.course_name} 
                 lastLesson={item.updated_at} 
                 progress={item.progress}

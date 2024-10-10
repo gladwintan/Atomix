@@ -10,6 +10,7 @@ import content from "@/assets/icons/content.png"
 import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
 import google from "@/assets/icons/google.png"
+import history from "@/assets/icons/history.png"
 import home from "@/assets/icons/home.png"
 import lesson from "@/assets/icons/lesson.png"
 import lock from "@/assets/icons/lock.png"
@@ -44,6 +45,7 @@ export const icons = {
     email,
     google,
     home,
+    history,
     lesson,
     lock,
     password,
