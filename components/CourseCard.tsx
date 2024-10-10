@@ -28,7 +28,7 @@ const CourseCard = ({
       <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
         <View className="w-[300px] p-4 px-6 rounded-xl shadow-sm shadow-neutral-200 bg-white border border-slate-100">
           <View className="flex-row w-full">
-            <View className="bg-[#0286FF] p-2 rounded-xl">
+            <View className="bg-[#93b5ff] p-2 rounded-xl">
               <Image source={icons.chemistry} tintColor="white" resizeMode="contain" className="w-7 h-7"/>
             </View>
             <View className='h-full ml-4'>

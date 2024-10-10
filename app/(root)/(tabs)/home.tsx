@@ -6,14 +6,15 @@ import { fetchAPI } from '@/lib/fetch'
 import CustomButton from '@/components/CustomButton'
 import CourseCard from '@/components/CourseCard'
 import { useEffect, useState } from 'react'
-import { Course } from '@/types/type'
+import { OngoingCourse } from '@/types/type'
+import { getOngoingCourses } from '@/lib/utils'
 
 export default function Home() {
   const { user } = useUser()
   const userClerkId = user?.id
 
   const [username, setUsername] = useState("")
-  const [courses, setCourses] = useState<Course[] | null>(null)
+  const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(null)
 
   useEffect(() => {
     if (userClerkId) {
@@ -30,11 +31,9 @@ export default function Home() {
   useEffect(() => {
     if (userClerkId) {
       const fetchCourses = async () => {
-        const courses = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-          method: "GET"
-        })
+        const courses = await getOngoingCourses(userClerkId)
         console.log(courses)
-        setCourses(courses?.data?.filter((course: Course) => !(parseFloat(course.progress) == 1.0)))
+        setOngoingCourses(courses)
       }
       fetchCourses()
     }
@@ -53,7 +52,7 @@ export default function Home() {
           </View>
           
           <FlatList
-            data={courses}
+            data={ongoingCourses}
             renderItem={({ item }) => 
               <CourseCard 
                 courseName={item.course_name} 
