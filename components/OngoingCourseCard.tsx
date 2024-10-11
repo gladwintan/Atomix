@@ -13,7 +13,7 @@ function formatDate(date: string): string {
   const newDate = new Date(date);
   return newDate.toLocaleDateString('en-US', options)
 }
-const CourseCard = ({ 
+const OngoingCourseCard = ({ 
   courseName,
   progress,
   lastLesson,
@@ -51,6 +51,7 @@ const CourseCard = ({
               </View> 
               <View className='ml-2'>
                 <Text className='text-xs'>Quiz</Text>
+                {/* To update uncompleted quizzes with data  */}
                 <Text className='text-xs font-light'>5 uncompleted</Text>
               </View>
             </View>
@@ -63,4 +64,4 @@ const CourseCard = ({
   )
 }
 
-export default CourseCard
+export default OngoingCourseCard

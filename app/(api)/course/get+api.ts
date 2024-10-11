@@ -8,7 +8,8 @@ export async function GET(request: Request) {
       SELECT 
         courses.course_id,
         courses.course_name,
-        courses.description
+        courses.description,
+        courses.total_lessons
       FROM 
         courses
       ORDER BY

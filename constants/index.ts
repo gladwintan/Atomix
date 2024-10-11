@@ -2,9 +2,11 @@ import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
 import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png"
+
 import calendar from "@/assets/icons/calendar.png"
 import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
+import chevronRight from "@/assets/icons/chevron-right.png"
 import code from "@/assets/icons/code.png"
 import content from "@/assets/icons/content.png"
 import course from "@/assets/icons/course.png"
@@ -39,6 +41,7 @@ export const icons = {
     calendar,
     check,
     chemistry,
+    chevronRight,
     code,
     course,
     content,
