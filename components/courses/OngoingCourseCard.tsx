@@ -5,14 +5,16 @@ import { icons } from '@/constants'
 
 function formatDate(date: string): string {
   const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
+    day: '2-digit',
     month: 'short',
-    day: '2-digit'
+    year: '2-digit'
   };
 
   const newDate = new Date(date);
-  return newDate.toLocaleDateString('en-US', options)
+  const formattedDate = newDate.toLocaleDateString('en-GB', options);
+  return formattedDate.replace(/(\d{2})$/, "'$1");
 }
+
 const OngoingCourseCard = ({ 
   courseName,
   progress,
@@ -26,7 +28,7 @@ const OngoingCourseCard = ({
 }) => {
   return (
       <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
-        <View className="w-[300px] p-4 px-6 space-y-1 rounded-xl shadow-sm bg-white border border-slate-100">
+        <View className="w-[300px] p-4 px-6 space-y-1.5 rounded-xl shadow-sm bg-white border border-slate-100">
           <View className="flex-row justify-between w-full">
             <Text className="text-base font-medium">{courseName}</Text>
             <View className="bg-[#93b5ff] p-1 rounded-md">

@@ -55,7 +55,9 @@ const Layout = () => {
         name="course"
         options={{
           title: "Course",
-          headerShown: false,
+          headerStyle: { backgroundColor: "gray" },
+          headerShown: true,
+          header: () => <View className="h-16 bg-[#93b5ff]"></View>,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.course} focused={focused}/>
           ),

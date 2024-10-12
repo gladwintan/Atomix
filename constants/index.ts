@@ -8,6 +8,7 @@ import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
 import chevronRight from "@/assets/icons/chevron-right.png"
 import code from "@/assets/icons/code.png"
+import completed from "@/assets/icons/completed.png"
 import content from "@/assets/icons/content.png"
 import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
@@ -44,6 +45,7 @@ export const icons = {
     chevronRight,
     code,
     course,
+    completed,
     content,
     email,
     google,

@@ -47,6 +47,7 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
 			return "";
 	}
 }
+
 const CustomButton = ({
 	onPress,
 	title,
