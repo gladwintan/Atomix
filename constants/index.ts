@@ -9,6 +9,7 @@ import chemistry from "@/assets/icons/chemistry.png"
 import chevronRight from "@/assets/icons/chevron-right.png"
 import code from "@/assets/icons/code.png"
 import completed from "@/assets/icons/completed.png"
+import completedEmpty from "@/assets/icons/completed-empty.png"
 import content from "@/assets/icons/content.png"
 import course from "@/assets/icons/course.png"
 import email from "@/assets/icons/email.png"
@@ -17,11 +18,13 @@ import history from "@/assets/icons/history.png"
 import home from "@/assets/icons/home.png"
 import lesson from "@/assets/icons/lesson.png"
 import lock from "@/assets/icons/lock.png"
+import ongoingEmpty from "@/assets/icons/ongoing-empty.png"
 import password from "@/assets/icons/password.png"
 import profile from "@/assets/icons/profile.png"
 import quiz from "@/assets/icons/quiz.png"
 import start from "@/assets/icons/start.png"
 import time from "@/assets/icons/time.png"
+
 
 export const onboarding = [
     {
@@ -46,6 +49,7 @@ export const icons = {
     code,
     course,
     completed,
+    completedEmpty,
     content,
     email,
     google,
@@ -55,6 +59,7 @@ export const icons = {
     lock,
     password,
     profile,
+    ongoingEmpty,
     quiz,
     start,
     time

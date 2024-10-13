@@ -1,4 +1,4 @@
-import { FlatList, Text, StyleSheet, View, StatusBar, ScrollView } from "react-native";
+import { FlatList, Image, Text, StyleSheet, View, StatusBar, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUser } from "@clerk/clerk-expo";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import OngoingCourseCard from "@/components/courses/OngoingCourseCard";
 import { Course, ExploreCourse, OngoingCourse } from "@/types/type";
 import { getCoursesByCompletionStatus } from "@/lib/utils";
 import CompletedCourseCard from "@/components/courses/CompletedCourseCard";
+import { icons } from "@/constants";
 
 const courses = [
   {
@@ -61,57 +62,74 @@ const CoursePage = () => {
       <ScrollView className="mb-24" showsVerticalScrollIndicator={false}>
         <View className="mx-4 my-2 flex-row items-center justify-between">
           <Text className="text-lg font-semibold text-[#161d2e]">Ongoing</Text>
-          <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
+          <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
         </View>
-
-        <FlatList
-          data={ongoingCourses}
-          renderItem={({ item }) => 
-            <OngoingCourseCard 
-              courseName={item.course_name} 
-              lastLesson={item.updated_at} 
-              progress={item.progress}
-              //@ts-ignore
-              onPress={() => router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) }
-            />
-          }
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => <View className='ml-5'/>}
-          className='py-2 mb-8 bg-white'
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.container}
-        />
+        
+        {ongoingCourses ?
+          <FlatList
+            data={ongoingCourses}
+            renderItem={({ item }) => 
+              <OngoingCourseCard 
+                courseName={item.course_name} 
+                lastLesson={item.updated_at} 
+                progress={item.progress}
+                //@ts-ignore
+                onPress={() => router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) }
+              />
+            }
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => <View className='ml-5'/>}
+            className='py-2 mb-8 bg-white'
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+          />
+          :
+          <View className="justify-center items-center mt-4 mb-6">
+            <Image source={icons.ongoingEmpty}/>
+            <Text className="mt-3 text-sm text-[#161d2e] font-medium">No ongoing courses</Text>
+            <Text className="text-sm font-light text-[#253048]">Check out courses available</Text>
+          </View>
+        }
 
         <View className="mx-4 my-2 flex-row items-center justify-between">
           <Text className="text-lg font-semibold text-[#161d2e]">Completed</Text>
-          <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
+          <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
         </View>
 
-        <FlatList
-          data={completedCourses}
-          renderItem={({ item }) => 
-            <CompletedCourseCard 
-              courseName={item.course_name} 
-              lastLesson={item.updated_at}
-              progress={item.progress}
-              onPress={() => item.course_name && 
-                //@ts-ignore
-                router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) 
-              }
-            />
-          }
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => <View className='ml-5'/>}
-          className='py-2 mb-8 bg-white'
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.container}
-        />
+        {completedCourses ?
+          <FlatList
+            data={completedCourses}
+            renderItem={({ item }) => 
+              <CompletedCourseCard 
+                courseName={item.course_name} 
+                lastLesson={item.updated_at}
+                progress={item.progress}
+                onPress={() => item.course_name && 
+                  //@ts-ignore
+                  router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) 
+                }
+              />
+            }
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => <View className='ml-5'/>}
+            className='py-2 mb-8 bg-white'
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+          />
+          :
+          <View className="justify-center items-center mt-4 mb-6">
+            <Image source={icons.completedEmpty}/>
+            <Text className="mt-3 text-sm text-[#161d2e] font-medium">No completed courses</Text>
+            <Text className="text-sm font-light text-[#253048]">Continue learning or start a new course</Text>
+          </View>
+        }
+
 
         <View className="mx-4 my-2 flex-row items-center justify-between">
           <Text className="text-lg font-semibold text-[#161d2e]">Explore</Text>
-          <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
+          <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
         </View>
         <FlatList
           data={otherCourses}
