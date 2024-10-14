@@ -22,6 +22,7 @@ import ongoingEmpty from "@/assets/icons/ongoing-empty.png"
 import password from "@/assets/icons/password.png"
 import profile from "@/assets/icons/profile.png"
 import quiz from "@/assets/icons/quiz.png"
+import resume from "@/assets/icons/resume.png"
 import start from "@/assets/icons/start.png"
 import time from "@/assets/icons/time.png"
 
@@ -61,6 +62,7 @@ export const icons = {
     profile,
     ongoingEmpty,
     quiz,
+    resume,
     start,
     time
 }

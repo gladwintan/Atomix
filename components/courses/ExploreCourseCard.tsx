@@ -8,6 +8,7 @@ const ExploreCourseCard = ({
   courseName,
   description,
   totalLessons,
+  completionStatus,
   difficulty,
   quizzes,
   onPress
@@ -15,6 +16,7 @@ const ExploreCourseCard = ({
   courseName: string,
   description: string,
   totalLessons: number,
+  completionStatus: string
   difficulty?: string,
   quizzes?: number,
   onPress: () => void
@@ -32,9 +34,9 @@ const ExploreCourseCard = ({
             </View>
           </View>
 
-          <Text className='font-light mt-4'>{description}</Text>
+          <Text className='font-light mt-3 text-sm'>{description}</Text>
 
-          <View className='flex-row justify-between items-center mt-3'>
+          <View className='flex-row justify-between items-center mt-4'>
             <View className='flex-row space-x-1.5'>
               <Text className='text-sm'>{totalLessons} lessons</Text>
               <Text>•</Text>
@@ -42,12 +44,22 @@ const ExploreCourseCard = ({
               <Text>•</Text>
               <Text className='text-sm'>Intermediate</Text>
             </View>
-            <View className="flex-row bg-[#e9f0ff] items-center p-1 rounded-md">
-              <Text className="pl-1">Details</Text>
 
-              <Image source={icons.chevronRight} tintColor="black" resizeMode="contain" className="w-5 h-5"/>
-
-            </View>
+            {completionStatus == "completed" 
+              ? <View className="flex-row bg-[#E8F8EB]/70 items-center p-1 rounded-md">
+                  <Text className="pl-1 text-[#36633e]">completed</Text>
+                  <Image source={icons.completed} tintColor="#36633e" resizeMode="contain" className="ml-1 w-5 h-5"/>
+                </View>
+              : completionStatus == "ongoing" 
+                ? <View className="flex-row bg-[#ebf9ff] items-center p-1 rounded-md">
+                    <Text className="pl-1 text-[#253e48]">ongoing</Text>
+                    <Image source={icons.resume} tintColor="#253e48" resizeMode="contain" className="w-5 h-5"/>
+                  </View>
+                : <View className="flex-row bg-[#e9f0ff] items-center p-1 rounded-md">
+                    <Text className="pl-1 text-[#161d2e]">Details</Text>
+                    <Image source={icons.chevronRight} tintColor="#161d2e" resizeMode="contain" className="w-5 h-5"/>
+                  </View>
+            }
           </View>
 
         </View>

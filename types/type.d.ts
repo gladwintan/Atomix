@@ -35,4 +35,5 @@ declare interface OngoingCourse extends Course {
 declare interface ExploreCourse extends Course {
   description: string;
   total_lessons: number;
+  completionStatus: "uncompleted" | "completed" | "ongoing"
 }
