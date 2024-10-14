@@ -37,14 +37,14 @@ const CoursePage = () => {
   const userClerkId = user?.id
 
   const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(null)
-  const [otherCourses, setOtherCourses] = useState<ExploreCourse[] | null>(null)
+  const [exploreCourses, setExploreCourses] = useState<ExploreCourse[] | null>(null)
   const [completedCourses, setCompletedCourses] = useState<OngoingCourse[] | null>(null)
 
   useEffect(() => {
     if (userClerkId) {
       const fetchCourses = async () => {
         const fetchData = await getCoursesByCompletionStatus(userClerkId)
-        setOtherCourses(fetchData?.uncompletedCourses)
+        setExploreCourses(fetchData?.exploreCourses)
         setOngoingCourses(fetchData?.ongoingCourses)
         setCompletedCourses(fetchData?.completedCourses)
       }
@@ -85,8 +85,8 @@ const CoursePage = () => {
             contentContainerStyle={styles.container}
           />
           :
-          <View className="justify-center items-center mt-4 mb-6">
-            <Image source={icons.ongoingEmpty}/>
+          <View className="justify-center items-center mt-4 mb-8">
+            <Image source={icons.ongoingEmpty} className="w-[160] h-[64px]" resizeMode="contain"/>
             <Text className="mt-3 text-sm text-[#161d2e] font-medium">No ongoing courses</Text>
             <Text className="text-sm font-light text-[#253048]">Check out courses available</Text>
           </View>
@@ -119,8 +119,8 @@ const CoursePage = () => {
             contentContainerStyle={styles.container}
           />
           :
-          <View className="justify-center items-center mt-4 mb-6">
-            <Image source={icons.completedEmpty}/>
+          <View className="justify-center items-center mt-4 mb-8">
+            <Image source={icons.completedEmpty} className="w-[160px] h-[64px]" resizeMode="contain"/>
             <Text className="mt-3 text-sm text-[#161d2e] font-medium">No completed courses</Text>
             <Text className="text-sm font-light text-[#253048]">Continue learning or start a new course</Text>
           </View>
@@ -132,12 +132,13 @@ const CoursePage = () => {
           <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
         </View>
         <FlatList
-          data={otherCourses}
+          data={exploreCourses}
           renderItem={({ item }) => 
             <ExploreCourseCard 
               courseName={item.course_name}
               description={item.description}
-              totalLessons={item.total_lessons} 
+              totalLessons={item.total_lessons}
+              completionStatus={item.completionStatus} 
               onPress={() => item.course_name && 
                 //@ts-ignore
                 router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) 

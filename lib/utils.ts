@@ -1,4 +1,4 @@
-import { OngoingCourse, Course } from "@/types/type";
+import { OngoingCourse, Course, ExploreCourse } from "@/types/type";
 import { fetchAPI } from "./fetch";
 
 export const getCoursesByCompletionStatus = async (userClerkId: string | undefined) => {
@@ -18,18 +18,29 @@ export const getCoursesByCompletionStatus = async (userClerkId: string | undefin
 
     const allCourses = fetchData1?.data
     const startedCourses = fetchData2?.data
-    const startedCoursesName = startedCourses?.map((course: OngoingCourse) => course.course_name)
     
     const ongoingCourses = startedCourses.filter((course: OngoingCourse) => !(parseFloat(course.progress) == 1.0))
     const completedCourses = startedCourses.filter((course: OngoingCourse) => (parseFloat(course.progress) == 1.0))
-    const uncompletedCourses = allCourses?.filter((course: Course) => !startedCoursesName.includes(course.course_name))
+
+    const ongoingCourseNames = ongoingCourses.map((course: OngoingCourse) => course.course_name)
+    const completedCourseNames = completedCourses.map((course: OngoingCourse) => course.course_name)
+
+    const exploreCourses = allCourses?.map((course: ExploreCourse) => {
+      if (ongoingCourseNames.includes(course.course_name)) {
+        return { ...course, completionStatus: "ongoing" }
+      } else if (completedCourseNames.includes(course.course_name)) {
+        return { ...course, completionStatus: "completed" }
+      }
+      return { ...course, completionStatus: "uncompleted" }
+    })
 
     return {
-      completedCourses: completedCourses,
-      ongoingCourses: ongoingCourses,
-      uncompletedCourses: uncompletedCourses
+      completedCourses: completedCourses.length == 0 ? null : completedCourses,
+      ongoingCourses: ongoingCourses.length == 0 ? null : ongoingCourses,
+      exploreCourses: exploreCourses
     }
   } catch (error) {
+    console.error(error)
     console.error("Error while retrieving course progress from database")
   }
   
