@@ -1,5 +1,4 @@
 import { Image, View, Text, TouchableOpacity } from 'react-native'
-import * as Progress from 'react-native-progress';
 
 import { icons } from '@/constants'
 import CustomButton from '../CustomButton';

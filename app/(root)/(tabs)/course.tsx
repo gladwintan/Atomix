@@ -157,7 +157,6 @@ const CoursePage = () => {
                 </Text>
               </TouchableOpacity>
             </View>
-            
             <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
           </View>
         
