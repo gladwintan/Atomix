@@ -48,7 +48,7 @@ const ExploreCourseCard = ({
             {completionStatus == "completed" 
               ? <View className="flex-row bg-[#E8F8EB]/70 items-center p-1 rounded-md">
                   <Text className="pl-1 text-[#36633e]">completed</Text>
-                  <Image source={icons.completed} tintColor="#36633e" resizeMode="contain" className="ml-1 w-5 h-5"/>
+                  <Image source={icons.completed} tintColor="#36633e" resizeMode="contain" className="ml-1 w-4 h-4"/>
                 </View>
               : completionStatus == "ongoing" 
                 ? <View className="flex-row bg-[#ebf9ff] items-center p-1 rounded-md">
