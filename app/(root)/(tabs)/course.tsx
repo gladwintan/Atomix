@@ -1,4 +1,4 @@
-import { FlatList, Image, Text, StyleSheet, View, Animated, LayoutChangeEvent } from "react-native";
+import { FlatList, Image, Text, StyleSheet, View, Animated, LayoutChangeEvent, TouchableOpacity } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import { useEffect, useState, useRef } from "react";
 import { router } from "expo-router";
@@ -14,6 +14,7 @@ import { icons } from "@/constants";
 import OngoingCourses from "@/components/courses/OngoingCourses";
 import CompletedCourses from "@/components/courses/CompletedCourses";
 import ExploreCourses from "@/components/courses/ExploreCourses";
+import { Button } from "react-native";
 
 const courses = [
   {
@@ -42,6 +43,7 @@ const CoursePage = () => {
   const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(null)
   const [exploreCourses, setExploreCourses] = useState<ExploreCourse[]>([])
   const [completedCourses, setCompletedCourses] = useState<OngoingCourse[] | null>(null)
+  const [showCompletedCourses, setShowCompletedCourses] = useState(false)
   
   const [elementHeight, setElementHeight] = useState(1)
 
@@ -136,27 +138,40 @@ const CoursePage = () => {
           )}
           scrollEventThrottle={16}
         >
-          <View className="mx-4 my-2 flex-row items-center justify-between">
-            <Text className="text-lg font-semibold text-[#161d2e]">Ongoing</Text>
-            <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
+          <View className="mx-4 mt-4 mb-4 flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <TouchableOpacity 
+                onPress={() => setShowCompletedCourses(false)}
+                className={`${!showCompletedCourses ? "bg-[#91b0f2]" : "bg-[#e9f0ff]"} p-2 px-3.5 rounded-full`}
+              >
+                <Text className={`${!showCompletedCourses ? "text-white font-bold" : "text-[#253048] font-medium"} text-xs`}>
+                  Ongoing
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                onPress={() => setShowCompletedCourses(true)}
+                className={`${showCompletedCourses ? "bg-[#91b0f2]" : "bg-[#e9f0ff]"} ml-4 p-2 px-3.5 rounded-full`}
+              >
+                <Text className={`${showCompletedCourses ? "text-white font-bold" : "text-[#253048] font-medium"} text-xs`}>
+                  Completed
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
           </View>
         
-          
-          <OngoingCourses ongoingCourses={ongoingCourses} />
-            
+          {!showCompletedCourses ?
+            <OngoingCourses ongoingCourses={ongoingCourses} />
+            :
+            <CompletedCourses completedCourses={completedCourses} />
+          }
 
           <View className="mx-4 my-2 flex-row items-center justify-between">
-            <Text className="text-lg font-semibold text-[#161d2e]">Completed</Text>
-            <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
+            <Text className="text-base font-semibold text-[#161d2e]">Explore</Text>
+            <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
           </View>
 
-          <CompletedCourses completedCourses={completedCourses} />
-
-
-          <View className="mx-4 my-2 flex-row items-center justify-between">
-            <Text className="text-lg font-semibold text-[#161d2e]">Explore</Text>
-            <Text className="text-sm font-light text-[#161d2e]">All shown</Text>
-          </View>
           <ExploreCourses exploreCourses={exploreCourses} />
         </Animated.ScrollView>
       }
