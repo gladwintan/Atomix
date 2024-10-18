@@ -1,5 +1,6 @@
 import { FlatList, Image, View, StyleSheet, Text } from 'react-native'
 import React from 'react'
+import { router } from 'expo-router'
 import { OngoingCourse } from '@/types/type'
 
 import CompletedCourseCard from './CompletedCourseCard'

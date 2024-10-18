@@ -69,31 +69,31 @@ const AtomicStructure = () => {
 
   return (
     <SafeAreaView className='h-full bg-white'>
-      <View className='p-3 px-5 bg-[#0286FF]/10 mx-3 rounded-2xl flex-row items-center'>
+      <View className='p-3 px-5 bg-[#E9F0FF] mx-3 rounded-2xl flex-row items-center'>
         <View className='w-3/4'>
-          <Text className='text-xl font-semibold'>Atomic Structure</Text>
-          <Text className='mt-1.5 text-base text-slate-700'>
+          <Text className='text-base text-[#253048] font-semibold'>Atomic Structure</Text>
+          <Text className='mt-1 text-sm text-[#253048] font-light'>
             Learn about atomic orbitals and ionisation energy
           </Text>
         </View>
         <View className="p-3 bg-white rounded-full absolute right-4">
           <Image 
             source={icons.chemistry} 
-            tintColor="#0286FF90" 
+            tintColor="#93B5FF" 
             resizeMode="contain" 
-            className="w-14 h-14"
+            className="w-12 h-12"
           />
         </View>
       </View>
       
-      <View className='border-b-2 border-slate-200 mt-5 mx-3 mb-2 pb-1 flex-row items-center'>
+      <View className='border-b border-slate-300 mt-5 mx-3 pb-1 flex-row items-center'>
         <Image 
-            source={icons.lesson} 
-            tintColor="black" 
-            resizeMode="contain" 
-            className="w-6 h-6"
-          />
-        <Text className='text-lg ml-1 '>Lessons</Text>
+          source={icons.lesson} 
+          tintColor="#253048" 
+          resizeMode="contain" 
+          className="w-5 h-5"
+        />
+        <Text className='text-[#253048] font-semibold text-base ml-1'>Lessons</Text>
       </View>
       <FlatList
         data={lessons}
@@ -135,7 +135,7 @@ export default AtomicStructure
 const styles = StyleSheet.create({
   contentContainer: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    paddingLeft: 20,
+    paddingTop: 15
   }
 });

@@ -26,102 +26,100 @@ const LessonCard = ({
 }) => {
   const [showRestartMenu, setShowRestartMenu] = useState(false)
   return (
-    <View className='w-[350px]'>
-      <View className="bg-slate-50 rounded-lg my-3">
+    <View className='pb-10'>
+      <View className="my-3">
         <View className='flex-row'>
-          <View className='bg-[#0286FF]/70 items-center justify-center rounded-tl-lg rounded-br-lg'>
-            <Text className='text-white px-3 font-medium'>{id}</Text>
+          <View className='bg-[#93B5FF] mr-4 w-[50px] h-[50px] items-center justify-center rounded-full'>
+            <Text className='text-white text-base px-3 font-bold'>{id}</Text>
           </View>
-          <Text className='p-2 text-base font-medium'>{title}</Text>
-        </View>
-
-        <View className='flex-row items-center p-2'>
-          <Image 
-              source={icons.content} 
-              tintColor="black" 
-              resizeMode="contain" 
-              className="w-6 h-6"
-          />
-          <Text className='p-2'>{description}</Text>
-        </View>
-
-        <View className='px-2 pb-3 flex-row w-full items-center justify-between'>
-          <View className='p-1 flex-row items-center justify-center'>
-            <Text className='font-bold mr-1 text-gray-500'>•</Text>
-            <Text className='ml-1 text-sm text-gray-500'>Difficulty {difficulty}</Text>
-          </View>
-
-          <View className='p-1 flex-row items-center justify-center'>
-            <Text className='font-bold mr-1 text-gray-500'>•</Text>
-            <Image 
-              source={icons.time} 
-              tintColor="#6b7280" 
-              resizeMode="contain" 
-              className="w-5 h-5"
-            />
-            <Text className='ml-1 text-sm text-gray-500'>{time}</Text>
+          <View className='w-[270px]'>
+            <Text className='text-sm'>{title}</Text>
+            <Text className='mt-1 text-xs font-light'>{description}</Text>
             
-          </View>
+            <View className='mt-2 flex-row items-center justify-between'>
+              <View className='flex-row items-center space-x-1.5'>
+                <Text className='text-xs text-gray-600 font-light'>Difficulty {difficulty}</Text>
+                <Text className='font-bold text-gray-600'>•</Text>
 
-          {(lessonsCompleted != -1) && id <= lessonsCompleted ?
-            <TouchableOpacity
-              onPress={() => setShowRestartMenu(true)} 
-              className='bg-[#add0b3] w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
-            >
-              <Text className='text-white font-medium'>Completed</Text>
-              <Image 
-                  source={icons.check} 
-                  tintColor="white" 
-                  resizeMode="contain" 
-                  className="ml-1 w-5 h-5"
-              />
-            </TouchableOpacity>
-            : id == (lessonsCompleted + 1) ?
-            <TouchableOpacity
-              onPress={onPress} 
-              className='bg-[#0286FF]/80 w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
-            >
-              <Text className='text-white font-medium'>Start lesson</Text>
-              <Image 
-                  source={icons.start} 
-                  tintColor="white" 
-                  resizeMode="contain" 
-                  className="ml-1 w-5 h-5"
-              />
-            </TouchableOpacity>
-            :
-            <View
-              className='bg-[#0286FF]/50 w-32 p-1 place-self-end rounded-lg flex-row items-center justify-center'
-            >
-              <Text className='text-white font-medium'>Locked</Text>
-              <Image 
-                  source={icons.lock} 
-                  tintColor="white" 
-                  resizeMode="contain" 
-                  className="ml-1 w-5 h-5"
-              />
+                <View className='flex-row items-center'>
+                  <Image 
+                    source={icons.time} 
+                    tintColor="#4b5563" 
+                    resizeMode="contain" 
+                    className="w-4 h-4"
+                  />
+                  <Text className='ml-1 text-xs text-gray-600 font-light'>{time}</Text>
+                </View>
+              </View>
+
+              {(lessonsCompleted != -1) && id <= lessonsCompleted ?
+                <TouchableOpacity
+                  onPress={() => setShowRestartMenu(true)} 
+                  className='bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative'
+                >
+                  <Text className='text-[#36633e] text-xs font-medium'>Completed</Text>
+                  <Image 
+                      source={icons.check} 
+                      tintColor="#36633e" 
+                      resizeMode="contain" 
+                      className="ml-1 w-4 h-4"
+                  />
+                </TouchableOpacity>
+                : id == (lessonsCompleted + 1) ?
+                <TouchableOpacity
+                  onPress={onPress} 
+                  className='bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative'
+                >
+                  <Text className='text-white text-xs font-semibold'>Start lesson</Text>
+                  <Image 
+                      source={icons.start} 
+                      tintColor="white" 
+                      resizeMode="contain" 
+                      className="ml-1 w-4 h-4"
+                  />
+                </TouchableOpacity>
+                :
+                <View
+                  className='bg-[#91B0F2]/75 p-1 px-2 rounded-md flex-row items-center justify-center relative'
+                >
+                  <Text className='text-white text-xs font-medium'>Locked</Text>
+                  <Image 
+                      source={icons.lock} 
+                      tintColor="white" 
+                      resizeMode="contain" 
+                      className="ml-1 w-4 h-4"
+                  />
+                </View>
+              }
             </View>
-          }
+          </View>
 
           {showRestartMenu && 
             <ReactNativeModal
               isVisible={showRestartMenu}
             >
-              <View className='rounded-lg p-4 h-[250px] w-[300px] self-center bg-white space-y-5 items-center justify-center'>
-                <Text className='text-center text-base mb-2'>You have already completed this lesson</Text>
-                <CustomButton
-                  title="Restart lesson"
-                  onPress={() => {
-                    setShowRestartMenu(false);
-                    onPress()
-                  }}
-                />
-                <CustomButton
-                  title="Start another lesson"
-                  onPress={() => setShowRestartMenu(false)}
-                />
+              <View className='rounded-2xl p-4 h-[250px] w-[300px] self-center bg-white space-y-5 items-center justify-center'>
+                <Image source={icons.completedEmpty} className="w-[160px] h-[64px]" resizeMode="contain"/>
+                <Text className='text-center text-[#161d2e] text-sm mb-5 font-light'>You have already completed this lesson</Text>
+                <View className='flex-row space-x-2'>
+                  <TouchableOpacity
+                    onPress={() => setShowRestartMenu(false)}
+                    className='w-28 items-center justify-center border border-slate-300 p-2 rounded-lg'
+                    >
+                    <Text className='text-[#161d2e]'>Cancel</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      setShowRestartMenu(false);
+                      onPress()
+                    }}
+                    className='w-28 bg-[#91B0F2] items-center justify-center p-2 rounded-lg'
+                  >
+                    <Text className='text-white font-bold'>Start lesson</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              
             </ReactNativeModal>
           }
         </View>
@@ -129,12 +127,11 @@ const LessonCard = ({
       
       {!lastLesson && 
         <View 
-          className={`${(id <= lessonsCompleted) ? "border-[#0286FF]" : "border-slate-300"} 
-            ml-4 h-10 w-0 border-2 rounded-b-full rounded-t-full`
+          className={`${(id <= lessonsCompleted) ? "border-[#B3CCFF]" : "border-slate-300"} 
+            absolute bottom-1 ml-5 h-12 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
       }
-
     </View>
   )
 }

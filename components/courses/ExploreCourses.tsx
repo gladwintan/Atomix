@@ -1,5 +1,6 @@
 import { FlatList, Text, View } from 'react-native'
 import React from 'react'
+import { router } from 'expo-router'
 
 import ExploreCourseCard from './ExploreCourseCard'
 import { ExploreCourse } from '@/types/type'
