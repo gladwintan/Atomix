@@ -7,6 +7,7 @@ import calendar from "@/assets/icons/calendar.png"
 import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
 import chevronRight from "@/assets/icons/chevron-right.png"
+import close from "@/assets/icons/close.png"
 import code from "@/assets/icons/code.png"
 import completed from "@/assets/icons/completed.png"
 import completedEmpty from "@/assets/icons/completed-empty.png"
@@ -47,6 +48,7 @@ export const icons = {
     check,
     chemistry,
     chevronRight,
+    close,
     code,
     course,
     completed,

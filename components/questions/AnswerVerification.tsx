@@ -18,12 +18,12 @@ const AnswerVerification = ({
       <ReactNativeModal 
         isVisible={true}
         backdropOpacity={0.1}
-        className='w-11/12 rounded-3xl absolute bottom-3 self-center bg-white'
+        className='w-full rounded-3xl absolute -bottom-5 pb-6 self-center bg-white'
       >
         <View className='h-full mb-4'>
-          <Text className='text-center text-xl p-10'>{message}</Text>
+          <Text className='text-center text-base p-10'>{message}</Text>
           <CustomButton
-            title='continue'
+            title='Continue'
             type='continue'
             onPress={onPress}
           />
@@ -33,10 +33,10 @@ const AnswerVerification = ({
       <ReactNativeModal 
         isVisible={true}
         backdropOpacity={0.1}
-        className='w-11/12 rounded-3xl absolute bottom-3 self-center bg-white'
+        className='w-full rounded-3xl absolute -bottom-5 pb-6 self-center bg-white'
       >
         <View className='h-full mb-4'>
-          <Text className='text-center text-xl p-10'>{message}</Text>
+          <Text className='text-center text-base p-10'>{message}</Text>
           <CustomButton
             title='Try again'
             type='continue'

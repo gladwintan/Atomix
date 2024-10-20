@@ -12,7 +12,7 @@ const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
 		case "outline":
 			return "bg-transparent border-neutral-300 border-[0.5px]";
 		default:
-			return "bg-[#0286FF]";
+			return "bg-[#93b5ff]";
 	}
 };
 
@@ -27,7 +27,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 		case "success":
 			return "text-green-100";
 		case "boolean": 
-			return "text-slate-700 font-medium text-base";
+			return "text-[#161d2e] font-normal text-base";
 		case "answer":
 			return "text-slate-800 font-normal text-base"
 		default:
@@ -40,9 +40,9 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
 		case "continue":
 			return "w-5/6 self-center";
 		case "boolean":
-			return "w-36 bg-white border border-slate-200 rounded-2xl shadow-2xs";
+			return "w-36 bg-white border-2 border-slate-200 rounded-2xl shadow-none";
 		case "answer":
-			return "bg-white rounded-xl py-1.5 ml-2"
+			return "bg-white rounded-lg py-1.5 ml-2 shadow-none border-slate-200 border"
 		default:
 			return "";
 	}

@@ -16,7 +16,8 @@ const Lesson1 = () => {
       <CustomButton
         title='continue'
         onPress={() => router.replace('/(root)/courses/atomic-structure/lesson-1/page1')}
-        type='continue'  
+        type='continue'
+        className='absolute bottom-2'  
       />
     </SafeAreaView>
   )

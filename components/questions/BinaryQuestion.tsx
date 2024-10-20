@@ -20,20 +20,20 @@ const BinaryQuestion = ({
   const [answered, setAnswered] = useState(false)
 
   return (
-    <View className='bg-white p-3'>
+    <View className='bg-white p-2'>
       <View>
         {imageSrc && 
           <Image
             source={imageSrc}
-            className='self-center w-[350px]'
+            className='self-center w-[320px] h-[280px]'
             resizeMode='contain'
           />
         }
-        <Text className='text-center text-base px-10'>
+        <Text className='text-center text-base px-10 mt-8'>
           {question}
         </Text>
 
-        <View className='bg-white flex-row justify-center space-x-5 mt-8'>
+        <View className='bg-white flex-row justify-center space-x-5 mt-6'>
           <CustomButton
             title='True'
             type='boolean'

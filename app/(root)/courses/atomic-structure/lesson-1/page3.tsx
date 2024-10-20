@@ -16,8 +16,7 @@ const question = "Which orbitals are shown above?"
 
 const Page3 = () => {
   return (
-    <SafeAreaView>
-      <Text>page3</Text>
+    <SafeAreaView className='h-full bg-white'>
       <MultipleResponseQuestion
         options={options}
         answer={answer}

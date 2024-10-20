@@ -27,7 +27,7 @@ const MultipleResponseQuestion = ({
   }
 
   return (
-    <View>
+    <View className='items-center p-2'>
       {imageSrc && 
         <Image
           source={imageSrc}
@@ -35,11 +35,11 @@ const MultipleResponseQuestion = ({
           resizeMode='contain'
         />
       }
-      <View>
-        <Text>{question}</Text>
-      </View>
+      
+      <Text className='text-base'>{question}</Text>
+      
 
-      <View className='px-10 flex-row flex-wrap gap-x-6 gap-y-4 justify-center'>
+      <View className='px-10 flex-row flex-wrap gap-x-6 gap-y-4 justify-center mt-3'>
         {optionsGiven.map((option, index) => (
           <CustomButton
             key={index}

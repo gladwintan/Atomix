@@ -116,7 +116,7 @@ const LessonCard = ({
                     }}
                     className='w-28 bg-[#91B0F2] items-center justify-center p-2 rounded-lg'
                   >
-                    <Text className='text-white font-bold'>Start lesson</Text>
+                    <Text className='text-white font-semibold'>Start lesson</Text>
                   </TouchableOpacity>
                 </View>
               </View>
