@@ -32,7 +32,7 @@ const LessonCard = ({
           <View className='bg-[#93B5FF] mr-4 w-[50px] h-[50px] items-center justify-center rounded-full'>
             <Text className='text-white text-base px-3 font-bold'>{id}</Text>
           </View>
-          <View className='w-[270px]'>
+          <View className={`w-[275px] p-2 relative bottom-2 ${(id == lessonsCompleted + 1) && 'bg-[#f4f8ff]/40 rounded-lg'}`}> 
             <Text className='text-sm'>{title}</Text>
             <Text className='mt-1 text-xs font-light'>{description}</Text>
             
@@ -100,7 +100,7 @@ const LessonCard = ({
             >
               <View className='rounded-2xl p-4 h-[250px] w-[300px] self-center bg-white space-y-5 items-center justify-center'>
                 <Image source={icons.completedEmpty} className="w-[160px] h-[64px]" resizeMode="contain"/>
-                <Text className='text-center text-[#161d2e] text-sm mb-5 font-light'>You have already completed this lesson</Text>
+                <Text className='text-center text-[#161d2e] text-sm mb-3 font-medium px-2'>You have already completed this lesson</Text>
                 <View className='flex-row space-x-2'>
                   <TouchableOpacity
                     onPress={() => setShowRestartMenu(false)}
@@ -128,7 +128,7 @@ const LessonCard = ({
       {!lastLesson && 
         <View 
           className={`${(id <= lessonsCompleted) ? "border-[#B3CCFF]" : "border-slate-300"} 
-            absolute bottom-1 ml-5 h-12 w-0 border-2 rounded-b-full rounded-t-full`
+            absolute bottom-2 ml-5 h-14 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
       }
