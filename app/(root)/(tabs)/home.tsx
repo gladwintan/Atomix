@@ -1,20 +1,20 @@
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { fetchAPI } from '@/lib/fetch'
 import CustomButton from '@/components/CustomButton'
-import CourseCard from '@/components/CourseCard'
+import OngoingCourseCard from '@/components/courses/OngoingCourseCard'
 import { useEffect, useState } from 'react'
-import { Course } from '@/types/type'
+import { OngoingCourse } from '@/types/type'
+import { getOngoingCourses } from '@/lib/utils'
 
 export default function Home() {
   const { user } = useUser()
   const userClerkId = user?.id
 
   const [username, setUsername] = useState("")
-  const [userId, setUserId] = useState("");
-  const [courses, setCourses] = useState<Course[] | null>(null)
+  const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(null)
 
   useEffect(() => {
     if (userClerkId) {
@@ -23,56 +23,57 @@ export default function Home() {
           method: "GET",
         })
         setUsername(name?.data[0]?.name)
-        setUserId(name?.data[0]?.id)
       }
       fetchUser()
     }
   }, [userClerkId])
 
   useEffect(() => {
-    if (userId) {
+    if (userClerkId) {
       const fetchCourses = async () => {
-        const courses = await fetchAPI(`/(api)/course/${userId}`, {
-          method: "GET"
-        })
-        setCourses(courses?.data)
+        const courses = await getOngoingCourses(userClerkId)
+        console.log(courses)
+        setOngoingCourses(courses)
       }
       fetchCourses()
     }
-  }, [userId])
+  }, [userClerkId])
 
   return (
-    <SafeAreaView className="px-5 h-full bg-white">
+    <SafeAreaView className="h-full bg-white">
       <ScrollView>
         <SignedIn>
-          <Text className="text-2xl font-bold mt-3">Hi, {username}</Text>
-          <View className="h-[200px] bg-slate-100">
+          <Text className="text-2xl font-bold mt-3 ml-5">Hi, {username}</Text>
+          <View className="h-[200px] bg-slate-100 mx-5">
             <Text>Summary stats</Text>
           </View>
-          <View className="w-[180px] mt-5 mb-3 bg-slate-100 rounded-2xl p-3">
+          <View className="w-[180px] mt-5 mb-3 ml-5 bg-slate-100 rounded-2xl p-3">
             <Text className="text-lg font-medium">Ongoing courses</Text>
           </View>
           
           <FlatList
-            data={courses}
+            data={ongoingCourses}
             renderItem={({ item }) => 
-              <CourseCard 
+              <OngoingCourseCard 
                 courseName={item.course_name} 
                 lastLesson={item.updated_at} 
                 progress={item.progress}
+                //@ts-ignore
+                onPress={() => router.push(`/courses/${item.course_name.split(" ").join("-").toLowerCase()}`) }
               />
             }
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={() => <View className='ml-5'/>}
             className='py-2 bg-white'
             horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
           />
 
-          <View className="w-[100px] mt-5 mb-3 bg-slate-100 rounded-2xl p-3">
+          <View className="w-[100px] mt-5 mb-3 ml-5 bg-slate-100 rounded-2xl p-3">
             <Text className="text-lg font-medium">Quizzes</Text>
           </View>
           
-
         </SignedIn>
         <SignedOut>
           <Link href="/(auth)/sign-in">
@@ -87,3 +88,9 @@ export default function Home() {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20
+  }
+})

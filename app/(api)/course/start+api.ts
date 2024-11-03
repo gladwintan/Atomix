@@ -1,10 +1,12 @@
 import { neon } from '@neondatabase/serverless';
 
-export async function GET(request: Request, { userId }: Record<string, string>) {
-  try { 
+export async function POST(request: Request) {
+  try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
-    if (!userId) {
+    const { courseName, clerkId } = await request.json();
+
+    if (!courseName || !clerkId) {
       return Response.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -12,24 +14,25 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
     }
 
     const response = await sql`
+      INSERT INTO progress (
+        user_id, 
+        course_id
+      )
       SELECT 
-        progress.progress,
-        progress.updated_at,
-        courses.course_name
+        users.id,
+        courses.course_id 
       FROM 
-        progress
-      JOIN
+        users,
         courses
-      ON 
-        progress.course_id = courses.course_id
       WHERE 
-        progress.user_id = ${userId}
-      ORDER BY
-        progress.updated_at DESC`
-      
+        users.clerk_id = ${clerkId} 
+        AND
+        courses.course_name = ${courseName}  
+    `;
+
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
-    console.error("Error getting courses:", error);
+    console.error("Error creating user:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
