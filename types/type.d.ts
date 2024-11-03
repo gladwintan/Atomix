@@ -37,3 +37,14 @@ declare interface ExploreCourse extends Course {
   total_lessons: number;
   completionStatus: "uncompleted" | "completed" | "ongoing"
 }
+
+declare interface LessonCardProps {
+  id: number,
+  title: string,
+  description: string,
+  time: string,
+  difficulty: number,
+  lessonsCompleted: number,
+  lastLesson?: boolean
+  onPress: () => void
+}

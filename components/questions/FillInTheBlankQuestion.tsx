@@ -59,7 +59,7 @@ const FillInTheBlankQuestion = ({
                 </View>
               : index == questionWithBlanks.length - 1
                 ? <Text key={index} className='text-base'>{text.text}</Text>
-                : <Text key={index} className='text-base'>{text.text} ________ </Text>
+                : <Text key={index} className='text-base'>{text.text} ________</Text>
         ))}
       </View>
       <View className='px-10 flex-row flex-wrap gap-x-6 gap-y-4 justify-center'>

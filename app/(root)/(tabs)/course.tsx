@@ -1,11 +1,7 @@
 import { FlatList, Image, Text, StyleSheet, View, Animated, LayoutChangeEvent, TouchableOpacity } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import { useEffect, useState, useRef } from "react";
-import { router } from "expo-router";
 
-import ExploreCourseCard from "@/components/courses/ExploreCourseCard";
-import OngoingCourseCard from "@/components/courses/OngoingCourseCard";
-import CompletedCourseCard from "@/components/courses/CompletedCourseCard";
 import CourseLoader from "@/components/CourseLoader";
 
 import { ExploreCourse, OngoingCourse } from "@/types/type";
@@ -14,26 +10,6 @@ import { icons } from "@/constants";
 import OngoingCourses from "@/components/courses/OngoingCourses";
 import CompletedCourses from "@/components/courses/CompletedCourses";
 import ExploreCourses from "@/components/courses/ExploreCourses";
-import { Button } from "react-native";
-
-const courses = [
-  {
-    id: 1,
-    courseName: "Atomic Structure"
-  },
-  {
-    id: 2,
-    courseName: "Chemical Bonding"
-  },
-  {
-    id: 3,
-    courseName: "Acid-Base Equilibrium"
-  },
-  {
-    id: 4,
-    courseName: "Intro to Organic Chem"
-  }
-]
 
 const CoursePage = () => {
   const { user } = useUser()

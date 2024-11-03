@@ -29,7 +29,7 @@ const BinaryQuestion = ({
             resizeMode='contain'
           />
         }
-        <Text className='text-center text-base px-10 mt-8'>
+        <Text className='text-center text-base font-medium px-10 mt-8'>
           {question}
         </Text>
 

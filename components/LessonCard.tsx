@@ -4,6 +4,7 @@ import { icons } from '@/constants'
 import ReactNativeModal from 'react-native-modal'
 import { useState } from 'react'
 import CustomButton from './CustomButton'
+import { LessonCardProps } from '@/types/type'
 
 const LessonCard = ({
   id,
@@ -14,16 +15,7 @@ const LessonCard = ({
   lessonsCompleted,
   lastLesson,
   onPress
-} : {
-  id: number,
-  title: string,
-  description: string,
-  time: string,
-  difficulty: number,
-  lessonsCompleted: number,
-  lastLesson?: boolean
-  onPress: () => void
-}) => {
+} : LessonCardProps) => {
   const [showRestartMenu, setShowRestartMenu] = useState(false)
   return (
     <View className='pb-10'>
@@ -128,7 +120,7 @@ const LessonCard = ({
       {!lastLesson && 
         <View 
           className={`${(id <= lessonsCompleted) ? "border-[#B3CCFF]" : "border-slate-300"} 
-            absolute bottom-2 ml-5 h-14 w-0 border-2 rounded-b-full rounded-t-full`
+            absolute bottom-2 ml-6 h-14 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
       }
