@@ -28,33 +28,33 @@ const OngoingCourseCard = ({
 }) => {
   return (
       <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
-        <View className="w-[300px] p-4 px-6 space-y-1.5 rounded-xl shadow-sm bg-white border border-slate-100">
-          <View className="flex-row justify-between items-center w-full">
-            <Text className="text-sm font-medium">{courseName}</Text>
-            <View className="bg-[#93b5ff] p-1 rounded-md">
-              <Image source={icons.chemistry} tintColor="white" resizeMode="contain" className="w-5 h-5"/>
+        <View className="w-[300px] p-3.5 px-6 space-y-1.5 rounded-xl shadow-sm shadow-neutral-300 bg-white border border-slate-100">
+          <View className="flex-row justify-between items-center w-full mb-1.5">
+            <Text className="text-sm text-dark-base font-medium">{courseName}</Text>
+            <View className="bg-primary-base p-1 rounded-md">
+              <Image source={icons.chemistry} tintColor="white" resizeMode="contain" className="w-4 h-4"/>
             </View>
           </View>
 
-          <View className='flex-row justify-between mb-3'>
+          <View className='flex-row justify-between mb-4'>
             <View className='flex-row items-center'>
-              <View className="bg-[#91B0F2] p-1 rounded-full">
+              <View className="bg-primary-600 p-1 rounded-full">
                 <Image source={icons.history} tintColor="white" resizeMode="contain" className="w-5 h-5"/>
               </View> 
               <View className='ml-2'>
-                <Text className='text-xs'>Last lesson</Text>
-                <Text className='text-xs font-light'>{formatDate(lastLesson)}</Text>
+                <Text className='text-xs text-dark-base'>Last lesson</Text>
+                <Text className='text-xs text-dark-base font-light'>{formatDate(lastLesson)}</Text>
               </View>
             </View>
 
             <View className='flex-row items-center'>
-              <View className="bg-[#8FABE5] p-1 rounded-full">
+              <View className="bg-primary-600 p-1 rounded-full">
                 <Image source={icons.quiz} tintColor="white" resizeMode="contain" className="w-5 h-5"/>
               </View> 
               <View className='ml-2'>
-                <Text className='text-xs'>Quiz</Text>
+                <Text className='text-xs text-dark-base'>Quiz</Text>
                 {/* To update uncompleted quizzes with data  */}
-                <Text className='text-xs font-light'>5 uncompleted</Text>
+                <Text className='text-xs text-dark-base font-light'>5 uncompleted</Text>
               </View>
             </View>
           </View>

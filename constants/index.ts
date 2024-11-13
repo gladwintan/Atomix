@@ -21,6 +21,7 @@ import lesson from "@/assets/icons/lesson.png"
 import lock from "@/assets/icons/lock.png"
 import ongoingEmpty from "@/assets/icons/ongoing-empty.png"
 import password from "@/assets/icons/password.png"
+import pending from "@/assets/icons/pending.png"
 import profile from "@/assets/icons/profile.png"
 import quiz from "@/assets/icons/quiz.png"
 import resume from "@/assets/icons/resume.png"
@@ -61,6 +62,7 @@ export const icons = {
     lesson,
     lock,
     password,
+    pending,
     profile,
     ongoingEmpty,
     quiz,

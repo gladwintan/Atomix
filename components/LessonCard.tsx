@@ -1,9 +1,8 @@
 import { Image, View, Text, TouchableOpacity } from 'react-native'
-
-import { icons } from '@/constants'
 import ReactNativeModal from 'react-native-modal'
 import { useState } from 'react'
-import CustomButton from './CustomButton'
+
+import { icons } from '@/constants'
 import { LessonCardProps } from '@/types/type'
 
 const LessonCard = ({
@@ -16,22 +15,24 @@ const LessonCard = ({
   lastLesson,
   onPress
 } : LessonCardProps) => {
+  
   const [showRestartMenu, setShowRestartMenu] = useState(false)
+
   return (
-    <View className='pb-10'>
+    <View className='pb-8'>
       <View className="my-3">
         <View className='flex-row'>
-          <View className='bg-[#93B5FF] mr-4 w-[50px] h-[50px] items-center justify-center rounded-full'>
-            <Text className='text-white text-base px-3 font-bold'>{id}</Text>
+          <View className='mr-4 w-[50px] h-[50px] items-center justify-center rounded-full border-primary-base border'>
+            <Text className='text-dark-light text-sm px-3'>{id}</Text>
           </View>
-          <View className={`w-[275px] p-2 relative bottom-2 ${(id == lessonsCompleted + 1) && 'bg-[#f4f8ff]/40 rounded-lg'}`}> 
-            <Text className='text-sm'>{title}</Text>
-            <Text className='mt-1 text-xs font-light'>{description}</Text>
+          <View className={`w-[275px] p-2.5 relative bottom-2 ${(id == lessonsCompleted + 1) && 'bg-primary-50/40 rounded-lg'}`}> 
+            <Text className='text-sm text-dark-base'>{title}</Text>
+            <Text className='mt-2 text-xs font-light text-dark-base leading-5'>{description}</Text>
             
-            <View className='mt-2 flex-row items-center justify-between'>
+            <View className='mt-3 flex-row items-center justify-between'>
               <View className='flex-row items-center space-x-1.5'>
                 <Text className='text-xs text-gray-600 font-light'>Difficulty {difficulty}</Text>
-                <Text className='font-bold text-gray-600'>•</Text>
+                <Text className='text-gray-600'>•</Text>
 
                 <View className='flex-row items-center'>
                   <Image 
@@ -120,7 +121,7 @@ const LessonCard = ({
       {!lastLesson && 
         <View 
           className={`${(id <= lessonsCompleted) ? "border-[#B3CCFF]" : "border-slate-300"} 
-            absolute bottom-2 ml-6 h-14 w-0 border-2 rounded-b-full rounded-t-full`
+            absolute bottom-3 ml-6 h-14 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
       }

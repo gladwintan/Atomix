@@ -20,7 +20,7 @@ const ExploreCourses = ({ exploreCourses } : { exploreCourses: ExploreCourse[] }
         />
       }
       keyExtractor={(item, index) => index.toString()}
-      ItemSeparatorComponent={() => <View className='p-1 border-t border-[#bdd3ff]'/>}
+      ItemSeparatorComponent={() => <View className='p-1 border-t border-slate-200'/>}
       className='bg-white'
       scrollEnabled={false}
     />
