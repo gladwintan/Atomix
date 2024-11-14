@@ -40,7 +40,7 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
     case "back":
       return "shadow-none";
     default:
-      return "";
+      return "bg-primary-base";
   }
 };
 
