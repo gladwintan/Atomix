@@ -22,10 +22,10 @@ const LessonCard = ({
     <View className='pb-8'>
       <View className="my-3">
         <View className='flex-row'>
-          <View className='mr-4 w-[50px] h-[50px] items-center justify-center rounded-full border-primary-base border'>
-            <Text className='text-dark-light text-sm px-3'>{id}</Text>
+          <View className='mr-4 w-[30px] h-[30px] items-center justify-center rounded-full border-primary-700 border'>
+            <Text className='text-dark-light text-sm font-light'>{id}</Text>
           </View>
-          <View className={`w-[275px] p-2.5 relative bottom-2 ${(id == lessonsCompleted + 1) && 'bg-primary-50/40 rounded-lg'}`}> 
+          <View className={`w-10/12 p-2.5 relative bottom-2 ${(id == lessonsCompleted + 1) && 'bg-primary-50/40 rounded-lg'}`}> 
             <Text className='text-sm text-dark-base'>{title}</Text>
             <Text className='mt-2 text-xs font-light text-dark-base leading-5'>{description}</Text>
             
@@ -121,7 +121,7 @@ const LessonCard = ({
       {!lastLesson && 
         <View 
           className={`${(id <= lessonsCompleted) ? "border-[#B3CCFF]" : "border-slate-300"} 
-            absolute bottom-3 ml-6 h-14 w-0 border-2 rounded-b-full rounded-t-full`
+            absolute bottom-6 ml-3 h-14 w-0 border-2 rounded-b-full rounded-t-full`
           }
         />
       }

@@ -1,7 +1,7 @@
 import { Image, View, Text, FlatList, StyleSheet } from 'react-native'
 import { router } from 'expo-router'
 import { useUser } from '@clerk/clerk-expo'
-import LessonCard from '@/components/LessonCard'
+import LessonCard from '@/components/courses/LessonCard'
 import { startNewCourse } from '@/lib/utils'
 import { icons } from '@/constants'
 import CustomButton from '@/components/CustomButton'

@@ -1,7 +1,9 @@
 import { Lesson } from "@/types/type";
 
-export const courseName = "Atomic Structure"
-export const courseDescription = "Learn about atomic orbitals and ionisation energy"
+export const info = {
+  courseName: "Atomic Structure",
+  courseDescription: "Learn about atomic orbitals and ionisation energy"
+}
 
 export const lessons: Lesson[] = [
   {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useUser } from '@clerk/clerk-expo'
-import { getCourseProgress, startNewCourse } from '@/lib/utils'
-import { courseName, courseDescription, lessons } from '@/courses/AtomicStructure'
-import CourseDetails from '@/components/CourseDetails'
+import { getCourseProgress } from '@/lib/utils'
+import { info, lessons } from '@/courses/AtomicStructure'
+import CourseDetails from '@/components/courses/CourseDetails'
 
 const AtomicStructure = () => {
   const { user } = useUser()
@@ -27,8 +27,8 @@ const AtomicStructure = () => {
   return (
     <SafeAreaView className='h-full bg-white'>
       <CourseDetails
-        courseName={courseName}
-        courseDescription={courseDescription}
+        courseName={info.courseName}
+        courseDescription={info.courseDescription}
         lessonsCompleted={lessonsCompleted}
         lessons={lessons}
         setLessonsCompleted={setLessonsCompleted}
