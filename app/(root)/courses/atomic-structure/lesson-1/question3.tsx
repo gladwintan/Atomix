@@ -4,6 +4,7 @@ import { View, Text, SafeAreaView } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import MultipleResponseQuestionCard from "@/components/questions/MultipleResponseQuestionCard";
+
 import { ProgressContext } from "./_layout";
 
 const options = [
@@ -17,8 +18,7 @@ const answer = ["s"];
 const question = "Which orbitals are shown above?";
 
 const question3 = () => {
-
-  const setProgress = useContext(ProgressContext)
+  const setProgress = useContext(ProgressContext);
 
   return (
     <SafeAreaView className="h-full bg-white">

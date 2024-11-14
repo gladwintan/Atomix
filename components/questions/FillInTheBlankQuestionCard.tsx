@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Image, View, Text } from "react-native";
 
 import AnswerVerification from "@/components/questions/AnswerVerification";
+import { FillInTheBlankQuestion } from "@/types/type";
 
 import CustomButton from "../CustomButton";
-import { FillInTheBlankQuestion } from "@/types/type";
 
 const FillInTheBlankQuestionCard = ({
   question,
@@ -36,7 +36,9 @@ const FillInTheBlankQuestionCard = ({
         />
       )}
 
-      <Text className="text-center px-2 text-base font-medium text-dark-lighter my-3">{question}</Text>
+      <Text className="text-center px-2 text-base font-medium text-dark-lighter my-3">
+        {question}
+      </Text>
 
       <View className="flex-row flex-wrap items-center justify-center p-10 gap-y-4">
         {questionWithBlanks.map((text, index) =>

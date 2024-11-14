@@ -3,9 +3,10 @@ import React from "react";
 import { useState } from "react";
 import { Image, View, Text } from "react-native";
 
+import { MultipleResponseQuestion } from "@/types/type";
+
 import AnswerVerification from "./AnswerVerification";
 import CustomButton from "../CustomButton";
-import { MultipleResponseQuestion } from "@/types/type";
 
 const MultipleResponseQuestionCard = ({
   options,

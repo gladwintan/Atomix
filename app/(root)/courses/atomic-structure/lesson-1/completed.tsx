@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import React from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import { updateCourseProgress } from "@/lib/courses";

@@ -1,20 +1,20 @@
 import { Stack } from "expo-router";
+import { createContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { createContext, useState } from "react";
 import LessonHeader from "@/components/courses/LessonHeader";
 
-export const ProgressContext = createContext<React.Dispatch<React.SetStateAction<number>> | undefined>(undefined);
+export const ProgressContext = createContext<
+  React.Dispatch<React.SetStateAction<number>> | undefined
+>(undefined);
 
 const Layout = () => {
-
   const [progress, setProgress] = useState(0);
 
   return (
-    <ProgressContext.Provider value={setProgress} >
+    <ProgressContext.Provider value={setProgress}>
       <SafeAreaView className="h-full bg-white">
-
-        <LessonHeader progress={progress} courseName="atomic-structure"/>
+        <LessonHeader progress={progress} courseName="atomic-structure" />
 
         <Stack
           screenOptions={{
@@ -23,7 +23,7 @@ const Layout = () => {
             animation: "none",
             contentStyle: {
               backgroundColor: "transparent",
-            }
+            },
           }}
         >
           <Stack.Screen name="index" />

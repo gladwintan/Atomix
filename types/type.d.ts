@@ -75,7 +75,7 @@ declare interface BinaryQuestion {
 }
 
 declare interface FillInTheBlankQuestion {
-  question: string,
+  question: string;
   options: string[];
   questionWithBlanks: { text: string; index: number }[];
   answer: string[];

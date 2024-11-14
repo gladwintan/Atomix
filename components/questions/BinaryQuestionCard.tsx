@@ -10,7 +10,7 @@ const BinaryQuestionCard = ({
   question,
   answer,
   imageSrc,
-  onPressNextQuestion
+  onPressNextQuestion,
 }: BinaryQuestion) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [answered, setAnswered] = useState(false);
