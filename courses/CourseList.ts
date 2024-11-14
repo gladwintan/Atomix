@@ -1,18 +1,18 @@
 export const courses = [
   {
     id: 1,
-    courseName: "Atomic Structure"
+    courseName: "Atomic Structure",
   },
   {
     id: 2,
-    courseName: "Chemical Bonding"
+    courseName: "Chemical Bonding",
   },
   {
     id: 3,
-    courseName: "Acid-Base Equilibrium"
+    courseName: "Acid-Base Equilibrium",
   },
   {
     id: 4,
-    courseName: "Intro to Organic Chem"
-  }
-]
+    courseName: "Intro to Organic Chem",
+  },
+];

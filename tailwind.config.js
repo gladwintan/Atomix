@@ -10,20 +10,19 @@ module.exports = {
           100: "#e9f0ff",
           500: "#91b0f2",
           600: "#8FABE5",
-          700: "#7f9dde"
+          700: "#7f9dde",
         },
         dark: {
           light: "#364463",
           lighter: "#253048",
-          base: "#161d2e"
+          base: "#161d2e",
         },
         green: {
           light: "#edf9ef",
-          dark: "#36633e"
-        }
-      }
+          dark: "#36633e",
+        },
+      },
     },
   },
   plugins: [],
-}
-
+};

@@ -1,7 +1,10 @@
-import { neon } from '@neondatabase/serverless';
+import { neon } from "@neondatabase/serverless";
 
-export async function GET(request: Request, { userId }: Record<string, string>) {
-  try { 
+export async function GET(
+  request: Request,
+  { userId }: Record<string, string>,
+) {
+  try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
     if (!userId) {
@@ -30,8 +33,8 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
       WHERE 
         users.clerk_id = ${userId}
       ORDER BY
-        progress.updated_at DESC`
-      
+        progress.updated_at DESC`;
+
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
     console.error("Error getting courses:", error);

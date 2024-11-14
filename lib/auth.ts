@@ -23,7 +23,7 @@ export const tokenCache = {
     try {
       return SecureStore.setItemAsync(key, value);
     } catch (error) {
-      console.error("SecureStore save token error: ", error)
+      console.error("SecureStore save token error: ", error);
       return;
     }
   },

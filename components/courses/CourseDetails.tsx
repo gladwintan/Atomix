@@ -1,96 +1,99 @@
-import { Image, View, Text, FlatList, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-import { useUser } from '@clerk/clerk-expo'
-import LessonCard from '@/components/courses/LessonCard'
-import { startNewCourse } from '@/lib/utils'
-import { icons } from '@/constants'
-import CustomButton from '@/components/CustomButton'
-import { Lesson } from '@/types/type'
+import { useUser } from "@clerk/clerk-expo";
+import { router } from "expo-router";
+import { Image, View, Text, FlatList, StyleSheet } from "react-native";
 
-const CourseDetails = ({ 
+import LessonCard from "@/components/courses/LessonCard";
+import CustomButton from "@/components/CustomButton";
+import { icons } from "@/constants";
+import { startNewCourse } from "@/lib/courses";
+import { Lesson } from "@/types/type";
+
+const CourseDetails = ({
   courseName,
   courseDescription,
-  lessonsCompleted, 
+  lessonsCompleted,
   lessons,
-  setLessonsCompleted 
-} : {
-  courseName: string,
-  courseDescription: string,
-  lessonsCompleted: number,
-  lessons: Lesson[],
-  setLessonsCompleted: (completed: number) => void
+  setLessonsCompleted,
+}: {
+  courseName: string;
+  courseDescription: string;
+  lessonsCompleted: number;
+  lessons: Lesson[];
+  setLessonsCompleted: (completed: number) => void;
 }) => {
-  const { user } = useUser()
-  const userClerkId = user?.id 
+  const { user } = useUser();
+  const userClerkId = user?.id;
   return (
     <>
-      <View className='p-3 px-5 bg-[#E9F0FF] mx-3 rounded-2xl flex-row items-center'>
-        <View className='w-3/4'>
-          <Text className='text-base text-[#253048] font-semibold'>{courseName}</Text>
-          <Text className='mt-1 text-sm text-[#253048] font-light'>
+      <View className="p-3 px-5 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
+        <View className="w-3/4">
+          <Text className="text-base text-dark-lighter font-semibold">
+            {courseName}
+          </Text>
+          <Text className="mt-1 text-sm text-dark-lighter font-light">
             {courseDescription}
           </Text>
         </View>
         <View className="p-3 bg-white rounded-full absolute right-4">
-          <Image 
-            source={icons.chemistry} 
-            tintColor="#93B5FF" 
-            resizeMode="contain" 
+          <Image
+            source={icons.chemistry}
+            tintColor="#93B5FF"
+            resizeMode="contain"
             className="w-12 h-12"
           />
         </View>
       </View>
-      
-      <View className='border-b border-slate-300 mt-5 mx-3 pb-1 flex-row items-center'>
-        <Image 
-          source={icons.lesson} 
-          tintColor="#253048" 
-          resizeMode="contain" 
+
+      <View className="border-b border-slate-300 mt-5 mx-3 pb-1 flex-row items-center">
+        <Image
+          source={icons.lesson}
+          tintColor="#253048"
+          resizeMode="contain"
           className="w-5 h-5"
         />
-        <Text className='text-[#253048] font-semibold text-base ml-1'>Lessons</Text>
+        <Text className="text-dark-lighter font-semibold text-base ml-1">
+          Lessons
+        </Text>
       </View>
       <FlatList
         data={lessons}
-        renderItem={({ item }) => 
+        renderItem={({ item }) => (
           <LessonCard
             id={item.id}
             title={item.title}
             description={item.description}
             lessonsCompleted={lessonsCompleted}
-            
             time={item.time}
             difficulty={item.difficulty}
             lastLesson={item.lastLesson}
-            //@ts-ignore
             onPress={() => router.push(item.link)}
           />
-        }
-        keyExtractor={(item, index) => index.toString() }
+        )}
+        keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       />
 
-      {lessonsCompleted == -1 && 
+      {lessonsCompleted == -1 && (
         <CustomButton
-          title='Start course'
+          title="Start course"
           onPress={() => {
             startNewCourse(courseName, userClerkId);
-            setLessonsCompleted(0)
+            setLessonsCompleted(0);
           }}
-          className='w-1/2 self-center'
+          className="w-1/2 self-center"
         />
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default CourseDetails
+export default CourseDetails;
 
 const styles = StyleSheet.create({
   contentContainer: {
     display: "flex",
     paddingLeft: 20,
-    paddingTop: 15
-  }
+    paddingTop: 15,
+  },
 });

@@ -1,12 +1,12 @@
 import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
-import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png"
 
+import arrowLeft from "@/assets/icons/arrow-left.png"
+import arrowRight from "@/assets/icons/arrow-right.png"
 import calendar from "@/assets/icons/calendar.png"
 import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
-import chevronRight from "@/assets/icons/chevron-right.png"
 import close from "@/assets/icons/close.png"
 import code from "@/assets/icons/code.png"
 import completed from "@/assets/icons/completed.png"
@@ -28,7 +28,6 @@ import resume from "@/assets/icons/resume.png"
 import start from "@/assets/icons/start.png"
 import time from "@/assets/icons/time.png"
 
-
 export const onboarding = [
     {
         id: 1, 
@@ -45,10 +44,11 @@ export const onboarding = [
 ];
 
 export const icons = {
+    arrowLeft,
+    arrowRight,
     calendar,
     check,
     chemistry,
-    chevronRight,
     close,
     code,
     course,
@@ -73,8 +73,4 @@ export const icons = {
 
 export const images = {
     verified
-}
-
-export const atomicStructureImages = {
-    dOrbitals
 }

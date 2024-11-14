@@ -1,21 +1,6 @@
 import { TouchableOpacity, Text } from "react-native";
 import { ButtonProps } from "@/types/type";
 
-const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
-	switch (variant) {
-		case "secondary":
-			return "bg-gray-500";
-		case "danger":
-			return "bg-red-500";
-		case "success":
-			return "bg-green-500";
-		case "outline":
-			return "bg-transparent border-neutral-300 border-[0.5px]";
-		default:
-			return "bg-[#93b5ff]";
-	}
-};
-
 const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 	switch (variant) {
 		case "primary":
@@ -26,23 +11,33 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 			return "text-red-100";
 		case "success":
 			return "text-green-100";
-		case "boolean": 
-			return "text-[#161d2e] font-normal text-base";
-		case "answer":
-			return "text-slate-800 font-normal text-base"
+		case "answer": 
+			return "text-dark-base text-base";
+		case "answerSuccess": 
+			return "text-white text-base font-semibold";
+		case "back": 
+			return "text-dark-light"
 		default:
-			return "text-white";
+			return "text-white font-semibold";
   }
 };
 
 const getButtonStyle = (type: ButtonProps["type"]) => {
 	switch (type) {
+		case "outline": 
+			return "bg-transparent border-neutral-300 border-[0.5px]";
 		case "continue":
-			return "w-5/6 self-center";
+			return "w-5/6 self-center bg-primary-base rounded-full p-3";
 		case "boolean":
-			return "w-36 bg-white border-2 border-slate-200 rounded-2xl shadow-none";
+			return "w-36 p-2 bg-white border-2 border-slate-200 rounded-xl shadow-none";
+		case "booleanSuccess":
+			return "w-36 p-2 bg-green-600 rounded-xl";	
 		case "answer":
-			return "bg-white rounded-lg py-1.5 ml-2 shadow-none border-slate-200 border"
+			return "bg-white rounded-lg px-3 py-1.5 ml-2 shadow-none border-slate-300 border";
+		case "answerSuccess":
+			return "bg-green-600 rounded-lg px-3 py-1.5 ml-2";
+		case "back": 
+			return "shadow-none"
 		default:
 			return "";
 	}
@@ -51,7 +46,6 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
 const CustomButton = ({
 	onPress,
 	title,
-	bgVariant = "primary",
 	textVariant = "default",
 	IconLeft,
 	IconRight,
@@ -62,12 +56,12 @@ const CustomButton = ({
   return (
 		<TouchableOpacity
 			onPress={onPress}
-			className={`rounded-full p-3 flex flex-row justify-center items-center shadow-sm shadow-neutral-400/70 
-				${getBgVariantStyle(bgVariant)} ${getButtonStyle(type)} ${className}`}
+			activeOpacity={0.4}
+			className={`flex flex-row justify-center items-center shadow-sm shadow-neutral-400/70 ${getButtonStyle(type)} ${className}`}
 			{...props}
 		>
 			{IconLeft && <IconLeft />}
-			<Text className={`text-lg font-semibold ${getTextVariantStyle(textVariant)}`}>
+			<Text className={`${getTextVariantStyle(textVariant)}`}>
 				{title}
 			</Text>
 			{IconRight && <IconRight />}

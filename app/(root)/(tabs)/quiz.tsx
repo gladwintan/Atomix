@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Quiz = () => {
   return (
     <SafeAreaView>
-        <Text>Quiz</Text>
-    </SafeAreaView>  
+      <Text>Quiz</Text>
+    </SafeAreaView>
   );
-}
+};
 
-export default Quiz
+export default Quiz;

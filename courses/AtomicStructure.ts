@@ -1,8 +1,14 @@
-import { Lesson } from "@/types/type";
+import { BinaryQuestion, FillInTheBlankQuestion, Lesson, MultipleResponseQuestion } from "@/types/type";
+
+import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png"
 
 export const info = {
   courseName: "Atomic Structure",
   courseDescription: "Learn about atomic orbitals and ionisation energy"
+}
+
+export const images = { 
+  dOrbitals
 }
 
 export const lessons: Lesson[] = [
