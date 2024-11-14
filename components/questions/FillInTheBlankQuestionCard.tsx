@@ -9,6 +9,7 @@ import CustomButton from "../CustomButton";
 import { FillInTheBlankQuestion } from "@/types/type";
 
 const FillInTheBlankQuestionCard = ({
+  question,
   options,
   questionWithBlanks,
   answer,
@@ -34,16 +35,19 @@ const FillInTheBlankQuestionCard = ({
           resizeMode="contain"
         />
       )}
+
+      <Text className="text-center px-2 text-base font-medium text-dark-lighter my-3">{question}</Text>
+      
       <View className="flex-row flex-wrap items-center justify-center p-10 gap-y-4">
         {questionWithBlanks.map((text, index) =>
           text.index == -1 ? (
-            <Text key={index} className="text-base">
+            <Text key={index} className="text-base text-dark-base">
               {" "}
               {text.text}
             </Text>
           ) : text.index < selectedAnswer.length ? (
             <View key={index} className="flex-row items-center">
-              <Text className="text-base">{text.text}</Text>
+              <Text className="text-base text-dark-base">{text.text}</Text>
               <CustomButton
                 title={selectedAnswer[text.index]}
                 type="answer"
@@ -62,11 +66,11 @@ const FillInTheBlankQuestionCard = ({
               />
             </View>
           ) : index == questionWithBlanks.length - 1 ? (
-            <Text key={index} className="text-base">
+            <Text key={index} className="text-base text-dark-base">
               {text.text}
             </Text>
           ) : (
-            <Text key={index} className="text-base">
+            <Text key={index} className="text-base text-dark-base">
               {text.text} ________
             </Text>
           ),

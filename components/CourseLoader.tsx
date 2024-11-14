@@ -1,5 +1,5 @@
 import ContentLoader, { Rect } from "react-content-loader/native";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 const CourseLoader = () => {
   return (

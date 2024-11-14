@@ -22,6 +22,7 @@ const Question2 = () => {
   return (
     <SafeAreaView className="h-full bg-white">
       <FillInTheBlankQuestionCard
+        question="Complete the following about the trend of atomic orbitals"
         options={options}
         questionWithBlanks={question}
         answer={answer}

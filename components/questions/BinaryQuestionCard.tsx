@@ -25,11 +25,11 @@ const BinaryQuestionCard = ({
             resizeMode="contain"
           />
         )}
-        <Text className="text-center text-base text-dark-base font-semibold px-10 mt-8">
+        <Text className="text-center text-base text-dark-base font-medium px-10 my-8">
           {question}
         </Text>
 
-        <View className="bg-white flex-row justify-center space-x-5 mt-6">
+        <View className="bg-white flex-row justify-center space-x-5">
           <CustomButton
             title="True"
             type={isCorrectAnswer && answer ? "booleanSuccess" : "boolean"}

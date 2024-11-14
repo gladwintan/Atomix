@@ -34,7 +34,7 @@ const MultipleResponseQuestionCard = ({
         />
       )}
 
-      <Text className="text-base">{question}</Text>
+      <Text className="text-base text-dark-base my-3">{question}</Text>
 
       <View className="px-10 flex-row flex-wrap gap-x-6 gap-y-4 justify-center mt-3">
         {optionsGiven.map((option, index) => (

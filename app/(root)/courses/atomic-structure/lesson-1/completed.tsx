@@ -18,6 +18,8 @@ const CompletedPage = () => {
           updateCourseProgress("Atomic Structure", 1, userClerkId);
           router.replace("/(root)/courses/atomic-structure");
         }}
+        type="continue"
+        className="absolute bottom-2"
       />
     </SafeAreaView>
   );
