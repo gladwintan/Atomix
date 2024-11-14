@@ -7,10 +7,10 @@ import AnswerVerification from "@/components/questions/AnswerVerification";
 import { BinaryQuestion } from "@/types/type";
 
 const BinaryQuestionCard = ({
-  nextPageUrl,
   question,
   answer,
   imageSrc,
+  onPressNextQuestion
 }: BinaryQuestion) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [answered, setAnswered] = useState(false);
@@ -59,7 +59,7 @@ const BinaryQuestionCard = ({
             message="Yay! you are correct"
             onPress={() => {
               setAnswered(false);
-              router.replace(nextPageUrl);
+              onPressNextQuestion();
             }}
           />
         ) : (

@@ -1,9 +1,10 @@
 import { router } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import MultipleResponseQuestionCard from "@/components/questions/MultipleResponseQuestionCard";
+import { ProgressContext } from "./_layout";
 
 const options = [
   { option: "s", selected: false },
@@ -16,13 +17,19 @@ const answer = ["s"];
 const question = "Which orbitals are shown above?";
 
 const question3 = () => {
+
+  const setProgress = useContext(ProgressContext)
+
   return (
     <SafeAreaView className="h-full bg-white">
       <MultipleResponseQuestionCard
         options={options}
         answer={answer}
         question={question}
-        nextPageUrl="/(root)/courses/atomic-structure/lesson-1/question4"
+        onPressNextQuestion={() => {
+          router.replace("/(root)/courses/atomic-structure/lesson-1/question4");
+          setProgress && setProgress(0.8);
+        }}
       />
     </SafeAreaView>
   );

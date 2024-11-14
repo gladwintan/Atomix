@@ -70,7 +70,7 @@ declare interface LessonCardProps extends Lesson {
 declare interface BinaryQuestion {
   question: string;
   answer: boolean;
-  nextPageUrl: Href<string>;
+  onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
 }
 
@@ -79,7 +79,7 @@ declare interface FillInTheBlankQuestion {
   options: string[];
   questionWithBlanks: { text: string; index: number }[];
   answer: string[];
-  nextPageUrl: Href<string>;
+  onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
 }
 
@@ -87,6 +87,6 @@ declare interface MultipleResponseQuestion {
   options: { option: string; selected: boolean }[];
   question: string;
   answer: string[];
-  nextPageUrl: Href<string>;
+  onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
 }

@@ -13,7 +13,7 @@ const FillInTheBlankQuestionCard = ({
   options,
   questionWithBlanks,
   answer,
-  nextPageUrl,
+  onPressNextQuestion,
   imageSrc,
 }: FillInTheBlankQuestion) => {
   const [remainingOptions, setRemainingOptions] = useState(options);
@@ -37,7 +37,7 @@ const FillInTheBlankQuestionCard = ({
       )}
 
       <Text className="text-center px-2 text-base font-medium text-dark-lighter my-3">{question}</Text>
-      
+
       <View className="flex-row flex-wrap items-center justify-center p-10 gap-y-4">
         {questionWithBlanks.map((text, index) =>
           text.index == -1 ? (
@@ -99,7 +99,7 @@ const FillInTheBlankQuestionCard = ({
             message="Yay! you are correct"
             onPress={() => {
               setSelectedAnswer([]);
-              router.replace(nextPageUrl);
+              onPressNextQuestion();
             }}
           />
         ) : (

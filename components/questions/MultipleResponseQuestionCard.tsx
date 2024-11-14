@@ -11,7 +11,7 @@ const MultipleResponseQuestionCard = ({
   options,
   question,
   answer,
-  nextPageUrl,
+  onPressNextQuestion,
   imageSrc,
 }: MultipleResponseQuestion) => {
   const [optionsGiven, setOptionsGiven] = useState(options);
@@ -73,7 +73,7 @@ const MultipleResponseQuestionCard = ({
             message="Yay! you are correct"
             onPress={() => {
               setSelectedAnswer([]);
-              router.replace(nextPageUrl);
+              onPressNextQuestion();
             }}
           />
         ) : (

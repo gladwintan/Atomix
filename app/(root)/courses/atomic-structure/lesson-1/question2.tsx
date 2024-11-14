@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 
 import FillInTheBlankQuestionCard from "@/components/questions/FillInTheBlankQuestionCard";
+import { ProgressContext } from "./_layout";
+import { router } from "expo-router";
 
 const options = ["group", "period", "decreases", "increases"];
 
@@ -19,6 +21,9 @@ const question = [
 const answer = ["group", "increases", "period", "decreases"];
 
 const Question2 = () => {
+
+  const setProgress = useContext(ProgressContext)
+
   return (
     <SafeAreaView className="h-full bg-white">
       <FillInTheBlankQuestionCard
@@ -26,7 +31,10 @@ const Question2 = () => {
         options={options}
         questionWithBlanks={question}
         answer={answer}
-        nextPageUrl="/(root)/courses/atomic-structure/lesson-1/question3"
+        onPressNextQuestion={() => {
+          router.replace("/(root)/courses/atomic-structure/lesson-1/question3");
+          setProgress && setProgress(0.6);
+        }}
       />
     </SafeAreaView>
   );
