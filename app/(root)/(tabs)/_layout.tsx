@@ -76,6 +76,16 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen
+        name="forum"
+        options={{
+          title: "Forum",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon source={icons.forum} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",

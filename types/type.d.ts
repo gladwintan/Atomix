@@ -90,3 +90,13 @@ declare interface MultipleResponseQuestion {
   onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
 }
+
+declare interface Post {
+  id: string,
+  title: string,
+  description: string,
+  difficulty: string,
+  topic: string,
+  likes: string,
+  created_at: string
+}
