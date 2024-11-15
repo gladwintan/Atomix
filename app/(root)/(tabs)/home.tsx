@@ -14,7 +14,7 @@ export default function Home() {
   const { user } = useUser();
   const userClerkId = user?.id;
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState<string>("");
   const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(
     null,
   );
@@ -63,7 +63,7 @@ export default function Home() {
                 progress={item.progress}
                 onPress={() =>
                   router.push(
-                    `/courses/${formatCourseName(item.course_name)}` as Href<string>,
+                    `/courses/${formatCourseName(item.course_name)}` as Href,
                   )
                 }
               />

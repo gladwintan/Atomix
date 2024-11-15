@@ -23,7 +23,7 @@ const OngoingCourses = ({
           progress={item.progress}
           onPress={() =>
             router.push(
-              `/courses/${formatCourseName(item.course_name)}` as Href<string>,
+              `/courses/${formatCourseName(item.course_name)}` as Href,
             )
           }
         />
@@ -42,10 +42,10 @@ const OngoingCourses = ({
         className="w-[160] h-[64px]"
         resizeMode="contain"
       />
-      <Text className="mt-3 text-sm text-[#161d2e] font-medium">
+      <Text className="mt-3 text-sm text-dark-base font-openSans-medium">
         No ongoing courses
       </Text>
-      <Text className="text-sm font-light text-[#253048]">
+      <Text className="text-sm font-openSans-light text-dark-lighter">
         Check out courses available
       </Text>
     </View>

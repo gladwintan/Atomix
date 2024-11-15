@@ -12,7 +12,13 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    OpenSans: require("../assets/fonts/OpenSans-Regular.ttf"),
+    OpenSansLight: require("../assets/fonts/OpenSans-Light.ttf"),
+    OpenSansMedium: require("../assets/fonts/OpenSans-Medium.ttf"),
+    OpenSansSemiBold: require("../assets/fonts/OpenSans-SemiBold.ttf"),
+    OpenSansBold: require("../assets/fonts/OpenSans-Bold.ttf"),
+    OpenSansExtraBold: require("../assets/fonts/OpenSans-ExtraBold.ttf"),
+    OpenSansItalic: require("../assets/fonts/OpenSans-Italic.ttf"),
   });
 
   useEffect(() => {

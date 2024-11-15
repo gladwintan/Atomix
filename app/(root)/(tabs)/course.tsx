@@ -157,7 +157,7 @@ const Course = () => {
                 className={`${!showCompletedCourses ? "bg-primary-500" : "bg-primary-100"} p-2 px-3.5 rounded-full flex-row shadow-sm`}
               >
                 <Text
-                  className={`${!showCompletedCourses ? "text-white font-bold" : "text-dark-lighter font-medium"} text-xs`}
+                  className={`${!showCompletedCourses ? "text-white font-openSans-bold" : "text-dark-lighter font-openSans-medium"} text-xs`}
                 >
                   Ongoing
                 </Text>
@@ -172,7 +172,7 @@ const Course = () => {
                 className={`${showCompletedCourses ? "bg-primary-500" : "bg-primary-100"} ml-4 p-2 px-3.5 rounded-full flex-row shadow-sm`}
               >
                 <Text
-                  className={`${showCompletedCourses ? "text-white font-bold" : "text-dark-lighter font-medium"} text-xs`}
+                  className={`${showCompletedCourses ? "text-white font-openSans-bold" : "text-dark-lighter font-openSans-medium"} text-xs`}
                 >
                   Completed
                 </Text>
@@ -183,7 +183,7 @@ const Course = () => {
                 />
               </TouchableOpacity>
             </View>
-            <Text className="text-xs font-light text-dark-base">All shown</Text>
+            <Text className="text-xs font-openSans-light text-dark-base">All shown</Text>
           </View>
 
           {!showCompletedCourses ? (
@@ -191,13 +191,6 @@ const Course = () => {
           ) : (
             <CompletedCourses completedCourses={completedCourses} />
           )}
-
-          <View className="mx-4 my-2 mt-5 flex-row items-center justify-between">
-            <Text className="text-base font-semibold text-dark-base">
-              Explore
-            </Text>
-            <Text className="text-xs font-light text-dark-base">All shown</Text>
-          </View>
 
           <ExploreCourses exploreCourses={exploreCourses} />
         </Animated.ScrollView>

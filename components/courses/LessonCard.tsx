@@ -22,19 +22,19 @@ const LessonCard = ({
       <View className="my-3">
         <View className="flex-row">
           <View className="mr-4 w-[30px] h-[30px] items-center justify-center rounded-full border-primary-700 border">
-            <Text className="text-dark-light text-sm font-light">{id}</Text>
+            <Text className="text-dark-light text-sm font-openSans-light">{id}</Text>
           </View>
           <View
             className={`w-10/12 p-2.5 relative bottom-2 ${id == lessonsCompleted + 1 && "bg-primary-50/40 rounded-lg"}`}
           >
-            <Text className="text-sm text-dark-base">{title}</Text>
-            <Text className="mt-2 text-xs font-light text-dark-base leading-5">
+            <Text className="text-sm text-dark-base font-openSans">{title}</Text>
+            <Text className="mt-2 text-xs font-openSans text-dark-light leading-5">
               {description}
             </Text>
 
             <View className="mt-3 flex-row items-center justify-between">
               <View className="flex-row items-center space-x-1.5">
-                <Text className="text-xs text-gray-600 font-light">
+                <Text className="text-xs text-gray-600 font-openSans-light">
                   Difficulty {difficulty}
                 </Text>
                 <Text className="text-gray-600">•</Text>
@@ -46,7 +46,7 @@ const LessonCard = ({
                     resizeMode="contain"
                     className="w-4 h-4"
                   />
-                  <Text className="ml-1 text-xs text-gray-600 font-light">
+                  <Text className="ml-1 text-xs text-gray-600 font-openSans-light">
                     {time}
                   </Text>
                 </View>
@@ -57,7 +57,7 @@ const LessonCard = ({
                   onPress={() => setShowRestartMenu(true)}
                   className="bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative"
                 >
-                  <Text className="text-[#36633e] text-xs font-medium">
+                  <Text className="text-[#36633e] text-xs font-openSans-medium">
                     Completed
                   </Text>
                   <Image
@@ -72,7 +72,7 @@ const LessonCard = ({
                   onPress={onPress}
                   className="bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative"
                 >
-                  <Text className="text-white text-xs font-semibold">
+                  <Text className="text-white text-xs font-openSans-semibold">
                     Start lesson
                   </Text>
                   <Image
@@ -84,7 +84,7 @@ const LessonCard = ({
                 </TouchableOpacity>
               ) : (
                 <View className="bg-[#91B0F2]/75 p-1 px-2 rounded-md flex-row items-center justify-center relative">
-                  <Text className="text-white text-xs font-medium">Locked</Text>
+                  <Text className="text-white text-xs font-openSans-medium">Locked</Text>
                   <Image
                     source={icons.lock}
                     tintColor="white"

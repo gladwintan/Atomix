@@ -19,7 +19,7 @@ const OngoingCourseCard = ({
     <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <View className="w-[300px] p-3.5 px-6 space-y-1.5 rounded-xl shadow-sm shadow-neutral-300 bg-white border border-slate-100">
         <View className="flex-row justify-between items-center w-full mb-1.5">
-          <Text className="text-sm text-dark-base font-medium">
+          <Text className="text-sm text-dark-base font-openSans-medium">
             {courseName}
           </Text>
           <View className="bg-primary-base p-1 rounded-md">
@@ -43,8 +43,8 @@ const OngoingCourseCard = ({
               />
             </View>
             <View className="ml-2">
-              <Text className="text-xs text-dark-base">Last lesson</Text>
-              <Text className="text-xs text-dark-base font-light">
+              <Text className="text-xs text-dark-base font-openSans">Last lesson</Text>
+              <Text className="text-xs text-dark-base font-openSans-light">
                 {formatDate(lastLesson)}
               </Text>
             </View>
@@ -60,9 +60,9 @@ const OngoingCourseCard = ({
               />
             </View>
             <View className="ml-2">
-              <Text className="text-xs text-dark-base">Quiz</Text>
+              <Text className="text-xs text-dark-base font-openSans">Quiz</Text>
               {/* To update uncompleted quizzes with data  */}
-              <Text className="text-xs text-dark-base font-light">
+              <Text className="text-xs text-dark-base font-openSans-light">
                 5 uncompleted
               </Text>
             </View>

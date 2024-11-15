@@ -3,6 +3,15 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        openSans: ["OpenSans"],
+        "openSans-light": ["OpenSansLight"],
+        "openSans-medium": ["OpenSansMedium"],
+        "openSans-semibold": ["OpenSansSemiBold"],
+        "openSans-bold": ["OpenSansBold"],
+        "openSans-extrabold": ["OpenSansExtraBold"],
+        "openSans-italic": ["OpenSansItalic"],
+      },
       colors: {
         primary: {
           base: "#93b5ff",

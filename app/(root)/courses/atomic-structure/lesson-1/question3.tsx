@@ -17,7 +17,7 @@ const options = [
 const answer = ["s"];
 const question = "Which orbitals are shown above?";
 
-const question3 = () => {
+const Question3 = () => {
   const setProgress = useContext(ProgressContext);
 
   return (
@@ -35,4 +35,4 @@ const question3 = () => {
   );
 };
 
-export default question3;
+export default Question3;

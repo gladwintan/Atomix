@@ -23,7 +23,7 @@ const ExploreCourseCard = ({
     <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <View className="w-full p-4">
         <View className="flex-row justify-between items-end w-full">
-          <Text className="text-sm text-dark-base">{courseName}</Text>
+          <Text className="text-sm font-openSans text-dark-base">{courseName}</Text>
           <View className="bg-primary-50 p-1 rounded-md shadow-sm">
             <Image
               source={icons.chemistry}
@@ -34,24 +34,24 @@ const ExploreCourseCard = ({
           </View>
         </View>
 
-        <Text className="font-light text-dark-base mt-2.5 text-xs leading-5">
+        <Text className="font-openSans-light text-dark-base mt-2.5 text-xs leading-5">
           {description}
         </Text>
 
         <View className="flex-row justify-between items-center mt-4">
           <View className="flex-row space-x-1.5">
-            <Text className="text-xs text-dark-base">
+            <Text className="text-xs font-openSans text-dark-light">
               {totalLessons} lessons
             </Text>
-            <Text>•</Text>
-            <Text className="text-xs text-dark-base">4 Quiz</Text>
-            <Text>•</Text>
-            <Text className="text-xs text-dark-base">Intermediate</Text>
+            <Text className="text-dark-light">•</Text>
+            <Text className="text-xs font-openSans text-dark-light">4 Quiz</Text>
+            <Text className="text-dark-light">•</Text>
+            <Text className="text-xs font-openSans text-dark-light">Intermediate</Text>
           </View>
 
           {completionStatus == "completed" ? (
             <View className="flex-row bg-green-light items-center p-1 rounded-md">
-              <Text className="pl-1 text-green-dark text-xs">Completed</Text>
+              <Text className="font-openSans pl-1 text-green-dark text-xs">Completed</Text>
               <Image
                 source={icons.completed}
                 tintColor="#36633e"
@@ -61,7 +61,7 @@ const ExploreCourseCard = ({
             </View>
           ) : completionStatus == "ongoing" ? (
             <View className="flex-row bg-primary-50 items-center p-1 rounded-md">
-              <Text className="pl-1 text-dark-lighter text-xs">Ongoing</Text>
+              <Text className="font-openSans pl-1 text-dark-lighter text-xs">Ongoing</Text>
               <Image
                 source={icons.resume}
                 tintColor="#364463"
@@ -71,7 +71,7 @@ const ExploreCourseCard = ({
             </View>
           ) : (
             <View className="flex-row items-center rounded-md">
-              <Text className="pl-1 text-gray-600 text-xs">Details</Text>
+              <Text className="font-openSans pl-1 text-gray-600 text-xs">Details</Text>
               <Image
                 source={icons.arrowRight}
                 tintColor="#4b5563"

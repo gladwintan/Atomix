@@ -59,7 +59,7 @@ declare interface Lesson {
   time: string;
   difficulty: number;
   lastLesson: boolean;
-  link?: Href<string>;
+  link?: Href;
 }
 
 declare interface LessonCardProps extends Lesson {

@@ -1,9 +1,6 @@
 import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png";
 import {
-  BinaryQuestion,
-  FillInTheBlankQuestion,
   Lesson,
-  MultipleResponseQuestion,
 } from "@/types/type";
 
 export const info = {

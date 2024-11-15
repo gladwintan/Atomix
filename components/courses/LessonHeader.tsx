@@ -15,7 +15,7 @@ const LessonHeader = ({
     <View className="p-2 flex-row items-center justify-center">
       <TouchableOpacity
         onPress={() =>
-          router.replace(`/(root)/courses/${courseName}` as Href<string>)
+          router.replace(`/(root)/courses/${courseName}` as Href)
         }
         className="absolute right-4"
       >
