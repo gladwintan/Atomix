@@ -1,14 +1,20 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 const Layout = () => {
   return (
-      <Stack>
-        <Stack.Screen name="atomic-structure" options={{ headerShown: false }} />
-        <Stack.Screen name="chemical-bonding" options={{ headerShown: false }} />
-        <Stack.Screen name="acid-base-equilibrium" options={{ headerShown: false }} />
-        <Stack.Screen name="intro-to-organic-chem" options={{ headerShown: false }} />
-      </Stack>
+    <Stack
+      screenOptions={{
+        gestureEnabled: false,
+        animation: "none",
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="atomic-structure" />
+      <Stack.Screen name="chemical-bonding" />
+      <Stack.Screen name="acid-base-equilibrium" />
+      <Stack.Screen name="intro-to-organic-chem" />
+    </Stack>
   );
-}
+};
 
 export default Layout;

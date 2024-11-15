@@ -1,4 +1,4 @@
-import { neon } from '@neondatabase/serverless';
+import { neon } from "@neondatabase/serverless";
 
 export async function PUT(request: Request) {
   try {
