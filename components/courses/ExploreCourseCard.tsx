@@ -34,11 +34,11 @@ const ExploreCourseCard = ({
           </View>
         </View>
 
-        <Text className="font-openSans-light text-dark-base mt-2.5 text-xs leading-5">
+        <Text className="font-openSans-light text-dark-base mt-3 text-[13px] leading-6">
           {description}
         </Text>
 
-        <View className="flex-row justify-between items-center mt-4">
+        <View className="flex-row justify-between items-center mt-6">
           <View className="flex-row space-x-1.5">
             <Text className="text-xs font-openSans text-dark-light">
               {totalLessons} lessons

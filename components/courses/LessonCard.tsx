@@ -28,25 +28,25 @@ const LessonCard = ({
             className={`w-10/12 p-2.5 relative bottom-2 ${id == lessonsCompleted + 1 && "bg-primary-50/40 rounded-lg"}`}
           >
             <Text className="text-sm text-dark-base font-openSans">{title}</Text>
-            <Text className="mt-2 text-xs font-openSans text-dark-light leading-5">
+            <Text className="mt-2.5 text-[13px] font-openSans-light text-dark-base leading-5">
               {description}
             </Text>
 
-            <View className="mt-3 flex-row items-center justify-between">
+            <View className="mt-4 flex-row items-center justify-between">
               <View className="flex-row items-center space-x-1.5">
-                <Text className="text-xs text-gray-600 font-openSans-light">
+                <Text className="text-xs text-gray-500 font-openSans">
                   Difficulty {difficulty}
                 </Text>
-                <Text className="text-gray-600">•</Text>
+                <Text className="text-gray-500">•</Text>
 
                 <View className="flex-row items-center">
                   <Image
                     source={icons.time}
-                    tintColor="#4b5563"
+                    tintColor="#6b7280"
                     resizeMode="contain"
                     className="w-4 h-4"
                   />
-                  <Text className="ml-1 text-xs text-gray-600 font-openSans-light">
+                  <Text className="ml-1 text-xs text-gray-500 font-openSans">
                     {time}
                   </Text>
                 </View>
@@ -136,7 +136,7 @@ const LessonCard = ({
       {!lastLesson && (
         <View
           className={`${id <= lessonsCompleted ? "border-[#B3CCFF]" : "border-slate-300"} 
-            absolute bottom-6 ml-3 h-14 w-0 border-2 rounded-b-full rounded-t-full`}
+            absolute bottom-6 ml-3 h-16 w-0 border-2 rounded-b-full rounded-t-full`}
         />
       )}
     </View>
