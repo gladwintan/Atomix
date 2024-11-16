@@ -6,6 +6,7 @@ import { icons } from '@/constants';
 import { createLikeForPost, deletePost, getLikeForPost, removeLikeForPost } from '@/lib/forum';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Post } from '@/types/type';
+import { Href, Link, router } from 'expo-router';
 
 const ForumPostCard = ({
   postId,
@@ -70,6 +71,9 @@ const ForumPostCard = ({
         title='DELETE'
         onPress={handleDeletePost}
       />
+      <Link href={`/(root)/forum/${postId})` as Href } >
+        <Text>See more</Text>
+      </Link>
     </View>
   )
 }
