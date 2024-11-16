@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
 
     const response = await sql`
-      INSERT INTO threads (
+      INSERT INTO posts (
         author_id, 
         title,
         description,
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         ${title},
         ${description},
         ${difficulty},
-        (SELECT id FROM thread_topics WHERE thread_topics.topic = ${topic})
+        (SELECT id FROM post_topics WHERE post_topics.topic = ${topic})
       )
     `;
 

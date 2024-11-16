@@ -16,38 +16,38 @@ export async function GET(
 
     const response = await sql`
       SELECT 
-        threads.id,
-        threads.title,
-        threads.description,
-        threads.difficulty,
-        threads.created_at,
-        thread_topics.topic,
-        COUNT(thread_likes.id) AS likes
+        posts.id,
+        posts.title,
+        posts.description,
+        posts.difficulty,
+        posts.created_at,
+        post_topics.topic,
+        COUNT(post_likes.id) AS likes
       FROM 
-        threads
+        posts
       JOIN
-        thread_topics
+        post_topics
       ON 
-        threads.topic = thread_topics.id
+        posts.topic = post_topics.id
       LEFT JOIN
-        thread_likes
+        post_likes
       ON
-        threads.id = thread_likes.thread_id
+        posts.id = post_likes.post_id
       JOIN 
         users
       ON 
-        threads.author_id = users.id
+        posts.author_id = users.id
       WHERE 
         users.clerk_id = ${userId}
       GROUP BY
-        threads.id,
-        threads.title,
-        threads.description,
-        threads.difficulty,
-        threads.created_at,
-        thread_topics.topic 
+        posts.id,
+        posts.title,
+        posts.description,
+        posts.difficulty,
+        posts.created_at,
+        post_topics.topic 
       ORDER BY
-        threads.created_at DESC
+        posts.created_at DESC
     `;
 
     return Response.json({ data: response }, { status: 201 });

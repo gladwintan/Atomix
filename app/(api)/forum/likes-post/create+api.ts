@@ -14,21 +14,21 @@ export async function POST(request: Request) {
     }
 
     const response = await sql`
-      INSERT INTO thread_likes (
+      INSERT INTO post_likes (
         user_id, 
-        thread_id
+        post_id
       )
       SELECT
         users.id,
-        threads.id
+        posts.id
       FROM
         users,
-        threads
+        posts
       WHERE
         users.clerk_id = ${clerkId}
         AND
-        threads.id = ${postId}
-      ON CONFLICT (user_id, thread_id)
+        posts.id = ${postId}
+      ON CONFLICT (user_id, post_id)
       DO NOTHING
     `;
 

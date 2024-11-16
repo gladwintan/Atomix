@@ -14,11 +14,11 @@ export async function DELETE(request: Request) {
     }
 
     const response = await sql`
-      DELETE FROM thread_likes
+      DELETE FROM post_likes
       WHERE
         user_id = (SELECT id FROM users WHERE users.clerk_id = ${clerkId})
         AND
-        thread_id = ${postId}
+        post_id = ${postId}
     `;
 
     return Response.json({ data: response }, { status: 201 });

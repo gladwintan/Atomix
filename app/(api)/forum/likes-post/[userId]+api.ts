@@ -17,17 +17,17 @@ export async function GET(
 
     const response = await sql`
       SELECT 
-        thread_likes.id
+        post_likes.id
       FROM 
-        thread_likes
+        post_likes
       JOIN 
         users
       ON 
-        thread_likes.user_id = users.id
+        post_likes.user_id = users.id
       WHERE 
         users.clerk_id = ${userId}
         AND
-        thread_id = ${postId}
+        post_id = ${postId}
     `;
     
     return Response.json({ data: response }, { status: 201 });

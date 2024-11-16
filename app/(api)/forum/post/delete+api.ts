@@ -14,7 +14,7 @@ export async function DELETE(request: Request) {
     }
 
     const response = await sql`
-      DELETE FROM threads
+      DELETE FROM posts
       WHERE
         author_id = (SELECT id FROM users WHERE users.clerk_id = ${clerkId})
         AND
@@ -23,7 +23,7 @@ export async function DELETE(request: Request) {
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
-    console.error("Error deleting like:", error);
+    console.error("Error deleting post:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
