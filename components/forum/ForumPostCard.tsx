@@ -11,6 +11,7 @@ import { Href, Link, router } from 'expo-router';
 const ForumPostCard = ({
   postId,
   likes,
+  replyCount,
   question,
   posts,
   setPosts
@@ -18,6 +19,7 @@ const ForumPostCard = ({
   postId: string,
   likes: string,
   question: string,
+  replyCount: string,
   posts: Post[],
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>
 }) => {
@@ -59,6 +61,7 @@ const ForumPostCard = ({
       <Text>Question: {question}</Text>
       <Text>Post ID: {postId}</Text>
       <Text>Likes: {likeCount}</Text>
+      <Text>Replies: {replyCount}</Text>
       <CustomButton
         title='like'
         IconLeft={() => postLiked 

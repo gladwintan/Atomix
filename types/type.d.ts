@@ -97,6 +97,7 @@ declare interface Post {
   description: string,
   difficulty: string,
   topic: string,
-  likes: string,
+  like_count: string,
+  reply_count: string,
   created_at: string
 }

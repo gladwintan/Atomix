@@ -22,7 +22,8 @@ export async function GET(
         posts.difficulty,
         posts.created_at,
         post_topics.topic,
-        COUNT(post_likes.id) AS likes
+        COUNT(post_likes.id) AS like_count,
+        COUNT(replies.id) AS reply_count
       FROM 
         posts
       JOIN
@@ -33,6 +34,10 @@ export async function GET(
         post_likes
       ON
         posts.id = post_likes.post_id
+      LEFT JOIN 
+        replies
+      ON
+        posts.id = replies.post_id
       JOIN 
         users
       ON 

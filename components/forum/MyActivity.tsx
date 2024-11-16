@@ -32,7 +32,8 @@ const MyActivity = () => {
           <ForumPostCard
             postId={item.id}
             question={item.title}
-            likes={item.likes}
+            likes={item.like_count}
+            replyCount={item.reply_count}
             posts={myPosts}
             setPosts={setMyPosts}
           />
