@@ -118,12 +118,15 @@ const Post = ({
 
   const handleReplyPost = async () => {
     const newReply = await createReply(replyContent, postId, null, userClerkId)
-    setShowReplyMenu(false)
-    setPostReplies([...postReplies, newReply.success])
+    if (newReply.success) {
+      setShowReplyMenu(false)
+      setReplyContent("")
+      setPostReplies([...postReplies, newReply.success])
+    }
   }
 
   return (
-    <>
+    <View className='h-full'>
       <View className='px-4 pb-3 border-b border-neutral-300'>
         <Text>Post ID: {postId}</Text>
         <Text className='font-openSans-bold text-dark-base text-lg'>Question</Text>
@@ -261,32 +264,31 @@ const Post = ({
           </View>  
         }
       </View>
-      <SafeAreaView>
-        <FlatList
-          data={postReplies}
-          renderItem={({ item }) => (
-            <ReplyCard
-              replyId={item.replyId}
-              parentReplyId={item.parentReplyId}
-              postId={item.postId}
-              content={item.content}
-              author={item.author}
-              isAuthor={item.isAuthor}
-              creationDate={item.creationDate}
-              lastUpdatedDate={item.lastUpdatedDate}
-              likeCount={item.likeCount}
-              postReplies={postReplies}
-              setPostReplies={setPostReplies}
-            />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => (
-            <View className="p-2 border-t border-neutral-100" />
-          )}
-          className="py-2 bg-white"
-        />
-      </SafeAreaView>
-    </>
+
+      <FlatList
+        data={postReplies}
+        renderItem={({ item }) => (
+          <ReplyCard
+            replyId={item.replyId}
+            parentReplyId={item.parentReplyId}
+            postId={item.postId}
+            content={item.content}
+            author={item.author}
+            isAuthor={item.isAuthor}
+            creationDate={item.creationDate}
+            lastUpdatedDate={item.lastUpdatedDate}
+            likeCount={item.likeCount}
+            postReplies={postReplies}
+            setPostReplies={setPostReplies}
+          />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={() => (
+          <View className="p-2 border-t border-neutral-100" />
+        )}
+        className="py-2 bg-white"
+      />
+    </View>
   )
 }
 

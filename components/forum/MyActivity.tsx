@@ -32,11 +32,18 @@ const MyActivity = () => {
           <ForumPostCard
             postId={item.id}
             question={item.title}
-            likes={item.like_count}
+            likeCount={item.like_count}
             replyCount={item.reply_count}
+            topic={item.topic}
+            difficulty={item.difficulty}
+            author={item.author}
+            creationDate={item.created_at}
             posts={myPosts}
             setPosts={setMyPosts}
           />
+        )}
+        ItemSeparatorComponent={() => (
+          <View className="p-2 border-t border-neutral-200" />
         )}
         keyExtractor={(item, index) => index.toString()}
         className="py-2 bg-white"

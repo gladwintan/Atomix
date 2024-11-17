@@ -105,6 +105,8 @@ declare interface Post {
   like_count: string,
   reply_count: string,
   created_at: string,
+  author: string,
+  is_author: boolean,
   replies?: PostReply[]
 }
 

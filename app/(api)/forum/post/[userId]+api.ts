@@ -23,6 +23,7 @@ export async function GET(
         posts.created_at,
         posts.last_updated,
         post_topics.topic,
+        users.name AS author,
         COUNT(DISTINCT post_likes.id) AS like_count,
         COUNT(DISTINCT replies.id) AS reply_count,
         CASE 
@@ -53,7 +54,8 @@ export async function GET(
         posts.description,
         posts.difficulty,
         posts.created_at,
-        post_topics.topic 
+        post_topics.topic,
+        users.name 
       ORDER BY
         posts.created_at DESC
     `;
