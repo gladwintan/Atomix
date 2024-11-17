@@ -36,7 +36,7 @@ export const createPost = async (
   }
 
   try {
-    await fetchAPI("/(api)/forum/post/create", {
+    const fetchData = await fetchAPI("/(api)/forum/post/create", {
       method: "POST",
       body: JSON.stringify({
         title: title,
@@ -46,8 +46,7 @@ export const createPost = async (
         clerkId: userClerkId,
       }),
     });
-
-    return { success: "Successfully created post" };
+    return { success: fetchData.data[0] };
   } catch (error) {
     console.error("Error adding new post to database");
     return { error: "Error creating post" };
@@ -238,3 +237,183 @@ export const isPostAuthor = async (
   return fetchData?.data;
 };
 
+export const createReply = async (
+  content: string,
+  postId: string,
+  parentReplyId: string | null,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error creating post" };
+  }
+  
+  if (!content) {
+    return { error: "Reply cannot be blank" }
+  }
+    
+  if (!postId) {
+    return { error: "Post ID is missing" }
+  }
+
+  try {
+    const fetchData = await fetchAPI("/(api)/forum/reply/create", {
+      method: "POST",
+      body: JSON.stringify({
+        content: content,
+        postId: postId,
+        parentReplyId: parentReplyId,
+        clerkId: userClerkId,
+      }),
+    });
+    return { success: fetchData.data[0]?.json_build_object };
+  } catch (error) {
+    console.error("Error adding new reply to database");
+    return { error: "Error creating reply" };
+  }
+};
+
+export const deleteReply = async (
+  replyId: string,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error deleting post" };
+  }
+  
+  if (!replyId) {
+    return { error: "Reply Id is not available"}
+  }
+
+  try {
+    await fetchAPI("/(api)/forum/reply/delete", {
+      method: "DELETE",
+      body: JSON.stringify({
+        replyId: replyId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: "Successfully deleted reply" };
+  } catch (error) {
+    console.error("Error deleting reply from database");
+    return { error: "Error deleting reply" };
+  }
+};
+
+export const updateReply = async (
+  content: string,
+  replyId: string,
+  userClerkId: string | undefined,
+) => {
+  console.log(content)
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Something went wrong"}
+  }
+  
+  if (!replyId) {
+    console.error("post ID is missing");
+    return { error: "Something went wrong"}
+  }
+  
+  if (!content) {
+    console.error("Description is blank");
+    return { error: "Description is blank"}
+  }
+  
+  try {
+    await fetchAPI("/(api)/forum/reply/update", {
+      method: "PUT",
+      body: JSON.stringify({
+        content: content,
+        replyId: replyId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: "Successfully updated reply" };
+  } catch (error) {
+    console.error("Error updating reply in database");
+    return { error: "Something went wrong" };
+  }
+};
+
+export const getLikeForReply = async (
+  replyId: string,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error getting like for reply"};
+  }
+
+  if (!replyId) {
+    return { error: "Reply Id is not available"}
+  }
+
+  const fetchData = await fetchAPI(`/(api)/forum/likes-reply/${userClerkId}?reply=${replyId}`, {
+    method: "GET",
+  });
+
+  return fetchData?.data[0];
+};
+
+export const createLikeForReply = async (
+  replyId: string,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error creating like for reply" };
+  }
+  
+  if (!replyId) {
+    return { error: "Reply Id is not available"}
+  }
+
+  try {
+    await fetchAPI("/(api)/forum/likes-reply/create", {
+      method: "POST",
+      body: JSON.stringify({
+        replyId: replyId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: "Successfully created like for reply" };
+  } catch (error) {
+    console.error("Error adding new like for reply to database");
+    return { error: "Error creating like for reply" };
+  }
+};
+
+export const removeLikeForReply = async (
+  replyId: string,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error deleting like" };
+  }
+  
+  if (!replyId) {
+    return { error: "Reply Id is not available"}
+  }
+
+  try {
+    await fetchAPI("/(api)/forum/likes-reply/delete", {
+      method: "DELETE",
+      body: JSON.stringify({
+        replyId: replyId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: "Successfully deleted like for reply" };
+  } catch (error) {
+    console.error("Error deleting like for reply from database");
+    return { error: "Error deleting like for reply" };
+  }
+};

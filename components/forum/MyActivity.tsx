@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from 'react-native'
+import { View, Text, Image, FlatList, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomButton from '../CustomButton'
 import { icons } from '@/constants'
@@ -14,7 +14,7 @@ const MyActivity = () => {
 
   const [showCreateMenu, setShowCreateMenu] = useState(false)
   const [myPosts, setMyPosts] = useState<Post[]>([])
-
+  console.log(myPosts)
   useEffect(() => {
     const fetchData = async () => {
       const posts = await getPosts(userClerkId)
@@ -22,10 +22,10 @@ const MyActivity = () => {
       console.log(posts)
     }
     if (userClerkId) fetchData()
-  }, [userClerkId, showCreateMenu])
+  }, [userClerkId])
 
   return (
-    <View>
+    <ScrollView className='mb-20'>
       <FlatList
         data={myPosts}
         renderItem={({ item }) => (
@@ -40,6 +40,7 @@ const MyActivity = () => {
         )}
         keyExtractor={(item, index) => index.toString()}
         className="py-2 bg-white"
+        scrollEnabled={false}
       />
         
       <Text>MyActivity</Text>
@@ -48,12 +49,15 @@ const MyActivity = () => {
         IconRight={() => <Image source={icons.add} className='w-4 h-4' />}
         onPress={() => setShowCreateMenu(!showCreateMenu)}
       />
+
       {showCreateMenu &&
-        <CreatePostMenu 
+        <CreatePostMenu
+          posts={myPosts}
+          setPosts={setMyPosts} 
           setShowCreateMenu={setShowCreateMenu}
         />
       }
-    </View>
+    </ScrollView>
   )
 }
 

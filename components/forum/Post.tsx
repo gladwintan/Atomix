@@ -1,15 +1,17 @@
-import { View, Text, SafeAreaView, ScrollView, Image, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { createLikeForPost, getLikeForPost, getPostDetailsWithReplies, isPostAuthor, removeLikeForPost, updatePost } from '@/lib/forum'
+import { View, Text, SafeAreaView, ScrollView, Image, TextInput, FlatList } from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { createLikeForPost, createReply, deletePost, getLikeForPost, getPostDetailsWithReplies, isPostAuthor, removeLikeForPost, updatePost } from '@/lib/forum'
 import { PostReply } from '@/types/type'
 import { formatPostTime } from '@/lib/utils'
 import CustomButton from '../CustomButton'
 import { MaterialIcons } from '@expo/vector-icons'
 import { icons } from '@/constants'
 import { useUser } from '@clerk/clerk-expo'
+import ReplyCard from './ReplyCard'
+import { router } from 'expo-router'
 
 const Post = ({
-  postId,
+  postId
 }: {
   postId: string
 }) => {
@@ -20,10 +22,16 @@ const Post = ({
   const [loading, setLoading] = useState(true)
   const [postLiked, setPostLiked] = useState(false)
   const [likeButtonDisabled, setLikeButtonDisabled] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
   
+  const textInputRef = useRef<TextInput>(null)
+  const [isEditing, setIsEditing] = useState(false)
   const [editedPostDescription, setEditedPostDescription] = useState("")
   const [editState, setEditState] = useState({ loading: false, error: "" })
+
+  const [showDeleteMenu, setShowDeleteMenu] = useState(false)
+
+  const [showReplyMenu, setShowReplyMenu] = useState(false)
+  const [replyContent, setReplyContent] = useState("")
 
   const [postTitle, setPostTitle] = useState("")
   const [postDescription, setPostDescription] = useState("")
@@ -40,7 +48,6 @@ const Post = ({
     const fetchData = async () => {
       const data = await getPostDetailsWithReplies(postId, userClerkId)
       const postDetails = data[0]
-      console.log(postDetails)
 
       setIsAuthor(postDetails.is_author)
       setPostTitle(postDetails.title)
@@ -49,7 +56,7 @@ const Post = ({
       setPostTopic(postDetails.topic)
       setPostAuthor(postDetails.name)
       setPostLikeCount(parseInt(postDetails.like_count))
-      setPostReplyCount(parseInt(postDetails.reply_count))
+      setPostReplyCount(postDetails.reply_count)
       setPostCreationDate(postDetails.created_at)
       setPostLastUpdatedDate(postDetails.last_updated)
       setPostReplies(postDetails.replies)
@@ -65,6 +72,12 @@ const Post = ({
     }
     fetchData()
   }, [postId])
+
+  const focusTextInput = () => {
+    if (textInputRef.current) {
+      textInputRef.current.focus()
+    }
+  }
 
   const handleLikePost = async () => {
     setLikeButtonDisabled(true)
@@ -97,49 +110,98 @@ const Post = ({
     }
   }
 
+  const handleDeletePost = () => {
+    deletePost(postId, userClerkId)
+    router.back()
+    //setPosts(posts.filter(post => !(post.id == postId)))
+  }
+
+  const handleReplyPost = async () => {
+    const newReply = await createReply(replyContent, postId, null, userClerkId)
+    setShowReplyMenu(false)
+    setPostReplies([...postReplies, newReply.success])
+  }
+
   return (
-    <SafeAreaView>
+    <>
       <View className='px-4 pb-3 border-b border-neutral-300'>
         <Text>Post ID: {postId}</Text>
-        <View className='flex-row items-center'>
-          <Text className='font-openSans-bold text-dark-base text-lg'>Question</Text>
-          <Text className='font-openSans text-dark-base ml-3'>by {postAuthor}</Text>
-          <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
-          <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
-          {(isAuthor && !isEditing) &&
-            <CustomButton
-              title=''
-              type='transparent'
-              IconLeft={() => <Image source={icons.edit} tintColor="#6b7280" className='w-5 h-5'/>}
-              className='absolute right-0'
-              onPress={() => setIsEditing(!isEditing)}
-            />
+        <Text className='font-openSans-bold text-dark-base text-lg'>Question</Text>
+        <View className='flex-row items-center justify-between'>
+          <View className='flex-row items-center'>
+            <Text className='font-openSans text-dark-base'>by {postAuthor}</Text>
+            <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
+            <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
+          </View>
+          {(isAuthor && !isEditing && !showDeleteMenu) &&
+            <View className='flex-row items-center space-x-1.5'>
+              <CustomButton
+                title=''
+                type='transparent'
+                IconLeft={() => <Image source={icons.edit} tintColor="#6b7280" className='w-5 h-5'/>}
+                onPress={() => {
+                  setShowDeleteMenu(false)
+                  setIsEditing(!isEditing)
+                  focusTextInput()
+                }}
+              />
+              <CustomButton
+                title=''
+                type='transparent'
+                IconLeft={() => <Image source={icons.deleteIcon} tintColor="#6b7280" className='w-5 h-5'/>}
+                onPress={() => {
+                  setIsEditing(false)
+                  setShowDeleteMenu(!showDeleteMenu)
+                }}
+              />
+            </View>
           }
         </View>
 
-        {(isAuthor && isEditing) &&
-          <View className='mt-3 justify-end items-center flex-row space-x-3'>
-            {editState.loading ?
-              <Text className='font-openSans text-dark-base mr-3'>updating post...</Text>
-              : 
-              <Text className='font-openSans text-red-400 mr-3'>{editState.error}</Text>
-            }
-            <CustomButton
-              title='cancel'
-              type='cancel'
-              textVariant='primary'
-              onPress={() => {
-                setIsEditing(false)
-                setEditState({ loading: false, error: "" })
-              }}
-            />
-            <CustomButton
-              title='confirm'
-              type='confirm'
-              textVariant='white'
-              onPress={handleEditPost}
-            />
-          </View>
+        {isAuthor && 
+          (isEditing ?
+            <View className='mt-3 justify-end items-center flex-row space-x-3'>
+              {editState.loading ?
+                <Text className='font-openSans text-dark-base mr-3'>updating post...</Text>
+                : 
+                <Text className='font-openSans text-red-400 mr-3'>{editState.error}</Text>
+              }
+              <CustomButton
+                title='cancel'
+                type='cancel'
+                textVariant='primary'
+                onPress={() => {
+                  setIsEditing(false)
+                  setEditState({ loading: false, error: "" })
+                }}
+              />
+              <CustomButton
+                title='save changes'
+                type='confirm'
+                textVariant='white'
+                onPress={handleEditPost}
+              />
+            </View>
+            : (showDeleteMenu &&
+                <View className='mt-3 justify-end items-center flex-row space-x-3'>
+                <CustomButton
+                  title='cancel'
+                  type='cancel'
+                  textVariant='primary'
+                  onPress={() => {
+                    setShowDeleteMenu(false)
+                  }}
+                />
+                <CustomButton
+                  title='Delete'
+                  type='confirm'
+                  textVariant='white'
+                  className='bg-red-400'
+                  onPress={handleDeletePost}
+                />
+              </View>
+            )
+          )
         }
         <Text className='font-openSans-medium mt-4 text-dark-base text-base'>{postTitle}</Text>
 
@@ -151,6 +213,7 @@ const Post = ({
           placeholder='No description given'
           multiline
           textAlignVertical='top'
+          ref={textInputRef}  
         />
 
         <View className='flex-row items-center justify-between mt-6'>
@@ -162,6 +225,7 @@ const Post = ({
               textClassName='text-dark-lighter ml-1'
               type='transparent'
               IconLeft={() => <Image source={icons.reply} tintColor="#253048" className='w-4 h-4'/>}
+              onPress={() => setShowReplyMenu(!showReplyMenu)}
             />
             <CustomButton
               title={postLikeCount.toString()}
@@ -176,10 +240,53 @@ const Post = ({
             />
           </View>
         </View>
+        {showReplyMenu &&
+          <View>
+            <TextInput
+              editable={showReplyMenu}
+              value={replyContent}
+              onChangeText={setReplyContent}
+              className='font-openSans mt-4 text-dark-base leading-6'
+              placeholder='Enter your reply here'
+              multiline
+              textAlignVertical='top'
+            />
+            <CustomButton
+              title='send reply'
+              type='confirm'
+              textVariant='white'
+              className='self-end'
+              onPress={handleReplyPost}
+            />
+          </View>  
+        }
       </View>
-      <ScrollView className='px-4'>
-      </ScrollView>
-    </SafeAreaView>
+      <SafeAreaView>
+        <FlatList
+          data={postReplies}
+          renderItem={({ item }) => (
+            <ReplyCard
+              replyId={item.replyId}
+              parentReplyId={item.parentReplyId}
+              postId={item.postId}
+              content={item.content}
+              author={item.author}
+              isAuthor={item.isAuthor}
+              creationDate={item.creationDate}
+              lastUpdatedDate={item.lastUpdatedDate}
+              likeCount={item.likeCount}
+              postReplies={postReplies}
+              setPostReplies={setPostReplies}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={() => (
+            <View className="p-2 border-t border-neutral-100" />
+          )}
+          className="py-2 bg-white"
+        />
+      </SafeAreaView>
+    </>
   )
 }
 

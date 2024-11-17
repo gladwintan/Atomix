@@ -74,7 +74,7 @@ const ForumPostCard = ({
         title='DELETE'
         onPress={handleDeletePost}
       />
-      <Link href={`/(root)/forum/${postId})` as Href } >
+      <Link href={`/(root)/forum/${postId}` as Href } >
         <Text>See more</Text>
       </Link>
     </View>

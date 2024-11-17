@@ -1,10 +1,10 @@
 import { neon } from "@neondatabase/serverless";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
-    const { postId, clerkId } = await request.json();
+    const { replyId, clerkId } = await request.json();
 
     if (!clerkId) {
       return Response.json(
@@ -14,27 +14,16 @@ export async function POST(request: Request) {
     }
 
     const response = await sql`
-      INSERT INTO post_likes (
-        user_id, 
-        post_id
-      )
-      SELECT
-        users.id,
-        posts.id
-      FROM
-        users,
-        posts
+      DELETE FROM replies
       WHERE
-        users.clerk_id = ${clerkId}
+        author_id = (SELECT id FROM users WHERE users.clerk_id = ${clerkId})
         AND
-        posts.id = ${postId}
-      ON CONFLICT (user_id, post_id)
-      DO NOTHING
+        id = ${replyId}
     `;
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
-    console.error("Error creating like for post:", error);
+    console.error("Error deleting reply:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

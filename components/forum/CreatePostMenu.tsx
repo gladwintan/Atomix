@@ -8,8 +8,12 @@ import { useUser } from '@clerk/clerk-expo'
 import { Post } from '@/types/type'
 
 const CreatePostMenu = ({
+  posts,
+  setPosts,
   setShowCreateMenu,
 }: {
+  posts: Post[],
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>
   setShowCreateMenu: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { user } = useUser();
@@ -20,6 +24,14 @@ const CreatePostMenu = ({
   const [difficulty, setDifficulty] = useState("")
   const [topic, setTopic] = useState("")
   
+  const handleCreatePost = async () => {
+    const newPost = await createPost(title, description, difficulty, topic, userClerkId);
+    if (newPost.success) {
+      setPosts([newPost.success, ...posts])
+      setShowCreateMenu(false)
+    }
+  }
+
   return (
     <View className='p-4'>
       <Text>{title}</Text>
@@ -58,10 +70,7 @@ const CreatePostMenu = ({
         <CustomButton 
           title='create'
           IconRight={() => <Image source={icons.add} className='w-4 h-4' />}
-          onPress={() => {
-            createPost(title, description, difficulty, topic, userClerkId);
-            setShowCreateMenu(false)
-          }}
+          onPress={handleCreatePost}
           className='place-self-start'
         />
       </View>

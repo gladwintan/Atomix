@@ -28,6 +28,17 @@ export async function POST(request: Request) {
         ${difficulty},
         (SELECT id FROM post_topics WHERE post_topics.topic = ${topic})
       )
+      RETURNING
+        posts.id,
+        posts.title,
+        posts.description,
+        posts.difficulty,
+        posts.created_at,
+        posts.last_updated,
+        ${topic} AS topic,
+        '0' AS like_count,
+        '0' AS reply_count,
+        true AS is_author
     `;
 
     return Response.json({ data: response }, { status: 201 });

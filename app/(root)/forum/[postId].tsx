@@ -1,16 +1,15 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 import Post from '@/components/forum/Post'
-import { useLocalSearchParams, useSearchParams } from 'expo-router/build/hooks'
+import { useLocalSearchParams } from 'expo-router'
 
 const PostPage = () => {
   const { postId } = useLocalSearchParams()
-  console.log(postId)
-
+  
   return (
-    <View>
-      <Post postId={postId[0]} />
-    </View>
+    <SafeAreaView>
+      <Post postId={postId as string} />
+    </SafeAreaView>
   )
 }
 

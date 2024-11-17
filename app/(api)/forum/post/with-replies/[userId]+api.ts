@@ -27,22 +27,48 @@ export async function GET(
         post_users.name,
         COUNT(DISTINCT post_likes.id) AS like_count,
         COUNT(DISTINCT replies.id) AS reply_count,
-        COALESCE(json_agg(json_build_object(
-          'replyId', replies.id,
-          'content', replies.content,
-          'createdAt', replies.created_at,
-          'lastUpdated', replies.last_updated,
-          'parentReplyId', replies.parent_reply_id,
-          'author', reply_users.name,
-          'is_author', CASE 
-            WHEN replies.author_id = (SELECT id FROM users WHERE clerk_id = ${userId}) THEN true
-            ELSE false
-          END
-        )) FILTER (WHERE replies.id IS NOT NULL), '[]') AS replies,
         CASE 
           WHEN posts.author_id = (SELECT id FROM users WHERE clerk_id = ${userId}) THEN true
           ELSE false
-        END AS is_author
+        END AS is_author,
+        COALESCE((
+          SELECT
+            json_agg(
+              json_build_object(
+                'replyId', replies.id,
+                'parentReplyId', replies.parent_reply_id,
+                'postId', replies.post_id,
+                'content', replies.content,
+                'creationDate', replies.created_at,
+                'lastUpdatedDate', replies.last_updated,
+                'author', users.name,
+                'isAuthor', CASE 
+                  WHEN replies.author_id = (SELECT id FROM users WHERE clerk_id = ${userId}) THEN true
+                  ELSE false
+                END,
+                'likeCount', COALESCE(replies_likes.like_count, 0)
+              ) ORDER BY replies.created_at ASC
+            ) 
+          FROM 
+            replies
+          JOIN 
+            users
+          ON 
+            replies.author_id = users.id
+          LEFT JOIN (
+            SELECT
+              reply_id,
+              COUNT(*) AS like_count
+            FROM 
+              replies_likes
+            GROUP BY 
+              reply_id
+          ) replies_likes
+          ON
+            replies.id = replies_likes.reply_id
+          WHERE
+            replies.post_id = ${postId}
+        ), '[]') AS replies
       FROM 
         posts
       JOIN

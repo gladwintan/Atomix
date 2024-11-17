@@ -111,8 +111,11 @@ declare interface Post {
 declare interface PostReply {
   replyId: string, 
   parentReplyId: string | null,
+  postId: string,
   content: string,
   author: string,
-  createdAt: string,
-  lastUpdated: string
+  isAuthor: boolean,
+  creationDate: string,
+  lastUpdatedDate: string,
+  likeCount: number
 }

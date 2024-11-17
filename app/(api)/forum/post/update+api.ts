@@ -31,7 +31,7 @@ export async function PUT(request: Request) {
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error updating post:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

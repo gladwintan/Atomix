@@ -11,6 +11,7 @@ import completedEmpty from "@/assets/icons/completed-empty.png";
 import completed from "@/assets/icons/completed.png";
 import content from "@/assets/icons/content.png";
 import course from "@/assets/icons/course.png";
+import deleteIcon from "@/assets/icons/delete.png";
 import edit from "@/assets/icons/edit.png";
 import email from "@/assets/icons/email.png";
 import forum from "@/assets/icons/forum.png";
@@ -62,6 +63,7 @@ export const icons = {
   completed,
   completedEmpty,
   content,
+  deleteIcon,
   edit,
   email,
   forum,
