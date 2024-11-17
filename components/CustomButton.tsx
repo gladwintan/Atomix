@@ -5,21 +5,23 @@ import { ButtonProps } from "@/types/type";
 const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
   switch (variant) {
     case "primary":
-      return "text-black";
+      return "text-base-dark font-openSans";
     case "secondary":
-      return "text-white text-xs";
+      return "text-white text-xs font-openSans";
+    case "white":
+      return "text-white font-openSans-semibold"
     case "danger":
-      return "text-red-100";
+      return "text-red-100 font-openSans";
     case "success":
-      return "text-green-100";
+      return "text-green-100 font-openSans";
     case "answer":
-      return "text-dark-base text-base";
+      return "text-dark-base text-base font-openSans";
     case "answerSuccess":
-      return "text-white text-base font-semibold";
+      return "text-white text-base font-semibold font-openSans";
     case "back":
-      return "text-dark-light";
+      return "text-dark-light font-openSans";
     default:
-      return "text-white font-semibold";
+      return "text-base-dark font-openSans-semibold";
   }
 };
 
@@ -39,6 +41,12 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
       return "bg-green-600 rounded-lg px-3 py-1.5 ml-2";
     case "back":
       return "shadow-none";
+    case "cancel":
+      return "border border-neutral-300 p-1 px-2 rounded-lg shadow-none";
+    case "confirm":
+      return "bg-primary-700 p-1 px-2 rounded-lg";
+    case "transparent":
+      return "bg-transparent shadow-none";
     default:
       return "bg-primary-base";
   }
@@ -51,6 +59,7 @@ const CustomButton = ({
   IconLeft,
   IconRight,
   className,
+  textClassName,
   type,
   ...props
 }: ButtonProps) => {
@@ -62,7 +71,7 @@ const CustomButton = ({
       {...props}
     >
       {IconLeft && <IconLeft />}
-      <Text className={`${getTextVariantStyle(textVariant)}`}>{title}</Text>
+      <Text className={`${getTextVariantStyle(textVariant)} ${textClassName}`}>{title}</Text>
       {IconRight && <IconRight />}
     </TouchableOpacity>
   );

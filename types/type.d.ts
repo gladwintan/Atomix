@@ -6,6 +6,7 @@ declare interface ButtonProps extends TouchableOpacityProps {
     | "primary"
     | "default"
     | "secondary"
+    | "white"
     | "danger"
     | "success"
     | "answerSuccess"
@@ -18,10 +19,14 @@ declare interface ButtonProps extends TouchableOpacityProps {
     | "booleanSuccess"
     | "answer"
     | "answerSuccess"
-    | "back";
+    | "back"
+    | "transparent"
+    | "cancel"
+    | "confirm"
   IconLeft?: React.ComponentType<any>;
   IconRight?: React.ComponentType<any>;
   className?: string;
+  textClassName?: string;
 }
 
 declare interface InputFieldProps extends TextInputProps {
@@ -99,5 +104,15 @@ declare interface Post {
   topic: string,
   like_count: string,
   reply_count: string,
-  created_at: string
+  created_at: string,
+  replies?: PostReply[]
+}
+
+declare interface PostReply {
+  replyId: string, 
+  parentReplyId: string | null,
+  content: string,
+  author: string,
+  createdAt: string,
+  lastUpdated: string
 }

@@ -1,14 +1,184 @@
-import { View, Text, SafeAreaView } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, ScrollView, Image, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { createLikeForPost, getLikeForPost, getPostDetailsWithReplies, isPostAuthor, removeLikeForPost, updatePost } from '@/lib/forum'
+import { PostReply } from '@/types/type'
+import { formatPostTime } from '@/lib/utils'
+import CustomButton from '../CustomButton'
+import { MaterialIcons } from '@expo/vector-icons'
+import { icons } from '@/constants'
+import { useUser } from '@clerk/clerk-expo'
 
 const Post = ({
-  postId
+  postId,
 }: {
   postId: string
 }) => {
+  const { user } = useUser();
+  const userClerkId = user?.id;
+
+  const [isAuthor, setIsAuthor] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [postLiked, setPostLiked] = useState(false)
+  const [likeButtonDisabled, setLikeButtonDisabled] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  
+  const [editedPostDescription, setEditedPostDescription] = useState("")
+  const [editState, setEditState] = useState({ loading: false, error: "" })
+
+  const [postTitle, setPostTitle] = useState("")
+  const [postDescription, setPostDescription] = useState("")
+  const [postDifficulty, setPostDifficulty] = useState("")
+  const [postTopic, setPostTopic] = useState("")
+  const [postAuthor, setPostAuthor] = useState("")
+  const [postLikeCount, setPostLikeCount] = useState(0)
+  const [postReplyCount, setPostReplyCount] = useState(0)
+  const [postCreationDate, setPostCreationDate] = useState("")
+  const [postLastUpdatedDate, setPostLastUpdatedDate] = useState("")
+  const [postReplies, setPostReplies] = useState<PostReply[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPostDetailsWithReplies(postId, userClerkId)
+      const postDetails = data[0]
+      console.log(postDetails)
+
+      setIsAuthor(postDetails.is_author)
+      setPostTitle(postDetails.title)
+      setPostDescription(postDetails.description)
+      setPostDifficulty(postDetails.difficulty)
+      setPostTopic(postDetails.topic)
+      setPostAuthor(postDetails.name)
+      setPostLikeCount(parseInt(postDetails.like_count))
+      setPostReplyCount(parseInt(postDetails.reply_count))
+      setPostCreationDate(postDetails.created_at)
+      setPostLastUpdatedDate(postDetails.last_updated)
+      setPostReplies(postDetails.replies)
+
+      setEditedPostDescription(postDetails.description)
+
+      const like = await getLikeForPost(postId, userClerkId)
+      if (like.id) {
+        setPostLiked(true)
+      }
+
+      setLoading(false)
+    }
+    fetchData()
+  }, [postId])
+
+  const handleLikePost = async () => {
+    setLikeButtonDisabled(true)
+    if (!postLiked) {
+      await createLikeForPost(postId, userClerkId)
+      setPostLikeCount(postLikeCount + 1)
+      setPostLiked(true)
+      setLikeButtonDisabled(false)
+    } else {
+      await removeLikeForPost(postId, userClerkId)
+      setPostLikeCount(postLikeCount - 1)
+      setPostLiked(false)
+      setLikeButtonDisabled(false)
+    }
+  }
+
+  const handleEditPost = async () => {
+    setEditState({ ...editState, loading: true })
+    const state = await updatePost(editedPostDescription, postId, userClerkId)
+    console.log(state)
+    if (state.error) {
+      setEditState({ loading: false, ...state })
+    }
+
+    if (state.success) {
+      setPostDescription(editedPostDescription)
+      setPostLastUpdatedDate(new Date().toISOString())
+      setIsEditing(false)
+      setEditState({ loading: false, error: "" })
+    }
+  }
+
   return (
     <SafeAreaView>
-      <Text>Post ID: {postId}</Text>
+      <View className='px-4 pb-3 border-b border-neutral-300'>
+        <Text>Post ID: {postId}</Text>
+        <View className='flex-row items-center'>
+          <Text className='font-openSans-bold text-dark-base text-lg'>Question</Text>
+          <Text className='font-openSans text-dark-base ml-3'>by {postAuthor}</Text>
+          <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
+          <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
+          {(isAuthor && !isEditing) &&
+            <CustomButton
+              title=''
+              type='transparent'
+              IconLeft={() => <Image source={icons.edit} tintColor="#6b7280" className='w-5 h-5'/>}
+              className='absolute right-0'
+              onPress={() => setIsEditing(!isEditing)}
+            />
+          }
+        </View>
+
+        {(isAuthor && isEditing) &&
+          <View className='mt-3 justify-end items-center flex-row space-x-3'>
+            {editState.loading ?
+              <Text className='font-openSans text-dark-base mr-3'>updating post...</Text>
+              : 
+              <Text className='font-openSans text-red-400 mr-3'>{editState.error}</Text>
+            }
+            <CustomButton
+              title='cancel'
+              type='cancel'
+              textVariant='primary'
+              onPress={() => {
+                setIsEditing(false)
+                setEditState({ loading: false, error: "" })
+              }}
+            />
+            <CustomButton
+              title='confirm'
+              type='confirm'
+              textVariant='white'
+              onPress={handleEditPost}
+            />
+          </View>
+        }
+        <Text className='font-openSans-medium mt-4 text-dark-base text-base'>{postTitle}</Text>
+
+        <TextInput
+          editable={isEditing}
+          value={isEditing ? editedPostDescription : postDescription}
+          onChangeText={setEditedPostDescription}
+          className='font-openSans mt-4 text-dark-base leading-6'
+          placeholder='No description given'
+          multiline
+          textAlignVertical='top'
+        />
+
+        <View className='flex-row items-center justify-between mt-6'>
+          <Text className='font-openSans-light text-xs'>edited {formatPostTime(postLastUpdatedDate)}</Text>
+          <View className='flex-row items-center justfy-center space-x-5'>
+            <CustomButton
+              title='Reply'
+              textVariant='primary'
+              textClassName='text-dark-lighter ml-1'
+              type='transparent'
+              IconLeft={() => <Image source={icons.reply} tintColor="#253048" className='w-4 h-4'/>}
+            />
+            <CustomButton
+              title={postLikeCount.toString()}
+              onPress={() => !likeButtonDisabled && handleLikePost()}
+              type='transparent'
+              textVariant='primary'
+              textClassName='font-openSans-light ml-1'
+              IconLeft={() => postLiked 
+                ? <MaterialIcons name='favorite' color='#ff4f8a' size={20}/>
+                : <MaterialIcons name='favorite-border' color='#6b7280' size={20}/>
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <ScrollView className='px-4'>
+      </ScrollView>
     </SafeAreaView>
   )
 }

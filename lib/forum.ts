@@ -83,6 +83,42 @@ export const deletePost = async (
   }
 };
 
+export const updatePost = async (
+  description: string,
+  postId: string,
+  userClerkId: string | undefined,
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Something went wrong"}
+  }
+  
+  if (!postId) {
+    console.error("post ID is missing");
+    return { error: "Something went wrong"}
+  }
+  
+  if (!description) {
+    console.error("Description is blank");
+    return { error: "Description is blank"}
+  }
+  
+  try {
+    await fetchAPI("/(api)/forum/post/update", {
+      method: "PUT",
+      body: JSON.stringify({
+        description: description,
+        postId: postId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: "Successfully updated post" };
+  } catch (error) {
+    console.error("Error updating post in database");
+    return { error: "Something went wrong" };
+  }
+};
 
 export const getLikeForPost = async (
   postId: string,
@@ -101,9 +137,8 @@ export const getLikeForPost = async (
     method: "GET",
   });
 
-  return fetchData?.data;
+  return fetchData?.data[0];
 };
-
 
 export const createLikeForPost = async (
   postId: string,
@@ -162,3 +197,44 @@ export const removeLikeForPost = async (
     return { error: "Error deleting like" };
   }
 };
+
+export const getPostDetailsWithReplies = async (
+  postId: string,
+  userClerkId: string | undefined
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error deleting like" };
+  }
+  
+  if (!postId) {
+    return { error: "Post Id is not available"}
+  }
+
+  const fetchData = await fetchAPI(`/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`, {
+    method: "GET",
+  });
+
+  return fetchData?.data;
+};
+
+export const isPostAuthor = async (
+  postId: string,
+  userClerkId: string | undefined
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error deleting like" };
+  }
+  
+  if (!postId) {
+    return { error: "Post Id is not available"}
+  }
+
+  const fetchData = await fetchAPI(`/(api)/forum/post/author/${userClerkId}?post=${postId}`, {
+    method: "GET",
+  });
+
+  return fetchData?.data;
+};
+
