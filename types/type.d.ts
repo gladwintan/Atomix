@@ -97,7 +97,7 @@ declare interface MultipleResponseQuestion {
 }
 
 declare interface Post {
-  id: string,
+  id: number,
   title: string,
   description: string,
   difficulty: string,
@@ -105,8 +105,10 @@ declare interface Post {
   like_count: string,
   reply_count: string,
   created_at: string,
+  last_updated: string,
   author: string,
-  is_author: boolean,
+  user_is_author: boolean,
+  user_liked_post: boolean,
   replies?: PostReply[]
 }
 
@@ -119,5 +121,7 @@ declare interface PostReply {
   isAuthor: boolean,
   creationDate: string,
   lastUpdatedDate: string,
-  likeCount: number
+  likeCount: number,
+  replyCount: number,
+  userLiked: boolean
 }

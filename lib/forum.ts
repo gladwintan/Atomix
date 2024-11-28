@@ -203,7 +203,7 @@ export const getPostDetailsWithReplies = async (
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Error deleting like" };
+    return { error: "Error fetching post" };
   }
   
   if (!postId) {

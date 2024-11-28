@@ -48,6 +48,7 @@ const Post = ({
     const fetchData = async () => {
       const data = await getPostDetailsWithReplies(postId, userClerkId)
       const postDetails = data[0]
+      console.log(typeof postDetails.created_at)
 
       setIsAuthor(postDetails.is_author)
       setPostTitle(postDetails.title)
