@@ -18,6 +18,8 @@ const ReplyCard = ({
   author,
   isAuthor,
   likeCount,
+  replyCount,
+  userLiked,
   postReplies,
   setPostReplies
 } : PostReply & { 

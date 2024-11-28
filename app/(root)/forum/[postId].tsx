@@ -5,7 +5,7 @@ import { useLocalSearchParams } from 'expo-router'
 
 const PostPage = () => {
   const { postId } = useLocalSearchParams()
-  
+
   return (
     <SafeAreaView>
       <Post postId={postId as string} />

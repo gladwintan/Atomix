@@ -279,6 +279,8 @@ const Post = ({
             creationDate={item.creationDate}
             lastUpdatedDate={item.lastUpdatedDate}
             likeCount={item.likeCount}
+            replyCount={item.replyCount}
+            userLiked={item.userLiked}
             postReplies={postReplies}
             setPostReplies={setPostReplies}
           />

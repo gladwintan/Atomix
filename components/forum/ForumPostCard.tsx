@@ -37,7 +37,7 @@ const ForumPostCard = ({
 
   const handleDeletePost = () => {
     deletePost(postId, userClerkId)
-    setPosts(posts.filter(post => !(post.id == postId)))
+    setPosts(posts.filter(post => !(post.id == parseInt(postId))))
   }
   
   return (

@@ -30,7 +30,7 @@ const MyActivity = () => {
         data={myPosts}
         renderItem={({ item }) => (
           <ForumPostCard
-            postId={item.id}
+            postId={item.id.toString()}
             question={item.title}
             likeCount={item.like_count}
             replyCount={item.reply_count}
