@@ -9,6 +9,7 @@ import { icons } from '@/constants'
 import { useUser } from '@clerk/clerk-expo'
 import ReplyCard from './ReplyCard'
 import { router } from 'expo-router'
+import ReplyMenu from './ReplyMenu'
 
 const Post = ({
   postId
@@ -48,7 +49,6 @@ const Post = ({
     const fetchData = async () => {
       const data = await getPostDetailsWithReplies(postId, userClerkId)
       const postDetails = data[0]
-      console.log(typeof postDetails.created_at)
 
       setIsAuthor(postDetails.is_author)
       setPostTitle(postDetails.title)
@@ -117,15 +117,6 @@ const Post = ({
     //setPosts(posts.filter(post => !(post.id == postId)))
   }
 
-  const handleReplyPost = async () => {
-    const newReply = await createReply(replyContent, postId, null, userClerkId)
-    if (newReply.success) {
-      setShowReplyMenu(false)
-      setReplyContent("")
-      setPostReplies([...postReplies, newReply.success])
-    }
-  }
-
   return (
     <View className='h-full'>
       <View className='px-4 pb-3 border-b border-neutral-300'>
@@ -146,7 +137,6 @@ const Post = ({
                 onPress={() => {
                   setShowDeleteMenu(false)
                   setIsEditing(!isEditing)
-                  focusTextInput()
                 }}
               />
               <CustomButton
@@ -207,6 +197,7 @@ const Post = ({
             )
           )
         }
+
         <Text className='font-openSans-medium mt-4 text-dark-base text-base'>{postTitle}</Text>
 
         <TextInput
@@ -244,28 +235,19 @@ const Post = ({
             />
           </View>
         </View>
-        {showReplyMenu &&
-          <View>
-            <TextInput
-              editable={showReplyMenu}
-              value={replyContent}
-              onChangeText={setReplyContent}
-              className='font-openSans mt-4 text-dark-base leading-6'
-              placeholder='Enter your reply here'
-              multiline
-              textAlignVertical='top'
-            />
-            <CustomButton
-              title='send reply'
-              type='confirm'
-              textVariant='white'
-              className='self-end'
-              onPress={handleReplyPost}
-            />
-          </View>  
-        }
+
       </View>
 
+      <ReplyMenu
+        postId={postId}
+        parentReplyId={null}
+        author={postAuthor}
+        postReplies={postReplies}
+        setPostReplies={setPostReplies}
+        setShowReplyMenu={setShowReplyMenu}
+        showReplyMenu={showReplyMenu}
+      />
+      
       <FlatList
         data={postReplies}
         renderItem={({ item }) => (
