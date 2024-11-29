@@ -113,7 +113,7 @@ export async function GET(
         CASE 
             WHEN posts.author_id = (SELECT id FROM user_info) THEN true
             ELSE false
-        END AS is_author,
+        END AS user_is_author,
         COALESCE(post_likes_info.userLiked, false) AS user_liked_post,
         COALESCE(post_replies.replies, '[]'::jsonb) AS replies
       FROM 

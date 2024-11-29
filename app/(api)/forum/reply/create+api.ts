@@ -32,11 +32,13 @@ export async function POST(request: Request) {
           'parentReplyId', replies.parent_reply_id,
           'postId', replies.post_id,
           'content', replies.content,
-          'creationDate', replies.created_at,
-          'lastUpdatedDate', replies.last_updated,
           'author', (SELECT name FROM users WHERE users.clerk_id = ${clerkId}),
           'isAuthor', true,
-          'likeCount', 0
+          'creationDate', replies.created_at,
+          'lastUpdatedDate', replies.last_updated,
+          'likeCount', 0,
+          'replyCount', 0,
+          'userLiked', false
         )  
     `;
     

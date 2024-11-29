@@ -125,3 +125,8 @@ declare interface PostReply {
   replyCount: number,
   userLiked: boolean
 }
+
+declare interface ReplyDetails {
+  parentReplyId: string | null,
+  author: string
+}

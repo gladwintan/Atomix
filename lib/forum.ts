@@ -214,27 +214,7 @@ export const getPostDetailsWithReplies = async (
     method: "GET",
   });
 
-  return fetchData?.data;
-};
-
-export const isPostAuthor = async (
-  postId: string,
-  userClerkId: string | undefined
-) => {
-  if (!userClerkId) {
-    console.error("User not authenticated");
-    return { error: "Error deleting like" };
-  }
-  
-  if (!postId) {
-    return { error: "Post Id is not available"}
-  }
-
-  const fetchData = await fetchAPI(`/(api)/forum/post/author/${userClerkId}?post=${postId}`, {
-    method: "GET",
-  });
-
-  return fetchData?.data;
+  return { success: "Post data fetched successfully", postDetails: fetchData?.data?.[0] };
 };
 
 export const createReply = async (

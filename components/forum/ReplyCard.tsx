@@ -1,12 +1,13 @@
-import { View, Text, TextInput, Image } from 'react-native'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { PostReply } from '@/types/type'
+import { PostReply, ReplyDetails } from '@/types/type'
 import { formatPostTime } from '@/lib/utils'
 import CustomButton from '../CustomButton'
 import { MaterialIcons } from '@expo/vector-icons'
 import { icons } from '@/constants'
 import { createLikeForReply, deleteReply, getLikeForReply, removeLikeForReply, updateReply } from '@/lib/forum'
 import { useUser } from '@clerk/clerk-expo'
+import ReplyMenu from './ReplyMenu'
 
 const ReplyCard = ({
   replyId,
@@ -21,10 +22,14 @@ const ReplyCard = ({
   replyCount,
   userLiked,
   postReplies,
-  setPostReplies
+  setPostReplies,
+  setReplyDetails,
+  setShowReplyMenu
 } : PostReply & { 
   postReplies: PostReply[], 
-  setPostReplies:  React.Dispatch<React.SetStateAction<PostReply[]>>
+  setPostReplies:  React.Dispatch<React.SetStateAction<PostReply[]>>,
+  setReplyDetails:  React.Dispatch<React.SetStateAction<ReplyDetails>>,
+  setShowReplyMenu: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { user } = useUser();
   const userClerkId = user?.id;
@@ -93,6 +98,7 @@ const ReplyCard = ({
   }
 
   return (
+
     <View className='px-4 py-2'>
       <View className='flex-row justify-between'>
         <View className='flex-row items-center space-x-2'>
@@ -184,6 +190,17 @@ const ReplyCard = ({
       <View className='flex-row items-center justify-end mt-3'>
         <Text className='font-openSans-light text-xs mr-3'>{(creationDate != replyLastUpdatedDate) && "edited " + formatPostTime(replyLastUpdatedDate)}</Text>
         <CustomButton
+          title='Reply'
+          textVariant='primary'
+          textClassName='text-dark-lighter ml-1'
+          type='transparent'
+          IconLeft={() => <Image source={icons.reply} tintColor="#253048" className='w-4 h-4'/>}
+          onPress={() => {
+            setReplyDetails({ parentReplyId: replyId, author: author })
+            setShowReplyMenu(true)
+          }}
+        />
+        <CustomButton
           title={replyLikeCount.toString()}
           onPress={() => !likeButtonDisabled && handleLikeReply()}
           type='transparent'
@@ -196,6 +213,7 @@ const ReplyCard = ({
         />
       </View>
     </View>
+
   )
 }
 

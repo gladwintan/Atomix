@@ -7,7 +7,7 @@ const PostPage = () => {
   const { postId } = useLocalSearchParams()
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className='flex-1 bg-white'>
       <Post postId={postId as string} />
     </SafeAreaView>
   )
