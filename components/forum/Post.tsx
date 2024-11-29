@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TextInput, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createLikeForPost, deletePost, getLikeForPost, getPostDetailsWithReplies, removeLikeForPost, updatePost } from '@/lib/forum'
 import { PostReply, ReplyDetails } from '@/types/type'
 import { formatPostTime } from '@/lib/utils'
@@ -10,6 +10,7 @@ import { useUser } from '@clerk/clerk-expo'
 import ReplyCard from './ReplyCard'
 import { router } from 'expo-router'
 import ReplyMenu from './ReplyMenu'
+import EditMenu from './EditMenu'
 
 const Post = ({
   postId
@@ -19,6 +20,7 @@ const Post = ({
   const { user } = useUser();
   const userClerkId = user?.id;
 
+  const textInputRef = useRef<TextInput>(null)
   const [loading, setLoading] = useState(true)
   const [likeButtonDisabled, setLikeButtonDisabled] = useState(false)
   
@@ -72,6 +74,14 @@ const Post = ({
 
   }, [postId])
 
+  useEffect(() => {
+    if (isEditing) {
+      setTimeout(() => {
+        textInputRef.current?.focus()
+      }, 100)
+    }
+  }, [isEditing])
+
   const handleLikePost = async () => {
     setLikeButtonDisabled(true)
     if (!postLiked) {
@@ -88,9 +98,13 @@ const Post = ({
   }
 
   const handleEditPost = async () => {
+    if (postDescription == editedPostDescription) {
+      setIsEditing(false)
+      return
+    }
+
     setEditState({ ...editState, loading: true })
     const state = await updatePost(editedPostDescription, postId, userClerkId)
-    console.log(state)
     if (state.error) {
       setEditState({ loading: false, ...state })
     }
@@ -116,92 +130,31 @@ const Post = ({
     >
       <ScrollView className='flex-1'>
 
-        <View className='px-4 pb-3 border-b border-neutral-300'>
-          <Text>Post ID: {postId}</Text>
-          <Text className='font-openSans-bold text-dark-base text-lg'>Question</Text>
-          <View className='flex-row items-center justify-between'>
-            <View className='flex-row items-center'>
-              <Text className='font-openSans text-dark-base'>by {postAuthor}</Text>
-              <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
-              <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
-            </View>
-            {(isAuthor && !isEditing && !showDeleteMenu) &&
-              <View className='flex-row items-center space-x-1.5'>
-                <CustomButton
-                  title=''
-                  type='transparent'
-                  IconLeft={() => <Image source={icons.edit} tintColor="#6b7280" className='w-5 h-5'/>}
-                  onPress={() => {
-                    setShowDeleteMenu(false)
-                    setIsEditing(!isEditing)
-                  }}
-                />
-                <CustomButton
-                  title=''
-                  type='transparent'
-                  IconLeft={() => <Image source={icons.deleteIcon} tintColor="#6b7280" className='w-5 h-5'/>}
-                  onPress={() => {
-                    setIsEditing(false)
-                    setShowDeleteMenu(!showDeleteMenu)
-                  }}
-                />
-              </View>
-            }
-          </View>
-
-          {isAuthor && 
-            (isEditing ?
-              <View className='mt-3 justify-end items-center flex-row space-x-3'>
-                {editState.loading ?
-                  <Text className='font-openSans text-dark-base mr-3'>updating post...</Text>
-                  : 
-                  <Text className='font-openSans text-red-400 mr-3'>{editState.error}</Text>
-                }
-                <CustomButton
-                  title='cancel'
-                  type='cancel'
-                  textVariant='primary'
-                  onPress={() => {
-                    setIsEditing(false)
-                    setEditState({ loading: false, error: "" })
-                  }}
-                />
-                <CustomButton
-                  title='save changes'
-                  type='confirm'
-                  textVariant='white'
-                  onPress={handleEditPost}
-                />
-              </View>
-              : (showDeleteMenu &&
-                <View className='mt-3 justify-end items-center flex-row space-x-3'>
-                  <CustomButton
-                    title='cancel'
-                    type='cancel'
-                    textVariant='primary'
-                    onPress={() => {
-                      setShowDeleteMenu(false)
-                    }}
-                  />
-                  <CustomButton
-                    title='Delete'
-                    type='confirm'
-                    textVariant='white'
-                    className='bg-red-400'
-                    onPress={handleDeletePost}
-                  />
-                </View>
-              )
-            )
+        <View className='px-4 pb-3 border-b border-neutral-300'>            
+          {isAuthor &&
+            <EditMenu
+              handleEdit={handleEditPost}
+              handleDelete={handleDeletePost}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              editState={editState}
+            />
           }
 
           <Text className='font-openSans-medium mt-4 text-dark-base text-base'>{postTitle}</Text>
+          
+          <View className='flex-row items-center'>
+            <Text numberOfLines={1} className='font-openSans text-dark-base max-w-[70vw]'>by {isAuthor ? "you" : postAuthor}</Text>
+            <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
+            <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
+          </View>
 
           <TextInput
+            ref={textInputRef}
             editable={isEditing}
             value={isEditing ? editedPostDescription : postDescription}
             onChangeText={setEditedPostDescription}
-            className='font-openSans mt-4 text-dark-base leading-6'
+            className='font-openSans mt-4 text-dark-base'
             placeholder='No description given'
             multiline
             textAlignVertical='top'
@@ -266,6 +219,7 @@ const Post = ({
           scrollEnabled={false}
         />
       </ScrollView>
+
       {showReplyMenu &&
         <ReplyMenu
           postId={postId}
