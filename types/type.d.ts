@@ -123,7 +123,8 @@ declare interface PostReply {
   lastUpdatedDate: string,
   likeCount: number,
   replyCount: number,
-  userLiked: boolean
+  userLiked: boolean,
+  nestLevel: number
 }
 
 declare interface ReplyDetails {

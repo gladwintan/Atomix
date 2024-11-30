@@ -210,11 +210,16 @@ export const getPostDetailsWithReplies = async (
     return { error: "Post Id is not available"}
   }
 
-  const fetchData = await fetchAPI(`/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`, {
-    method: "GET",
-  });
-
-  return { success: "Post data fetched successfully", postDetails: fetchData?.data?.[0] };
+  try {
+    const fetchData = await fetchAPI(`/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`, {
+      method: "GET",
+    });
+    
+    return { success: "Post data fetched successfully", postDetails: fetchData?.data?.[0] };
+  } catch (error) {
+    console.error("Error fetching post details");
+    return { error: "Error fetching post" };
+  }
 };
 
 export const createReply = async (
@@ -246,7 +251,7 @@ export const createReply = async (
         clerkId: userClerkId,
       }),
     });
-    return { success: fetchData.data[0]?.json_build_object };
+    return { success: "Successfully created reply", newReply: fetchData.data[0]?.json_build_object };
   } catch (error) {
     console.error("Error adding new reply to database");
     return { error: "Error creating reply" };

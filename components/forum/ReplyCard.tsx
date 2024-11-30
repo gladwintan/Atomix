@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { PostReply, ReplyDetails } from '@/types/type'
-import { formatPostTime } from '@/lib/utils'
+import { formatPostTime, removeReplyTree } from '@/lib/utils'
 import CustomButton from '../CustomButton'
 import { MaterialIcons } from '@expo/vector-icons'
 import { icons } from '@/constants'
@@ -22,6 +22,7 @@ const ReplyCard = ({
   likeCount,
   replyCount,
   userLiked,
+  nestLevel,
   postReplies,
   setPostReplies,
   setReplyDetails,
@@ -82,12 +83,11 @@ const ReplyCard = ({
 
   const handleDeleteReply = () => {
     deleteReply(replyId, userClerkId)
-    setPostReplies(postReplies.filter(reply => !(reply.replyId == replyId)))
+    setPostReplies(removeReplyTree(postReplies, replyId))
   }
 
   return (
-
-    <View className='px-3.5 py-2'>
+    <View className={`px-3.5 py-3 ${nestLevel == 0 && "border-t-[3px] border-neutral-100"}`} style={{ marginLeft: 15 * nestLevel }}>
       <View className='flex-row items-center justify-between'>
         <View className='flex-row items-center space-x-2'>
           <View className='bg-primary-100 rounded-full w-5 h-5 items-center justify-center'>
@@ -126,12 +126,10 @@ const ReplyCard = ({
           {(creationDate != replyLastUpdatedDate) && "edited " + formatPostTime(replyLastUpdatedDate)}
         </Text>
 
-        <View className='flex-row items-center justify-center space-x-3'>
+        <View className='flex-row items-center justify-center space-x-2.5'>
           {/* Reply button */}
           <CustomButton
-            title='Reply'
-            textVariant='primary'
-            textClassName='text-2xs text-gray-600 ml-1'
+            title=''
             type='transparent'
             IconLeft={() => <Image source={icons.reply} tintColor="#4b5563" className='w-4 h-4'/>}
             onPress={() => {

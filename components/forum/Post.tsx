@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Image, TextInput, FlatList, KeyboardAvoidingVie
 import { useEffect, useRef, useState } from 'react'
 import { createLikeForPost, deletePost, getLikeForPost, getPostDetailsWithReplies, removeLikeForPost, updatePost } from '@/lib/forum'
 import { PostReply, ReplyDetails } from '@/types/type'
-import { formatPostTime } from '@/lib/utils'
+import { createRepliesWithNestLevel, formatPostTime } from '@/lib/utils'
 import CustomButton from '../CustomButton'
 import { MaterialIcons } from '@expo/vector-icons'
 import { icons } from '@/constants'
@@ -48,7 +48,7 @@ const Post = ({
   useEffect(() => {
     const fetchData = async () => {
       const { postDetails, success, error } = await getPostDetailsWithReplies(postId, userClerkId)
-      
+
       if (postDetails) {
         setIsAuthor(postDetails.user_is_author)
         setPostTitle(postDetails.title)
@@ -59,7 +59,7 @@ const Post = ({
         setPostLikeCount(parseInt(postDetails.like_count))
         setPostCreationDate(postDetails.created_at)
         setPostLastUpdatedDate(postDetails.last_updated)
-        setPostReplies(postDetails.replies)
+        setPostReplies(createRepliesWithNestLevel(postDetails.replies))
         setPostLiked(postDetails.user_liked_post)
   
         setEditedPostDescription(postDetails.description)
@@ -129,7 +129,7 @@ const Post = ({
       behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       <ScrollView className='flex-1'>
-        <View className='px-3.5 pb-3 border-b-4 border-secondary-200'>
+        <View className='px-3.5 pb-3'>
           <View className='items-end'>
             {isAuthor &&
               <EditMenu
@@ -217,6 +217,7 @@ const Post = ({
               likeCount={item.likeCount}
               replyCount={item.replyCount}
               userLiked={item.userLiked}
+              nestLevel={item.nestLevel}
               postReplies={postReplies}
               setPostReplies={setPostReplies}
               setReplyDetails={setReplyDetails}
@@ -224,10 +225,7 @@ const Post = ({
             />
           )}
           keyExtractor={(item, index) => item.replyId }
-          ItemSeparatorComponent={() => (
-            <View className="h-1.5 border-t border-neutral-100" />
-          )}
-          className="py-2 bg-white"
+          className="pb-2 bg-white"
           scrollEnabled={false}
         />
       </ScrollView>

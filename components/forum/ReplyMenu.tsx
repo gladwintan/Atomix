@@ -6,6 +6,7 @@ import { useUser } from '@clerk/clerk-expo'
 import { PostReply } from '@/types/type'
 import CustomButton from '../CustomButton'
 import { icons } from '@/constants'
+import { appendNewReply } from '@/lib/utils'
 
 const ReplyMenu = ({
   postId,
@@ -28,13 +29,14 @@ const ReplyMenu = ({
   const [replyContent, setReplyContent] = useState("")
 
   const handleReply = async () => {
-    const newReply = await createReply(replyContent, postId, parentReplyId, userClerkId)
-    if (newReply.success) {
+    const { newReply, error, success } = await createReply(replyContent, postId, parentReplyId, userClerkId)
+    if (success) {
       setShowReplyMenu(false)
       setReplyContent("")
-      setPostReplies([...postReplies, newReply.success])
+      setPostReplies(appendNewReply(postReplies, newReply))
     }
   }
+
   const textInputRef = useRef<TextInput>(null);
 
   useEffect(() => {
