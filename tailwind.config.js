@@ -3,6 +3,10 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontSize: {
+        "2xs": "11px",
+        "3xs": "10px"
+      },
       fontFamily: {
         openSans: ["OpenSans"],
         "openSans-light": ["OpenSansLight"],

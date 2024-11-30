@@ -129,7 +129,7 @@ const Post = ({
       behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       <ScrollView className='flex-1'>
-        <View className='px-4 pb-3 border-b border-neutral-300'>
+        <View className='px-3.5 pb-3 border-b-4 border-[#e3ecd3]'>
           <View className='items-end'>
             {isAuthor &&
               <EditMenu
@@ -162,7 +162,7 @@ const Post = ({
             editable={isEditing}
             value={isEditing ? editedPostDescription : postDescription}
             onChangeText={setEditedPostDescription}
-            className='font-openSans mt-2 text-dark-base'
+            className='font-openSans mt-1.5 text-dark-base'
             placeholder='No description given'
             multiline
             textAlignVertical='top'
@@ -170,9 +170,11 @@ const Post = ({
             scrollEnabled={false}
           />
 
-          <View className='flex-row items-center justify-between mr-2 mt-4'>
-            <Text className='font-openSans-light text-[10px]'>edited {formatPostTime(postLastUpdatedDate)}</Text>
-            <View className='flex-row items-center justfy-center space-x-3 text-gray-500'>
+          <View className='flex-row items-end justify-between mr-2 mt-4'>
+            <Text className='font-openSans-light text-3xs'>
+              {(postCreationDate != postLastUpdatedDate) && "edited " + formatPostTime(postLastUpdatedDate)}
+            </Text>
+            <View className='flex-row items-center justfy-center space-x-3'>
               {/* Reply button */}
               <CustomButton
                 title='Reply'
@@ -225,7 +227,7 @@ const Post = ({
           )}
           keyExtractor={(item, index) => item.replyId }
           ItemSeparatorComponent={() => (
-            <View className="p-2 border-t border-neutral-100" />
+            <View className="h-1.5 border-t border-neutral-100" />
           )}
           className="py-2 bg-white"
           scrollEnabled={false}

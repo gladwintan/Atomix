@@ -87,15 +87,19 @@ const ReplyCard = ({
 
   return (
 
-    <View className='px-4 py-2'>
-      <View className='flex-row justify-between'>
+    <View className='px-3.5 py-2'>
+      <View className='flex-row items-center justify-between'>
         <View className='flex-row items-center space-x-2'>
-          <View className='bg-primary-100 rounded-full w-7 h-7 items-center justify-center'>
-            <Text className='font-openSans text-xs'>{author.slice(0, 1)}</Text>
+          <View className='bg-primary-100 rounded-full w-5 h-5 items-center justify-center'>
+            <Text className='font-openSans text-3xs'>{author.slice(0, 1)}</Text>
           </View>
-          <Text className='font-openSans text-dark-lighter'>{author}</Text>
-          <Text className='font-openSans text-gray-600 text-[13px]'>{formatPostTime(creationDate)}</Text>
+          <View className='flex-row space-x-1'>
+            <Text numberOfLines={1} className='font-openSans text-dark-light text-xs max-w-[50vw]'>{isAuthor ? "you" : author}</Text>
+            <Text className='font-openSans text-gray-600 text-xs'>•</Text>
+            <Text className='font-openSans text-gray-600 text-xs'>{formatPostTime(creationDate)}</Text>
+          </View>
         </View>
+
         {isAuthor &&
           <EditMenu
             handleEdit={handleEditReply}
@@ -111,38 +115,46 @@ const ReplyCard = ({
         editable={isEditing}
         value={isEditing ? editedReplyContent : replyContent}
         onChangeText={setEditedReplyContent}
-        className='font-openSans mt-4 text-dark-base leading-6'
+        className='font-openSans mt-1 text-dark-base'
         multiline
         textAlignVertical='top'
+        scrollEnabled={false}
       />
-      
-      <View className='flex-row items-center justify-end mt-3'>
-        <Text className='font-openSans-light text-xs mr-3'>{(creationDate != replyLastUpdatedDate) && "edited " + formatPostTime(replyLastUpdatedDate)}</Text>
-        <CustomButton
-          title='Reply'
-          textVariant='primary'
-          textClassName='text-dark-lighter ml-1'
-          type='transparent'
-          IconLeft={() => <Image source={icons.reply} tintColor="#253048" className='w-4 h-4'/>}
-          onPress={() => {
-            setReplyDetails({ parentReplyId: replyId, author: author })
-            setShowReplyMenu(true)
-          }}
-        />
-        <CustomButton
-          title={replyLikeCount.toString()}
-          onPress={() => !likeButtonDisabled && handleLikeReply()}
-          type='transparent'
-          textVariant='primary'
-          textClassName='font-openSans-light ml-1'
-          IconLeft={() => replyLiked 
-            ? <MaterialIcons name='favorite' color='#ff4f8a' size={20}/>
-            : <MaterialIcons name='favorite-border' color='#6b7280' size={20}/>
-          }
-        />
+
+      <View className='flex-row items-end justify-between mr-2 mt-2'>
+        <Text className='font-openSans-light text-3xs'>
+          {(creationDate != replyLastUpdatedDate) && "edited " + formatPostTime(replyLastUpdatedDate)}
+        </Text>
+
+        <View className='flex-row items-center justify-center space-x-3'>
+          {/* Reply button */}
+          <CustomButton
+            title='Reply'
+            textVariant='primary'
+            textClassName='text-2xs text-gray-600 ml-1'
+            type='transparent'
+            IconLeft={() => <Image source={icons.reply} tintColor="#4b5563" className='w-4 h-4'/>}
+            onPress={() => {
+              setReplyDetails({ parentReplyId: replyId, author: author })
+              setShowReplyMenu(true)
+            }}
+          />
+
+          {/* Like button */}
+          <CustomButton
+            title={replyLikeCount.toString()}
+            onPress={() => !likeButtonDisabled && handleLikeReply()}
+            type='transparent'
+            textVariant='primary'
+            textClassName='text-gray-600 text-2xs ml-1'
+            IconLeft={() => replyLiked 
+              ? <MaterialIcons name='favorite' color='#ff4f8a' size={17}/>
+              : <MaterialIcons name='favorite-border' color='#6b7280' size={17}/>
+            }
+          />
+        </View>
       </View>
     </View>
-
   )
 }
 

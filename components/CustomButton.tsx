@@ -19,7 +19,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
     case "answerSuccess":
       return "text-white text-base font-semibold font-openSans";
     case "back":
-      return "text-dark-light font-openSans";
+      return "text-dark-light text-xs font-openSans";
     default:
       return "text-base-dark font-openSans-semibold";
   }
