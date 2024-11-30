@@ -129,7 +129,7 @@ const Post = ({
       behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       <ScrollView className='flex-1'>
-        <View className='px-3.5 pb-3 border-b-4 border-[#e3ecd3]'>
+        <View className='px-3.5 pb-3 border-b-4 border-secondary-200'>
           <View className='items-end'>
             {isAuthor &&
               <EditMenu
@@ -144,10 +144,8 @@ const Post = ({
           <View className='flex-row items-center justify-between mb-2.5'>
             <View className='flex-row items-center space-x-2.5'>
               <Text className='font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full'>{postDifficulty}</Text>
-              <Text className='font-openSans-semibold text-xs bg-[#A6BE6C] text-white p-1 rounded-md'>{postTopic}</Text>
+              <Text className='font-openSans-semibold text-xs bg-secondary-600 text-white p-1 rounded-md'>{postTopic}</Text>
             </View>
-
-
           </View>            
           
           <View className='flex-row items-center mb-1.5'>

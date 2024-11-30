@@ -21,9 +21,20 @@ module.exports = {
           base: "#93b5ff",
           50: "#f4f8ff",
           100: "#e9f0ff",
+          200: "#dee9ff",
           500: "#91b0f2",
           600: "#8FABE5",
           700: "#7f9dde",
+          800: "#6c86be",
+          900: "#596f9e"
+        },
+        secondary: {
+          base: "#c3de7f",
+          50: "#f6f9f0",
+          200: "#e3ecd3",
+          500: "#a2b86f",
+          600: "#a6be6c",
+          700: "#90a55d"
         },
         dark: {
           light: "#364463",
