@@ -129,61 +129,73 @@ const Post = ({
       behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       <ScrollView className='flex-1'>
-
-        <View className='px-4 pb-3 border-b border-neutral-300'>            
-          {isAuthor &&
-            <EditMenu
-              handleEdit={handleEditPost}
-              handleDelete={handleDeletePost}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              editState={editState}
-            />
-          }
-
-          <Text className='font-openSans-medium mt-4 text-dark-base text-base'>{postTitle}</Text>
-          
-          <View className='flex-row items-center'>
-            <Text numberOfLines={1} className='font-openSans text-dark-base max-w-[70vw]'>by {isAuthor ? "you" : postAuthor}</Text>
-            <Text className='font-openSans mx-1.5 text-gray-600'>•</Text>
-            <Text className='font-openSans text-gray-600'>{formatPostTime(postCreationDate)}</Text>
+        <View className='px-4 pb-3 border-b border-neutral-300'>
+          <View className='items-end'>
+            {isAuthor &&
+              <EditMenu
+                handleEdit={handleEditPost}
+                handleDelete={handleDeletePost}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editState={editState}
+              />
+            }
           </View>
+          <View className='flex-row items-center justify-between mb-2.5'>
+            <View className='flex-row items-center space-x-2.5'>
+              <Text className='font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full'>{postDifficulty}</Text>
+              <Text className='font-openSans-semibold text-xs bg-[#A6BE6C] text-white p-1 rounded-md'>{postTopic}</Text>
+            </View>
+
+
+          </View>            
+          
+          <View className='flex-row items-center mb-1.5'>
+            <Text numberOfLines={1} className='font-openSans text-dark-light text-xs max-w-[70vw]'>by {isAuthor ? "you" : postAuthor}</Text>
+            <Text className='font-openSans mx-1.5 text-gray-500 text-xs'>•</Text>
+            <Text className='font-openSans text-gray-500 text-xs'>{formatPostTime(postCreationDate)}</Text>
+          </View>
+          <Text className='font-openSans-medium text-dark-base text-base leading-5'>{postTitle}</Text>
 
           <TextInput
             ref={textInputRef}
             editable={isEditing}
             value={isEditing ? editedPostDescription : postDescription}
             onChangeText={setEditedPostDescription}
-            className='font-openSans mt-4 text-dark-base'
+            className='font-openSans mt-2 text-dark-base'
             placeholder='No description given'
             multiline
             textAlignVertical='top'
             autoFocus
+            scrollEnabled={false}
           />
 
-          <View className='flex-row items-center justify-between mt-6'>
-            <Text className='font-openSans-light text-xs'>edited {formatPostTime(postLastUpdatedDate)}</Text>
-            <View className='flex-row items-center justfy-center space-x-5'>
+          <View className='flex-row items-center justify-between mr-2 mt-4'>
+            <Text className='font-openSans-light text-[10px]'>edited {formatPostTime(postLastUpdatedDate)}</Text>
+            <View className='flex-row items-center justfy-center space-x-3 text-gray-500'>
+              {/* Reply button */}
               <CustomButton
                 title='Reply'
                 textVariant='primary'
-                textClassName='text-dark-lighter ml-1'
+                textClassName='text-xs text-gray-600 ml-1'
                 type='transparent'
-                IconLeft={() => <Image source={icons.reply} tintColor="#253048" className='w-4 h-4'/>}
+                IconLeft={() => <Image source={icons.reply} tintColor="#4b5563" className='w-4 h-4'/>}
                 onPress={() => {
                   setReplyDetails({ parentReplyId: null, author: postAuthor })
                   setShowReplyMenu(true)
                 }}
               />
+
+              {/* Like button */}
               <CustomButton
                 title={postLikeCount.toString()}
                 onPress={() => !likeButtonDisabled && handleLikePost()}
                 type='transparent'
                 textVariant='primary'
-                textClassName='font-openSans-light ml-1'
+                textClassName='text-gray-600 text-xs ml-1'
                 IconLeft={() => postLiked 
-                  ? <MaterialIcons name='favorite' color='#ff4f8a' size={20}/>
-                  : <MaterialIcons name='favorite-border' color='#6b7280' size={20}/>
+                  ? <MaterialIcons name='favorite' color='#ff4f8a' size={18}/>
+                  : <MaterialIcons name='favorite-border' color='#6b7280' size={18}/>
                 }
               />
             </View>
