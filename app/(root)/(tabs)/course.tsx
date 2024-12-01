@@ -26,7 +26,7 @@ const Course = () => {
 
   const [loading, setLoading] = useState(true);
   const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(
-    null,
+    null
   );
   const [exploreCourses, setExploreCourses] = useState<ExploreCourse[]>([]);
   const [completedCourses, setCompletedCourses] = useState<
@@ -139,7 +139,7 @@ const Course = () => {
           showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false },
+            { useNativeDriver: false }
           )}
           scrollEventThrottle={16}
           refreshControl={
@@ -183,7 +183,9 @@ const Course = () => {
                 />
               </TouchableOpacity>
             </View>
-            <Text className="text-xs font-openSans-light text-dark-base">All shown</Text>
+            <Text className="text-xs font-openSans-light text-dark-base">
+              All shown
+            </Text>
           </View>
 
           {!showCompletedCourses ? (
