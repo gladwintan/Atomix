@@ -12,7 +12,7 @@ import {
   RefreshControl,
 } from "react-native";
 
-import CourseLoader from "@/components/CourseLoader";
+import CourseLoader from "@/components/loader/CourseLoader";
 import CompletedCourses from "@/components/courses/CompletedCourses";
 import ExploreCourses from "@/components/courses/ExploreCourses";
 import OngoingCourses from "@/components/courses/OngoingCourses";

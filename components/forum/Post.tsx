@@ -11,6 +11,7 @@ import ReplyCard from './ReplyCard'
 import { router } from 'expo-router'
 import ReplyMenu from './ReplyMenu'
 import EditMenu from './EditMenu'
+import ForumPostLoader from '../loader/ForumPostLoader'
 
 const Post = ({
   postId
@@ -21,7 +22,9 @@ const Post = ({
   const userClerkId = user?.id;
 
   const textInputRef = useRef<TextInput>(null)
+
   const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState(false)
   const [likeButtonDisabled, setLikeButtonDisabled] = useState(false)
   
   const [isEditing, setIsEditing] = useState(false)
@@ -61,13 +64,12 @@ const Post = ({
         setPostLastUpdatedDate(postDetails.last_updated)
         setPostReplies(createRepliesWithNestLevel(postDetails.replies))
         setPostLiked(postDetails.user_liked_post)
-  
         setEditedPostDescription(postDetails.description)
-      } else if (error) {
-        //set error message
-      }
 
-      setLoading(false)
+        setTimeout(() => setLoading(false), 1000)
+      } else if (error) {
+        setFetchError(true)
+      }
     }
 
     fetchData()
@@ -123,7 +125,9 @@ const Post = ({
     //setPosts(posts.filter(post => !(post.id == postId)))
   }
 
-  return (
+  return (loading ?
+    <ForumPostLoader fetchError={fetchError} />
+    :
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -241,7 +245,6 @@ const Post = ({
         />
       }          
     </KeyboardAvoidingView>
-
   )
 }
 

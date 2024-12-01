@@ -7,13 +7,14 @@ import chemistry from "@/assets/icons/chemistry.png";
 import close from "@/assets/icons/close.png";
 import code from "@/assets/icons/code.png";
 import comment from "@/assets/icons/comment.png";
-import completedEmpty from "@/assets/icons/completed-empty.png";
+import completedEmpty from "@/assets/graphics/completed-empty.png";
 import completed from "@/assets/icons/completed.png";
 import content from "@/assets/icons/content.png";
 import course from "@/assets/icons/course.png";
 import deleteIcon from "@/assets/icons/delete.png";
 import edit from "@/assets/icons/edit.png";
 import email from "@/assets/icons/email.png";
+import error from "@/assets/graphics/error.png"
 import forum from "@/assets/icons/forum.png";
 import google from "@/assets/icons/google.png";
 import history from "@/assets/icons/history.png";
@@ -21,7 +22,7 @@ import home from "@/assets/icons/home.png";
 import lesson from "@/assets/icons/lesson.png";
 import likes from "@/assets/icons/likes.png";
 import lock from "@/assets/icons/lock.png";
-import ongoingEmpty from "@/assets/icons/ongoing-empty.png";
+import ongoingEmpty from "@/assets/graphics/ongoing-empty.png";
 import password from "@/assets/icons/password.png";
 import pending from "@/assets/icons/pending.png";
 import profile from "@/assets/icons/profile.png";
@@ -66,6 +67,7 @@ export const icons = {
   deleteIcon,
   edit,
   email,
+  error,
   forum,
   google,
   home,
