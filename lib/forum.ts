@@ -1,9 +1,6 @@
 import { fetchAPI } from "./fetch";
 
-
-export const getPosts = async (
-  userClerkId: string | undefined,
-) => {
+export const getPosts = async (userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return;
@@ -20,19 +17,23 @@ export const createPost = async (
   description: string,
   difficulty: string,
   topic: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error creating post" };
   }
-  
+
   if (!title) {
-    return { error: "Question cannot be blank" }
+    return { error: "Post title cannot be blank" };
   }
-    
+
   if (!topic) {
-    return { error: "Topic cannot be blank" }
+    return { error: "Please select a topic for the post" };
+  }
+
+  if (!difficulty) {
+    return { error: "Please select difficulty for the post" };
   }
 
   try {
@@ -46,7 +47,7 @@ export const createPost = async (
         clerkId: userClerkId,
       }),
     });
-    return { success: fetchData.data[0] };
+    return { success: "Successfully created post", newPost: fetchData.data[0] };
   } catch (error) {
     console.error("Error adding new post to database");
     return { error: "Error creating post" };
@@ -55,15 +56,15 @@ export const createPost = async (
 
 export const deletePost = async (
   postId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error deleting post" };
   }
-  
+
   if (!postId) {
-    return { error: "Post Id is not available"}
+    return { error: "Post Id is not available" };
   }
 
   try {
@@ -85,23 +86,23 @@ export const deletePost = async (
 export const updatePost = async (
   description: string,
   postId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Something went wrong"}
+    return { error: "Something went wrong" };
   }
-  
+
   if (!postId) {
     console.error("post ID is missing");
-    return { error: "Something went wrong"}
+    return { error: "Something went wrong" };
   }
-  
+
   if (!description) {
     console.error("Description is blank");
-    return { error: "Description is blank"}
+    return { error: "Description is blank" };
   }
-  
+
   try {
     await fetchAPI("/(api)/forum/post/update", {
       method: "PUT",
@@ -121,35 +122,38 @@ export const updatePost = async (
 
 export const getLikeForPost = async (
   postId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Error getting like"};
+    return { error: "Error getting like" };
   }
 
   if (!postId) {
-    return { error: "Post Id is not available"}
+    return { error: "Post Id is not available" };
   }
 
-  const fetchData = await fetchAPI(`/(api)/forum/likes-post/${userClerkId}?post=${postId}`, {
-    method: "GET",
-  });
+  const fetchData = await fetchAPI(
+    `/(api)/forum/likes-post/${userClerkId}?post=${postId}`,
+    {
+      method: "GET",
+    }
+  );
 
   return fetchData?.data[0];
 };
 
 export const createLikeForPost = async (
   postId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error creating like" };
   }
-  
+
   if (!postId) {
-    return { error: "Post Id is not available"}
+    return { error: "Post Id is not available" };
   }
 
   try {
@@ -170,15 +174,15 @@ export const createLikeForPost = async (
 
 export const removeLikeForPost = async (
   postId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error deleting like" };
   }
-  
+
   if (!postId) {
-    return { error: "Post Id is not available"}
+    return { error: "Post Id is not available" };
   }
 
   try {
@@ -205,17 +209,23 @@ export const getPostDetailsWithReplies = async (
     console.error("User not authenticated");
     return { error: "Error fetching post" };
   }
-  
+
   if (!postId) {
-    return { error: "Post Id is not available"}
+    return { error: "Post Id is not available" };
   }
 
   try {
-    const fetchData = await fetchAPI(`/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`, {
-      method: "GET",
-    });
-    
-    return { success: "Post data fetched successfully", postDetails: fetchData?.data?.[0] };
+    const fetchData = await fetchAPI(
+      `/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`,
+      {
+        method: "GET",
+      }
+    );
+
+    return {
+      success: "Post data fetched successfully",
+      postDetails: fetchData?.data?.[0],
+    };
   } catch (error) {
     console.error("Error fetching post details");
     return { error: "Error fetching post" };
@@ -226,19 +236,19 @@ export const createReply = async (
   content: string,
   postId: string,
   parentReplyId: string | null,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error creating post" };
   }
-  
+
   if (!content) {
-    return { error: "Reply cannot be blank" }
+    return { error: "Reply cannot be blank" };
   }
-    
+
   if (!postId) {
-    return { error: "Post ID is missing" }
+    return { error: "Post ID is missing" };
   }
 
   try {
@@ -251,7 +261,10 @@ export const createReply = async (
         clerkId: userClerkId,
       }),
     });
-    return { success: "Successfully created reply", newReply: fetchData.data[0]?.json_build_object };
+    return {
+      success: "Successfully created reply",
+      newReply: fetchData.data[0]?.json_build_object,
+    };
   } catch (error) {
     console.error("Error adding new reply to database");
     return { error: "Error creating reply" };
@@ -260,15 +273,15 @@ export const createReply = async (
 
 export const deleteReply = async (
   replyId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error deleting post" };
   }
-  
+
   if (!replyId) {
-    return { error: "Reply Id is not available"}
+    return { error: "Reply Id is not available" };
   }
 
   try {
@@ -290,24 +303,24 @@ export const deleteReply = async (
 export const updateReply = async (
   content: string,
   replyId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
-  console.log(content)
+  console.log(content);
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Something went wrong"}
+    return { error: "Something went wrong" };
   }
-  
+
   if (!replyId) {
     console.error("post ID is missing");
-    return { error: "Something went wrong"}
+    return { error: "Something went wrong" };
   }
-  
+
   if (!content) {
     console.error("Description is blank");
-    return { error: "Description is blank"}
+    return { error: "Description is blank" };
   }
-  
+
   try {
     await fetchAPI("/(api)/forum/reply/update", {
       method: "PUT",
@@ -327,35 +340,38 @@ export const updateReply = async (
 
 export const getLikeForReply = async (
   replyId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Error getting like for reply"};
+    return { error: "Error getting like for reply" };
   }
 
   if (!replyId) {
-    return { error: "Reply Id is not available"}
+    return { error: "Reply Id is not available" };
   }
 
-  const fetchData = await fetchAPI(`/(api)/forum/likes-reply/${userClerkId}?reply=${replyId}`, {
-    method: "GET",
-  });
+  const fetchData = await fetchAPI(
+    `/(api)/forum/likes-reply/${userClerkId}?reply=${replyId}`,
+    {
+      method: "GET",
+    }
+  );
 
   return fetchData?.data[0];
 };
 
 export const createLikeForReply = async (
   replyId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error creating like for reply" };
   }
-  
+
   if (!replyId) {
-    return { error: "Reply Id is not available"}
+    return { error: "Reply Id is not available" };
   }
 
   try {
@@ -376,15 +392,15 @@ export const createLikeForReply = async (
 
 export const removeLikeForReply = async (
   replyId: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
     return { error: "Error deleting like" };
   }
-  
+
   if (!replyId) {
-    return { error: "Reply Id is not available"}
+    return { error: "Reply Id is not available" };
   }
 
   try {

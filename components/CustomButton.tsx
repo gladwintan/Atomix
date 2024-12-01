@@ -9,7 +9,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
     case "secondary":
       return "text-white text-xs font-openSans";
     case "white":
-      return "text-white font-openSans-semibold"
+      return "text-white font-openSans-semibold";
     case "danger":
       return "text-red-100 font-openSans";
     case "success":
@@ -48,7 +48,7 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
     case "transparent":
       return "bg-transparent shadow-none";
     default:
-      return "bg-primary-base";
+      return "bg-primary-500 p-2 px-3.5 rounded-full";
   }
 };
 
@@ -71,7 +71,9 @@ const CustomButton = ({
       {...props}
     >
       {IconLeft && <IconLeft />}
-      <Text className={`${getTextVariantStyle(textVariant)} ${textClassName}`}>{title}</Text>
+      <Text className={`${getTextVariantStyle(textVariant)} ${textClassName}`}>
+        {title}
+      </Text>
       {IconRight && <IconRight />}
     </TouchableOpacity>
   );

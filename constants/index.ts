@@ -14,7 +14,7 @@ import course from "@/assets/icons/course.png";
 import deleteIcon from "@/assets/icons/delete.png";
 import edit from "@/assets/icons/edit.png";
 import email from "@/assets/icons/email.png";
-import error from "@/assets/graphics/error.png"
+import error from "@/assets/graphics/error.png";
 import forum from "@/assets/icons/forum.png";
 import google from "@/assets/icons/google.png";
 import history from "@/assets/icons/history.png";
@@ -25,6 +25,7 @@ import lock from "@/assets/icons/lock.png";
 import ongoingEmpty from "@/assets/graphics/ongoing-empty.png";
 import password from "@/assets/icons/password.png";
 import pending from "@/assets/icons/pending.png";
+import post from "@/assets/icons/post.png";
 import profile from "@/assets/icons/profile.png";
 import quiz from "@/assets/icons/quiz.png";
 import reply from "@/assets/icons/reply.png";
@@ -77,6 +78,7 @@ export const icons = {
   lock,
   password,
   pending,
+  post,
   profile,
   ongoingEmpty,
   quiz,

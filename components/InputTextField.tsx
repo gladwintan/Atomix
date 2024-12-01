@@ -28,18 +28,20 @@ const InputField = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="w-full my-2">
-          <Text className={`font-semibold mb-2 ml-1 ${labelStyle}`}>
+          <Text
+            className={`font-openSans-semibold text-dark-base mb-2 ml-1 ${labelStyle}`}
+          >
             {label}
           </Text>
           <View
             className={`flex flex-row justify-start items-center relative bg-neutral-100 rounded-xl 
-                border border-neutral-100 focus:border-neutral-200  ${containerStyle}`}
+                border border-neutral-100 focus:border-neutral-200  ${containerStyle} text-dark-base`}
           >
             {icon && (
               <Image source={icon} className={`w-6 h-6 ml-4 ${iconStyle}`} />
             )}
             <TextInput
-              className={`rounded-full p-4 flex-1 ${inputStyle} text-left`}
+              className={`rounded-full p-4 flex-1 text-left text-dark-base ${inputStyle}`}
               placeholder={placeholder}
               placeholderTextColor="gray"
               secureTextEntry={secureTextEntry}

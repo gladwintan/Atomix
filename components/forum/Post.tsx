@@ -84,8 +84,8 @@ const Post = ({ postId }: { postId: string }) => {
         setPostLiked(postDetails.user_liked_post);
         setEditedPostDescription(postDetails.description);
 
-        setTimeout(() => setLoading(false), 1000);
-      } else if (error) {
+        setTimeout(() => setLoading(false), 500);
+      } else if (error || !postDetails) {
         setFetchError(true);
       }
     };
@@ -138,7 +138,7 @@ const Post = ({ postId }: { postId: string }) => {
 
   const handleDeletePost = () => {
     deletePost(postId, userClerkId);
-    router.back();
+    router.replace("/forum");
     //setPosts(posts.filter(post => !(post.id == postId)))
   };
 
