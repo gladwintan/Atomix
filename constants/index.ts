@@ -7,6 +7,7 @@ import chemistry from "@/assets/icons/chemistry.png";
 import close from "@/assets/icons/close.png";
 import code from "@/assets/icons/code.png";
 import comment from "@/assets/icons/comment.png";
+import commentReplied from "@/assets/icons/comment-replied.png";
 import completedEmpty from "@/assets/graphics/completed-empty.png";
 import completed from "@/assets/icons/completed.png";
 import content from "@/assets/icons/content.png";
@@ -62,6 +63,7 @@ export const icons = {
   code,
   course,
   comment,
+  commentReplied,
   completed,
   completedEmpty,
   content,

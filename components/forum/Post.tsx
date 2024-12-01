@@ -139,7 +139,6 @@ const Post = ({ postId }: { postId: string }) => {
   const handleDeletePost = () => {
     deletePost(postId, userClerkId);
     router.replace("/forum");
-    //setPosts(posts.filter(post => !(post.id == postId)))
   };
 
   return loading ? (
@@ -162,15 +161,13 @@ const Post = ({ postId }: { postId: string }) => {
               />
             )}
           </View>
-          <View className="flex-row items-center justify-between mb-2.5">
-            <View className="flex-row items-center space-x-2.5">
-              <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
-                {postDifficulty}
-              </Text>
-              <Text className="font-openSans-semibold text-xs bg-secondary-600 text-white p-1 rounded-md">
-                {postTopic}
-              </Text>
-            </View>
+          <View className="flex-row items-center space-x-2.5 mb-2.5">
+            <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
+              {postDifficulty}
+            </Text>
+            <Text className="font-openSans-semibold text-xs bg-secondary-600 text-white p-1 rounded-md">
+              {postTopic}
+            </Text>
           </View>
 
           <View className="flex-row items-center mb-1.5">
@@ -187,7 +184,7 @@ const Post = ({ postId }: { postId: string }) => {
               {formatPostTime(postCreationDate)}
             </Text>
           </View>
-          <Text className="font-openSans-medium text-dark-base text-base leading-5">
+          <Text className="font-openSans-medium text-dark-base text-base">
             {postTitle}
           </Text>
 

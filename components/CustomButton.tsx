@@ -28,7 +28,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
 const getButtonStyle = (type: ButtonProps["type"]) => {
   switch (type) {
     case "outline":
-      return "bg-transparent border-neutral-300 border-[0.5px]";
+      return "bg-transparent border-neutral-300 border-[0.5px] p-2 rounded-lg shadow-none";
     case "continue":
       return "w-5/6 self-center bg-primary-base rounded-full p-3";
     case "boolean":

@@ -3,13 +3,18 @@ import { fetchAPI } from "./fetch";
 export const getPosts = async (userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return;
+    return { error: "Error fetching posts" };
   }
 
-  const fetchData = await fetchAPI(`/(api)/forum/post/${userClerkId}`, {
-    method: "GET",
-  });
-  return fetchData?.data;
+  try {
+    const fetchData = await fetchAPI(`/(api)/forum/post/${userClerkId}`, {
+      method: "GET",
+    });
+    return { success: "Succesfully fetched posts", posts: fetchData?.data };
+  } catch (error) {
+    console.error("Error fetching posts from database");
+    return { error: "Error fetching posts" };
+  }
 };
 
 export const createPost = async (

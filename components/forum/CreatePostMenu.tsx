@@ -186,7 +186,7 @@ const CreatePostMenu = ({
               <TextInput
                 onChangeText={setTitle}
                 value={title}
-                className="font-openSans-medium p-2 text-base text-dark-base border-b border-neutral-300"
+                className="font-openSans-semibold p-2 text-base text-dark-base border-b border-neutral-300"
                 placeholder="Post title"
                 placeholderTextColor="#6b7280"
                 multiline
@@ -206,7 +206,9 @@ const CreatePostMenu = ({
                 scrollEnabled={false}
               />
             </ScrollView>
-            <View className="mb-4 mr-4">
+
+            {/* Post button and status message */}
+            <View className="mb-2 mr-2">
               {createPostState && (
                 <Text
                   className={`font-openSans-medium ${createPostState.error ? "text-red-400" : "text-green-dark"}`}

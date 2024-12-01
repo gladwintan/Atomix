@@ -22,7 +22,7 @@ declare interface ButtonProps extends TouchableOpacityProps {
     | "back"
     | "transparent"
     | "cancel"
-    | "confirm"
+    | "confirm";
   IconLeft?: React.ComponentType<any>;
   IconRight?: React.ComponentType<any>;
   className?: string;
@@ -97,37 +97,38 @@ declare interface MultipleResponseQuestion {
 }
 
 declare interface Post {
-  id: number,
-  title: string,
-  description: string,
-  difficulty: string,
-  topic: string,
-  like_count: string,
-  reply_count: string,
-  created_at: string,
-  last_updated: string,
-  author: string,
-  user_is_author: boolean,
-  user_liked_post: boolean,
-  replies?: PostReply[]
+  id: number;
+  title: string;
+  description: string;
+  difficulty: string;
+  topic: string;
+  like_count: string;
+  reply_count: string;
+  created_at: string;
+  last_updated: string;
+  author: string;
+  user_is_author: boolean;
+  user_liked_post: boolean;
+  user_replied_post?: boolean;
+  replies?: PostReply[];
 }
 
 declare interface PostReply {
-  replyId: string, 
-  parentReplyId: string | null,
-  postId: string,
-  content: string,
-  author: string,
-  isAuthor: boolean,
-  creationDate: string,
-  lastUpdatedDate: string,
-  likeCount: number,
-  replyCount: number,
-  userLiked: boolean,
-  nestLevel: number
+  replyId: string;
+  parentReplyId: string | null;
+  postId: string;
+  content: string;
+  author: string;
+  isAuthor: boolean;
+  creationDate: string;
+  lastUpdatedDate: string;
+  likeCount: number;
+  replyCount: number;
+  userLiked: boolean;
+  nestLevel: number;
 }
 
 declare interface ReplyDetails {
-  parentReplyId: string | null,
-  author: string
+  parentReplyId: string | null;
+  author: string;
 }
