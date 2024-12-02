@@ -75,13 +75,12 @@ const CreatePostMenu = ({ onPostCreated }: { onPostCreated: () => void }) => {
       <CustomButton
         title="new post"
         type="transparent"
-        textVariant="primary"
-        textClassName="text-base-light"
+        textVariant="white"
         IconLeft={() => (
           <Image
             source={icons.add}
-            tintColor="#364463"
-            className="w-4 h-4 mr-1"
+            tintColor="white"
+            className="w-4 h-4 mr-0.5"
           />
         )}
         onPress={() => setShowCreateMenu(!showCreateMenu)}

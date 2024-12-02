@@ -37,7 +37,7 @@ const MyActivity = () => {
   const scrollY = useRef(new Animated.Value(0)).current; // Shared scroll value for FlatList and button
 
   const buttonOpacity = scrollY.interpolate({
-    inputRange: [0, 100],
+    inputRange: [0, 80],
     outputRange: [1, 0],
     extrapolate: "clamp",
   });
@@ -49,9 +49,9 @@ const MyActivity = () => {
   });
 
   return (
-    <View className="flex-1 pb-16">
+    <View className="flex-1 pb-14">
       <Animated.View
-        className="absolute bottom-20 right-4 z-50 bg-white shadow-md p-2 px-3 rounded-full"
+        className="absolute bottom-20 right-4 z-50 bg-secondary-700 shadow-md p-2 px-3 rounded-full"
         style={{
           opacity: buttonOpacity,
           transform: [{ translateY: buttonTranslateY }],
