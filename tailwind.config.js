@@ -54,5 +54,12 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    "bg-tag-atomic",
+    "bg-tag-bonding",
+    "bg-tag-acidBase",
+    "bg-tag-organic",
+    "bg-secondary-600",
+  ],
   plugins: [],
 };

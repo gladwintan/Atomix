@@ -278,6 +278,13 @@ const Post = ({ postId }: { postId: string }) => {
           keyExtractor={(item, index) => item.replyId}
           className="pb-2 bg-white"
           scrollEnabled={false}
+          ListEmptyComponent={() => (
+            <View className="border-t-[1.5px] border-neutral-200 h-24 items-center justify-end">
+              <Text className="font-openSans-medium text-dark-light">
+                No replies yet
+              </Text>
+            </View>
+          )}
         />
       </ScrollView>
 

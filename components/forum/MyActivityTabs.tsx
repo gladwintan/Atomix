@@ -83,13 +83,20 @@ const MyActivityTabs = memo(
           <View className="h-1.5 border-t border-neutral-200" />
         )}
         keyExtractor={(item, index) => item.id.toString()}
+        ListEmptyComponent={() => (
+          <View className="h-24 items-center justify-end">
+            <Text className="font-openSans-medium text-dark-light">
+              No posts yet
+            </Text>
+          </View>
+        )}
         className="py-2 bg-white"
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
             colors={["#9Bd35A", "#689F38"]} // For Android
-            tintColor="#000" // For iOS
+            tintColor="#d1d5db" // For iOS
           />
         }
         onScroll={Animated.event(

@@ -16,6 +16,7 @@ import deleteIcon from "@/assets/icons/delete.png";
 import edit from "@/assets/icons/edit.png";
 import email from "@/assets/icons/email.png";
 import error from "@/assets/graphics/error.png";
+import filter from "@/assets/icons/filter.png";
 import forum from "@/assets/icons/forum.png";
 import google from "@/assets/icons/google.png";
 import history from "@/assets/icons/history.png";
@@ -31,6 +32,8 @@ import profile from "@/assets/icons/profile.png";
 import quiz from "@/assets/icons/quiz.png";
 import reply from "@/assets/icons/reply.png";
 import resume from "@/assets/icons/resume.png";
+import search from "@/assets/icons/search.png";
+import sort from "@/assets/icons/sort.png";
 import start from "@/assets/icons/start.png";
 import time from "@/assets/icons/time.png";
 import onboarding1 from "@/assets/images/onboarding1.jpg";
@@ -71,6 +74,7 @@ export const icons = {
   edit,
   email,
   error,
+  filter,
   forum,
   google,
   home,
@@ -86,6 +90,8 @@ export const icons = {
   quiz,
   reply,
   resume,
+  search,
+  sort,
   start,
   time,
 };

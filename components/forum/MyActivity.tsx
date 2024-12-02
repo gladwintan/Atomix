@@ -43,15 +43,15 @@ const MyActivity = () => {
   });
 
   const buttonTranslateY = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, 50],
+    inputRange: [0, 70],
+    outputRange: [0, 70],
     extrapolate: "clamp",
   });
 
   return (
-    <View className="flex-1 pb-14">
+    <View className="h-full">
       <Animated.View
-        className="absolute bottom-20 right-4 z-50 bg-secondary-700 shadow-md p-2 px-3 rounded-full"
+        className="absolute bottom-5 right-4 z-50 bg-secondary-700 shadow-md p-2 px-3 rounded-full"
         style={{
           opacity: buttonOpacity,
           transform: [{ translateY: buttonTranslateY }],

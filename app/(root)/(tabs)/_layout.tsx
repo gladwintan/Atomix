@@ -11,13 +11,15 @@ const TabIcon = ({
   focused: boolean;
 }) => (
   <View
-    className={`h-12 w-12 rounded-full items-center justify-center ${focused ? "bg-neutral-50" : "bg-white"}`}
+    className={`h-12 w-12 items-center justify-center bg-white text-neutral-400`}
   >
+    {focused && (
+      <View className="absolute top-0 h-[5px] rounded-b-md bg-primary-600 w-full"></View>
+    )}
     <Image
       source={source}
-      resizeMode="contain"
-      className="w-7 h-7"
-      tintColor={focused ? "#0286FF" : "black"}
+      className="w-6 h-6"
+      tintColor={focused ? "#8FABE5" : "#737373"}
     />
   </View>
 );
@@ -27,20 +29,26 @@ const Layout = () => {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        tabBarActiveTintColor: "blue",
-        tabBarInactiveTintColor: "black",
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
+        tabBarLabelStyle: {
+          fontFamily: "openSans",
+          fontSize: 10,
+          height: 20,
+          marginTop: 1,
+        },
         tabBarStyle: {
           backgroundColor: "white",
-          paddingBottom: 0, // ios only
+          paddingBottom: 65, // ios only
           overflow: "hidden",
-          height: 90,
+          height: 85,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
-          position: "absolute",
+          position: "relative",
         },
+        tabBarActiveTintColor: "#8FABE5",
+        tabBarInactiveTintColor: "#737373",
       }}
     >
       <Tabs.Screen

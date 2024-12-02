@@ -1,3 +1,4 @@
+import { Post } from "@/types/type";
 import { fetchAPI } from "./fetch";
 
 export const getPosts = async (userClerkId: string | undefined) => {
@@ -481,5 +482,44 @@ export const removeLikeForReply = async (
   } catch (error) {
     console.error("Error deleting like for reply from database");
     return { error: "Error deleting like for reply" };
+  }
+};
+
+export const sortPosts = (posts: Post[], sortOption: string): Post[] => {
+  const postsCopy = [...posts];
+  switch (sortOption) {
+    case "Recent":
+      const sortedByRecency = postsCopy.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+      return sortedByRecency;
+    case "Likes":
+      const sortedByLikeCount = postsCopy.sort(
+        (a, b) => parseInt(b.like_count) - parseInt(a.like_count)
+      );
+      return sortedByLikeCount;
+    case "Replies":
+      const sortedByReplyCount = postsCopy.sort(
+        (a, b) => parseInt(b.reply_count) - parseInt(a.reply_count)
+      );
+      return sortedByReplyCount;
+    default:
+      return posts;
+  }
+};
+
+export const filterPosts = (
+  posts: Post[],
+  filterType: string,
+  filterOption: string
+): Post[] => {
+  switch (filterType) {
+    case "difficulty":
+      return posts.filter((post) => post.difficulty === filterOption);
+    case "topic":
+      return posts.filter((post) => post.topic === filterOption);
+    default:
+      return posts;
   }
 };

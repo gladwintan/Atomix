@@ -102,7 +102,7 @@ const ReplyCard = ({
 
   return (
     <View
-      className={`px-3.5 py-3 ${nestLevel == 0 && "border-t-[3px] border-neutral-100"}`}
+      className={`px-3.5 py-3 border-neutral-200 ${nestLevel == 0 ? "border-t-[1.5px]" : "border-t-[0.5px]"}`}
       style={{ marginLeft: 15 * nestLevel }}
     >
       <View className="flex-row items-center justify-between">
@@ -139,7 +139,7 @@ const ReplyCard = ({
         editable={isEditing}
         value={isEditing ? editedReplyContent : replyContent}
         onChangeText={setEditedReplyContent}
-        className="font-openSans mt-1 text-dark-base"
+        className="font-openSans ml-1 mt-1 text-dark-base"
         multiline
         textAlignVertical="top"
         scrollEnabled={false}

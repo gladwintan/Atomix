@@ -3,26 +3,6 @@ import { icons } from "@/constants";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Href, router } from "expo-router";
 import { formatPostTime, getPostTopicTagColour } from "@/lib/utils";
-import { useEffect, useState } from "react";
-
-// const getPostTopicTagColour = (topic: string) => {
-//   switch (topic) {
-//     case "Atomic Structure":
-//       return "bg-tag-atomic";
-//     case "Chemical Bonding":
-//       return "bg-tag-bonding";
-//     case "Acid-Base Equilibrium":
-//       return "bg-tag-acidBase";
-//     case "Intro to Organic Chem":
-//       return "bg-tag-organic";
-//     // case "topic 1":
-//     //   return "#84be6c";
-//     // case "topic 2":
-//     //   return "#beb36c";
-//     default:
-//       return "bg-secondary-600";
-//   }
-// };
 
 const ForumPostCard = ({
   postId,
@@ -57,11 +37,11 @@ const ForumPostCard = ({
       onPress={() => router.push(`/(root)/forum/${postId}` as Href)}
     >
       <View className="flex-row items-center space-x-2.5 mb-2.5">
-        <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
+        <Text className="font-openSans-semibold text-xs bg-primary-700 text-white px-1 py-0.5 rounded-full">
           {difficulty}
         </Text>
         <Text
-          className={`font-openSans-semibold text-xs text-white p-1 rounded-md ${getPostTopicTagColour(topic)}`}
+          className={`font-openSans-semibold text-xs text-white px-1 py-0.5 rounded-md ${getPostTopicTagColour(topic)}`}
         >
           {topic}
         </Text>

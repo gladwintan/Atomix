@@ -5,6 +5,11 @@ import { getPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
 import ForumPostCard from "./ForumPostCard";
 import ForumLoader from "../loader/ForumLoader";
+import { Text } from "react-native";
+import { Searchbar } from "react-native-paper";
+import { icons } from "@/constants";
+import SortMenu from "./SortMenu";
+import FilterMenu from "./FilterMenu";
 
 const ForumPosts = () => {
   const { user } = useUser();
@@ -14,12 +19,15 @@ const ForumPosts = () => {
   const [loadError, SetLoadError] = useState({ error: "" });
 
   const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     if (userClerkId) fetchPosts();
   }, [userClerkId]);
 
   const fetchPosts = useCallback(async () => {
+    if (!userClerkId) return;
+
     setLoading(true);
     const { posts, success, error } = await getPosts(userClerkId);
     if (posts) {
@@ -30,7 +38,22 @@ const ForumPosts = () => {
     if (error) {
       SetLoadError({ error: error });
     }
-  }, []);
+  }, [userClerkId]);
+
+  const [searchQuery, setSearchQuery] = useState(""); // For search input
+
+  useEffect(() => {
+    const query = searchQuery.toLowerCase();
+    setFilteredPosts(
+      posts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.description.toLowerCase().includes(query) ||
+          post.topic.toLowerCase().includes(query) ||
+          query === ""
+      )
+    );
+  }, [searchQuery]);
 
   return loading ? (
     <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
@@ -44,10 +67,26 @@ const ForumPosts = () => {
           progressBackgroundColor="#ffffff"
         />
       }
-      className="mb-20"
     >
+      <Searchbar
+        placeholder="Search posts"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+        className="bg-transparent border border-gray-300 w-10/12 self-center mt-4"
+        inputStyle={{
+          fontFamily: "openSans",
+          fontSize: 14,
+          color: "#161d2e",
+        }}
+        icon={icons.search}
+        iconColor="#6b7280"
+      />
+      <View className="p-2 justify-end flex-row">
+        <FilterMenu posts={posts} setPosts={setFilteredPosts} />
+        <SortMenu posts={posts} setPosts={setFilteredPosts} />
+      </View>
       <FlatList
-        data={posts}
+        data={filteredPosts}
         renderItem={({ item }) => (
           <ForumPostCard
             postId={item.id.toString()}
@@ -67,9 +106,14 @@ const ForumPosts = () => {
         ItemSeparatorComponent={() => (
           <View className="h-1.5 border-t border-neutral-200" />
         )}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => item?.id.toString()}
         className="py-2 bg-white"
         scrollEnabled={false}
+        ListEmptyComponent={() => (
+          <View className="h-[50vh] border">
+            <Text>No posts to show</Text>
+          </View>
+        )}
       />
     </ScrollView>
   );
