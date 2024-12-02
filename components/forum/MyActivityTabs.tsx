@@ -1,5 +1,13 @@
-import { View, Text, FlatList, RefreshControl } from "react-native";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  RefreshControl,
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Post } from "@/types/type";
 import ForumPostCard from "./ForumPostCard";
 import { useUser } from "@clerk/clerk-expo";
@@ -9,12 +17,14 @@ import ForumLoader from "../loader/ForumLoader";
 const MyActivityTabs = memo(
   ({
     fetchFunction,
+    scrollY,
   }: {
     fetchFunction: (userClerkId: string | undefined) => Promise<{
       posts?: Post[];
       success?: string;
       error?: string;
     }>;
+    scrollY: Animated.Value;
   }) => {
     const { user } = useUser();
     const userClerkId = user?.id;
@@ -51,7 +61,7 @@ const MyActivityTabs = memo(
     return loading ? (
       <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
     ) : (
-      <FlatList
+      <Animated.FlatList
         data={posts}
         renderItem={({ item }) => (
           <ForumPostCard
@@ -82,6 +92,11 @@ const MyActivityTabs = memo(
             tintColor="#000" // For iOS
           />
         }
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={16}
       />
     );
   }
