@@ -18,7 +18,11 @@ import {
   updatePost,
 } from "@/lib/forum";
 import { PostReply, ReplyDetails } from "@/types/type";
-import { createRepliesWithNestLevel, formatPostTime } from "@/lib/utils";
+import {
+  createRepliesWithNestLevel,
+  formatPostTime,
+  getPostTopicTagColour,
+} from "@/lib/utils";
 import CustomButton from "../CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { icons } from "@/constants";
@@ -42,8 +46,6 @@ const Post = ({ postId }: { postId: string }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedPostDescription, setEditedPostDescription] = useState("");
   const [editState, setEditState] = useState({ loading: false, error: "" });
-
-  const [showDeleteMenu, setShowDeleteMenu] = useState(false);
 
   const [showReplyMenu, setShowReplyMenu] = useState(false);
   const [replyDetails, setReplyDetails] = useState<ReplyDetails>({
@@ -165,7 +167,9 @@ const Post = ({ postId }: { postId: string }) => {
             <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
               {postDifficulty}
             </Text>
-            <Text className="font-openSans-semibold text-xs bg-secondary-600 text-white p-1 rounded-md">
+            <Text
+              className={`font-openSans-semibold text-xs text-white p-1 rounded-md ${getPostTopicTagColour(postTopic)}`}
+            >
               {postTopic}
             </Text>
           </View>

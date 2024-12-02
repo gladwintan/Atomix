@@ -1,19 +1,9 @@
-import {
-  Image,
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { Image, View, Text, TextInput, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import InputField from "../InputTextField";
 import CustomButton from "../CustomButton";
 import { icons } from "@/constants";
 import { createPost } from "@/lib/forum";
 import { useUser } from "@clerk/clerk-expo";
-import { Post } from "@/types/type";
 import ReactNativeModal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -34,13 +24,7 @@ const difficulties = [
   { label: "H1 Chemistry", value: "H1 Chemistry" },
 ];
 
-const CreatePostMenu = ({
-  posts,
-  setPosts,
-}: {
-  posts: Post[];
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
-}) => {
+const CreatePostMenu = ({ onPostCreated }: { onPostCreated: () => void }) => {
   const { user } = useUser();
   const userClerkId = user?.id;
 
@@ -64,7 +48,7 @@ const CreatePostMenu = ({
       userClerkId
     );
     if (success) {
-      setPosts([newPost, ...posts]);
+      onPostCreated();
       setCreatePostState({ error: false, message: success });
       setTimeout(() => setShowCreateMenu(false), 500);
     } else if (error) {

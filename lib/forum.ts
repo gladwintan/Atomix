@@ -17,6 +17,66 @@ export const getPosts = async (userClerkId: string | undefined) => {
   }
 };
 
+export const getMyPosts = async (userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error fetching posts" };
+  }
+
+  try {
+    const fetchData = await fetchAPI(
+      `/(api)/forum/post/my-posts/${userClerkId}`,
+      {
+        method: "GET",
+      }
+    );
+    return { success: "Succesfully fetched posts", posts: fetchData?.data };
+  } catch (error) {
+    console.error("Error fetching posts from database");
+    return { error: "Error fetching posts" };
+  }
+};
+
+export const getRepliedPosts = async (userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error fetching posts" };
+  }
+
+  try {
+    const fetchData = await fetchAPI(
+      `/(api)/forum/post/replied-posts/${userClerkId}`,
+      {
+        method: "GET",
+      }
+    );
+    return { success: "Succesfully fetched posts", posts: fetchData?.data };
+  } catch (error) {
+    console.error("Error fetching posts from database");
+    return { error: "Error fetching posts" };
+  }
+};
+
+export const getLikedPosts = async (userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error fetching posts" };
+  }
+
+  try {
+    const fetchData = await fetchAPI(
+      `/(api)/forum/post/liked-posts/${userClerkId}`,
+      {
+        method: "GET",
+      }
+    );
+    return { success: "Succesfully fetched posts", posts: fetchData?.data };
+  } catch (error) {
+    console.error("Error fetching posts from database");
+    return { error: "Error fetching posts" };
+  }
+};
+
 export const createPost = async (
   title: string,
   description: string,

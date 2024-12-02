@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       fontSize: {
         "2xs": "11px",
-        "3xs": "10px"
+        "3xs": "10px",
       },
       fontFamily: {
         openSans: ["OpenSans"],
@@ -26,7 +26,7 @@ module.exports = {
           600: "#8FABE5",
           700: "#7f9dde",
           800: "#6c86be",
-          900: "#596f9e"
+          900: "#596f9e",
         },
         secondary: {
           base: "#c3de7f",
@@ -34,7 +34,7 @@ module.exports = {
           200: "#e3ecd3",
           500: "#a2b86f",
           600: "#a6be6c",
-          700: "#90a55d"
+          700: "#90a55d",
         },
         dark: {
           light: "#364463",
@@ -44,6 +44,12 @@ module.exports = {
         green: {
           light: "#edf9ef",
           dark: "#36633e",
+        },
+        tag: {
+          atomic: "#6cbeba",
+          bonding: "#6cbe98",
+          acidBase: "#deaa7f",
+          organic: "#e6938f",
         },
       },
     },

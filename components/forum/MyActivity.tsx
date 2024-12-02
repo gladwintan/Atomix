@@ -1,125 +1,57 @@
-import { View, FlatList, ScrollView, RefreshControl } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import { View, Dimensions } from "react-native";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-expo";
-import { getPosts } from "@/lib/forum";
+import {
+  getLikedPosts,
+  getMyPosts,
+  getPosts,
+  getRepliedPosts,
+} from "@/lib/forum";
 import { Post } from "@/types/type";
-import ForumPostCard from "./ForumPostCard";
 import ForumLoader from "../loader/ForumLoader";
 import CreatePostMenu from "./CreatePostMenu";
-import CustomButton from "../CustomButton";
+import { SceneMap, TabView } from "react-native-tab-view";
+import MyActivityTabs from "./MyActivityTabs";
 
 const MyActivity = () => {
-  const { user } = useUser();
-  const userClerkId = user?.id;
+  const [index, setIndex] = useState(0);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const [loading, setLoading] = useState(true);
-  const [loadError, SetLoadError] = useState({ error: "" });
+  const [routes] = useState([
+    { key: "myPosts", title: "My Posts" },
+    { key: "repliedPosts", title: "Replied" },
+    { key: "likedPosts", title: "Liked" },
+  ]);
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [showMyPosts, setShowMyPosts] = useState(true);
-  const [showRepliedPosts, setShowRepliedPosts] = useState(false);
-  const [showLikedPosts, setShowLikedPosts] = useState(false);
+  const renderScene = useCallback(
+    SceneMap({
+      myPosts: () => <MyActivityTabs fetchFunction={getMyPosts} />,
+      repliedPosts: () => <MyActivityTabs fetchFunction={getRepliedPosts} />,
+      likedPosts: () => <MyActivityTabs fetchFunction={getLikedPosts} />,
+    }),
+    [refreshTrigger]
+  );
 
-  useEffect(() => {
-    if (userClerkId) fetchPosts();
-  }, [userClerkId]);
-
-  const fetchPosts = useCallback(async () => {
-    setLoading(true);
-    const { posts, success, error } = await getPosts(userClerkId);
-    if (posts) {
-      setPosts(posts);
-      setTimeout(() => setLoading(false), 500);
-    }
-    if (error) {
-      SetLoadError({ error: error });
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log(posts);
-    if (showMyPosts) {
-      setFilteredPosts(posts.filter((post) => post.user_is_author));
-    } else if (showRepliedPosts) {
-      setFilteredPosts(posts.filter((post) => post.user_replied_post));
-    } else if (showLikedPosts) {
-      setFilteredPosts(posts.filter((post) => post.user_liked_post));
-    }
-  }, [posts, showMyPosts, showRepliedPosts, showLikedPosts]);
-
-  return loading ? (
-    <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
-  ) : (
-    <>
+  return (
+    <View className="flex-1">
       <View className="flex-row justify-between p-2 px-4">
-        <CustomButton
-          title="Your posts"
-          type="transparent"
-          onPress={() => {
-            setShowLikedPosts(false);
-            setShowRepliedPosts(false);
-            setShowMyPosts(true);
+        <CreatePostMenu
+          onPostCreated={() => {
+            setRefreshTrigger(refreshTrigger + 1);
+            setIndex(0);
           }}
         />
-        <CustomButton
-          title="Replied"
-          type="transparent"
-          onPress={() => {
-            setShowMyPosts(false);
-            setShowLikedPosts(false);
-            setShowRepliedPosts(true);
-          }}
-        />
-        <CustomButton
-          title="Liked"
-          type="transparent"
-          onPress={() => {
-            setShowMyPosts(false);
-            setShowRepliedPosts(false);
-            setShowLikedPosts(true);
-          }}
-        />
-        <CreatePostMenu posts={posts} setPosts={setPosts} />
       </View>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={fetchPosts}
-            colors={["#9Bd35A", "#689F38"]}
-            progressBackgroundColor="#ffffff"
-          />
-        }
-        className="mb-16"
-      >
-        <FlatList
-          data={filteredPosts}
-          renderItem={({ item }) => (
-            <ForumPostCard
-              postId={item.id.toString()}
-              title={item.title}
-              description={item.description}
-              likeCount={item.like_count}
-              replyCount={item.reply_count}
-              topic={item.topic}
-              difficulty={item.difficulty}
-              author={item.author}
-              isAuthor={item.user_is_author}
-              userLikedPost={item.user_liked_post}
-              userRepliedPost={item.user_replied_post}
-              creationDate={item.created_at}
-            />
-          )}
-          ItemSeparatorComponent={() => (
-            <View className="h-1.5 border-t border-neutral-200" />
-          )}
-          keyExtractor={(item, index) => item.id.toString()}
-          className="py-2 bg-white"
-          scrollEnabled={false}
-        />
-      </ScrollView>
-    </>
+
+      <TabView
+        swipeEnabled={true}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ height: 0, width: Dimensions.get("window").width }}
+        lazy
+      />
+    </View>
   );
 };
 
