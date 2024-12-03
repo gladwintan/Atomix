@@ -10,6 +10,8 @@ import { Searchbar } from "react-native-paper";
 import { icons } from "@/constants";
 import SortMenu from "./SortMenu";
 import FilterMenu from "./FilterMenu";
+import SearchBar from "../SearchBar";
+import { router } from "expo-router";
 
 const ForumPosts = () => {
   const { user } = useUser();
@@ -40,20 +42,20 @@ const ForumPosts = () => {
     }
   }, [userClerkId]);
 
-  const [searchQuery, setSearchQuery] = useState(""); // For search input
+  // const [searchQuery, setSearchQuery] = useState(""); // For search input
 
-  useEffect(() => {
-    const query = searchQuery.toLowerCase();
-    setFilteredPosts(
-      posts.filter(
-        (post) =>
-          post.title.toLowerCase().includes(query) ||
-          post.description.toLowerCase().includes(query) ||
-          post.topic.toLowerCase().includes(query) ||
-          query === ""
-      )
-    );
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   const query = searchQuery.toLowerCase();
+  //   setFilteredPosts(
+  //     posts.filter(
+  //       (post) =>
+  //         post.title.toLowerCase().includes(query) ||
+  //         post.description.toLowerCase().includes(query) ||
+  //         post.topic.toLowerCase().includes(query) ||
+  //         query === ""
+  //     )
+  //   );
+  // }, [searchQuery]);
 
   return loading ? (
     <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
@@ -68,7 +70,7 @@ const ForumPosts = () => {
         />
       }
     >
-      <Searchbar
+      {/* <Searchbar
         placeholder="Search posts"
         onChangeText={setSearchQuery}
         value={searchQuery}
@@ -80,7 +82,15 @@ const ForumPosts = () => {
         }}
         icon={icons.search}
         iconColor="#6b7280"
-      />
+      /> */}
+      <View className="items-end">
+        <SearchBar
+          handleSearch={(searchQuery) =>
+            router.push(`/(root)/forum/search?query=${searchQuery}`)
+          }
+        />
+      </View>
+
       <View className="p-2 justify-end flex-row">
         <FilterMenu posts={posts} setPosts={setFilteredPosts} />
         <SortMenu posts={posts} setPosts={setFilteredPosts} />
