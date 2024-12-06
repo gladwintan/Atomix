@@ -1,0 +1,20 @@
+{quiz.map((question, index) => {
+        const userAnswer = Answer1 ? Answer1[index] : null; 
+        console.log(userAnswer)
+        return(
+          <View className='items-center mt-3'>
+            <Text className='font-medium ml-3 mt-3 text-lg'>{question.text}</Text>
+            {question.options.map((option, optionindex) => {
+              const isCorrect = userAnswer.userAnswer == option ? true : false
+              console.log(isCorrect)
+                return( 
+                <View key={optionindex} className={isCorrect 
+                ? 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 bg-[#95f671]' 
+                : 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 bg-[#f68181]'  
+                }>
+                  <Text className='text-lg font-light ml-6'>{option}</Text>
+                </View>
+                )},)};
+          </View>
+        )
+      })}

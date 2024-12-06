@@ -32,7 +32,6 @@ export default function Home() {
     if (userClerkId) {
       const fetchCourses = async () => {
         const courses = await getOngoingCourses(userClerkId)
-        console.log(courses)
         setOngoingCourses(courses)
       }
       fetchCourses()

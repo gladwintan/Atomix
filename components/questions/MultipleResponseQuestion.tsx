@@ -1,6 +1,6 @@
 import { Image, View, Text, ImageSourcePropType } from 'react-native'
 import React from 'react'
-import AnswerVerification from './AnswerVerification'
+import AnswerVerification from '../questions/AnswerVerification'
 import { useState } from 'react'
 import CustomButton from '../CustomButton'
 import { router } from 'expo-router'

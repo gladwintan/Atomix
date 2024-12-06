@@ -7,6 +7,7 @@ import calendar from "@/assets/icons/calendar.png"
 import check from "@/assets/icons/check.png"
 import chemistry from "@/assets/icons/chemistry.png"
 import chevronRight from "@/assets/icons/chevron-right.png"
+import chevronLeft from "@/assets/icons/chevron-left.png"
 import close from "@/assets/icons/close.png"
 import code from "@/assets/icons/code.png"
 import completed from "@/assets/icons/completed.png"
@@ -26,6 +27,7 @@ import quiz from "@/assets/icons/quiz.png"
 import resume from "@/assets/icons/resume.png"
 import start from "@/assets/icons/start.png"
 import time from "@/assets/icons/time.png"
+import circle from "@/assets/icons/circle.png"
 
 
 export const onboarding = [
@@ -48,6 +50,7 @@ export const icons = {
     check,
     chemistry,
     chevronRight,
+    chevronLeft,
     close,
     code,
     course,
@@ -66,7 +69,8 @@ export const icons = {
     quiz,
     resume,
     start,
-    time
+    time,
+    circle
 }
 
 export const images = {
