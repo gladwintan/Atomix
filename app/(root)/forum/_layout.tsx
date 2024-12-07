@@ -24,7 +24,7 @@ const Layout = () => {
           headerStyle: { backgroundColor: "white" },
           headerLeft: () => (
             <CustomButton
-              title="forum"
+              title="back"
               textVariant="back"
               type="back"
               IconLeft={() => (
@@ -34,7 +34,7 @@ const Layout = () => {
                   className="w-3 h-3 mr-1"
                 />
               )}
-              onPress={() => router.replace("/(root)/(tabs)/forum")}
+              onPress={() => router.back()}
             />
           ),
         }}

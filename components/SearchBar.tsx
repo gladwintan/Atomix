@@ -71,10 +71,7 @@ const SearchBar = ({
             returnKeyLabel="Search"
             keyboardType="default"
             multiline={false}
-            onSubmitEditing={() => {
-              handleSearch(searchQuery);
-              setSearchQuery("");
-            }}
+            onSubmitEditing={() => handleSearch(searchQuery)}
           />
           <CustomButton
             type="transparent"

@@ -120,7 +120,7 @@ const Forum = () => {
           <View className="p-2 justify-end flex-row items-center">
             <Text className="absolute left-3 font-openSans-bold">Discover</Text>
             <FilterMenu posts={posts} setPosts={setFilteredPosts} />
-            <SortMenu posts={posts} setPosts={setFilteredPosts} />
+            <SortMenu posts={filteredPosts} setPosts={setFilteredPosts} />
           </View>
           <FlatList
             data={filteredPosts}

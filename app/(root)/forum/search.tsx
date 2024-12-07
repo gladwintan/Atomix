@@ -11,6 +11,8 @@ import ForumLoader from "@/components/loader/ForumLoader";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { router } from "expo-router";
+import FilterMenu from "@/components/forum/FilterMenu";
+import SortMenu from "@/components/forum/SortMenu";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -22,6 +24,9 @@ const SearchPage = () => {
   const [loadError, SetLoadError] = useState({ error: "" });
 
   const [searchResults, setSearchResults] = useState<Post[]>([]);
+  const [filteredSearchResults, setFilteredSearchResults] = useState<Post[]>(
+    []
+  );
 
   useEffect(() => {
     handleSearch(query as string);
@@ -32,15 +37,17 @@ const SearchPage = () => {
 
     const query = searchQuery.toLowerCase().trim();
     const posts = await fetchPosts();
-    setSearchResults(
-      posts.filter(
-        (post: Post) =>
-          post.title.toLowerCase().includes(query) ||
-          post.description.toLowerCase().includes(query) ||
-          post.topic.toLowerCase().includes(query) ||
-          query === ""
-      )
+
+    const filteredPosts = posts.filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.description.toLowerCase().includes(query) ||
+        post.topic.toLowerCase().includes(query) ||
+        query === ""
     );
+
+    setSearchResults(filteredPosts);
+    setFilteredSearchResults(filteredPosts);
     setTimeout(() => setLoading(false), 500);
   };
 
@@ -58,7 +65,7 @@ const SearchPage = () => {
   }, [userClerkId]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={["left", "right", "top"]} className="flex-1">
       <View className="items-end">
         <CustomButton
           title="forum"
@@ -76,6 +83,15 @@ const SearchPage = () => {
         />
         <SearchBar handleSearch={handleSearch} />
       </View>
+
+      <View className="px-2 justify-end flex-row items-center">
+        <FilterMenu posts={searchResults} setPosts={setFilteredSearchResults} />
+        <SortMenu
+          posts={filteredSearchResults}
+          setPosts={setFilteredSearchResults}
+        />
+      </View>
+
       {loading ? (
         <ForumLoader
           fetchError={loadError.error}
@@ -83,7 +99,7 @@ const SearchPage = () => {
         />
       ) : (
         <FlatList
-          data={searchResults}
+          data={filteredSearchResults}
           renderItem={({ item }) => (
             <ForumPostCard
               postId={item.id.toString()}
@@ -104,8 +120,8 @@ const SearchPage = () => {
             <View className="h-1.5 border-t border-neutral-200" />
           )}
           keyExtractor={(item, index) => item?.id.toString()}
-          className="py-2 bg-white"
-          scrollEnabled={false}
+          className="py-2 mb-8 bg-white"
+          scrollEnabled={true}
           ListEmptyComponent={() => (
             <View className="h-[50vh] border">
               <Text>No posts to show</Text>
