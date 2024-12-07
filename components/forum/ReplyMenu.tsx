@@ -36,7 +36,7 @@ const ReplyMenu = ({
 
   const handleReply = async () => {
     const { newReply, error, success } = await createReply(
-      replyContent,
+      replyContent.trim(),
       postId,
       parentReplyId,
       userClerkId
@@ -57,9 +57,22 @@ const ReplyMenu = ({
   return (
     <TouchableWithoutFeedback className="bg-white shadow-lg">
       <View className="p-4 bg-white w-[100vw]">
-        <Text className="font-openSans text-gray-500 mb-2 text-xs">
-          Reply to {author}
-        </Text>
+        <View className="flex-row justify-between items-center">
+          <Text className="font-openSans text-gray-500 mb-2 text-xs">
+            Reply to {author}
+          </Text>
+          <CustomButton
+            type="transparent"
+            IconLeft={() => (
+              <Image
+                source={icons.close}
+                tintColor="#6b7280"
+                className="w-4 h-4"
+              />
+            )}
+            onPress={() => setShowReplyMenu(false)}
+          />
+        </View>
         <TextInput
           ref={textInputRef}
           value={replyContent}

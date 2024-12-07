@@ -79,7 +79,11 @@ const ReplyCard = ({
   const handleEditReply = async () => {
     if (editedReplyContent != replyContent) {
       setEditState({ ...editState, loading: true });
-      const state = await updateReply(editedReplyContent, replyId, userClerkId);
+      const state = await updateReply(
+        editedReplyContent.trim(),
+        replyId,
+        userClerkId
+      );
       if (state.error) {
         setEditState({ loading: false, ...state });
       }

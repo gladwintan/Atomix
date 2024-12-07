@@ -126,7 +126,11 @@ const Post = ({ postId }: { postId: string }) => {
     }
 
     setEditState({ ...editState, loading: true });
-    const state = await updatePost(editedPostDescription, postId, userClerkId);
+    const state = await updatePost(
+      editedPostDescription.trim(),
+      postId,
+      userClerkId
+    );
     if (state.error) {
       setEditState({ loading: false, ...state });
     }
@@ -150,6 +154,7 @@ const Post = ({ postId }: { postId: string }) => {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.OS == "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={85}
     >
       <ScrollView className="flex-1">
         <View className="px-3.5 pb-3">
@@ -290,16 +295,14 @@ const Post = ({ postId }: { postId: string }) => {
       </ScrollView>
 
       {showReplyMenu && (
-        <View className={`${Keyboard.isVisible() ? "pb-20" : "mb-0"}`}>
-          <ReplyMenu
-            postId={postId}
-            parentReplyId={replyDetails.parentReplyId}
-            author={replyDetails.author}
-            postReplies={postReplies}
-            setPostReplies={setPostReplies}
-            setShowReplyMenu={setShowReplyMenu}
-          />
-        </View>
+        <ReplyMenu
+          postId={postId}
+          parentReplyId={replyDetails.parentReplyId}
+          author={replyDetails.author}
+          postReplies={postReplies}
+          setPostReplies={setPostReplies}
+          setShowReplyMenu={setShowReplyMenu}
+        />
       )}
     </KeyboardAvoidingView>
   );
