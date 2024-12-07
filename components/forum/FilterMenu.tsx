@@ -59,7 +59,7 @@ const FilterMenu = ({
           <Image
             source={icons.filter}
             tintColor="#253048"
-            className="w-7 h-7"
+            className="w-6 h-6"
           />
         )}
         onPress={() => setOpenFilterMenu(!openFilterMenu)}

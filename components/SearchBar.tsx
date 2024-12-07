@@ -6,8 +6,10 @@ import CustomButton from "./CustomButton";
 
 const SearchBar = ({
   handleSearch,
+  searchBarStyle,
 }: {
   handleSearch: (query: string) => void;
+  searchBarStyle?: string;
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,11 +44,10 @@ const SearchBar = ({
 
   return (
     <Animated.View
-      className="flex-row bg-transparent items-center justify-center p-1.5 px-2 min-w-[36px]"
+      className={`flex-row bg-white items-center justify-center p-1.5 px-2 min-w-[36px] ${searchBarStyle}`}
       style={{ width: searchBarWidth }}
     >
       <CustomButton
-        title=""
         type="transparent"
         IconLeft={() => (
           <Image
@@ -59,18 +60,34 @@ const SearchBar = ({
         onPress={expandSearchBar}
       />
       {isExpanded && (
-        <TextInput
-          placeholder="Search"
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          className="w-11/12 bg-white ml-1.5 p-1 font-openSans text-dark-base"
-          autoFocus
-          onBlur={collapseSearchBar}
-          returnKeyLabel="Search"
-          keyboardType="default"
-          multiline={false}
-          onSubmitEditing={() => handleSearch(searchQuery)}
-        />
+        <>
+          <TextInput
+            placeholder="Search"
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+            className="w-10/12 bg-neutral-100 mx-1.5 p-2 font-openSans text-dark-base rounded-md"
+            autoFocus
+            onBlur={collapseSearchBar}
+            returnKeyLabel="Search"
+            keyboardType="default"
+            multiline={false}
+            onSubmitEditing={() => {
+              handleSearch(searchQuery);
+              setSearchQuery("");
+            }}
+          />
+          <CustomButton
+            type="transparent"
+            IconLeft={() => (
+              <Image
+                source={icons.close}
+                tintColor="#6b7280"
+                className="w-5 h-5"
+              />
+            )}
+            onPress={collapseSearchBar}
+          />
+        </>
       )}
     </Animated.View>
   );

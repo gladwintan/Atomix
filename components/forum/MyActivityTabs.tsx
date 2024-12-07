@@ -1,17 +1,8 @@
-import {
-  View,
-  Text,
-  FlatList,
-  RefreshControl,
-  Animated,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-} from "react-native";
+import { View, Text, RefreshControl, Animated } from "react-native";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Post } from "@/types/type";
 import ForumPostCard from "./ForumPostCard";
 import { useUser } from "@clerk/clerk-expo";
-import { getLikedPosts, getMyPosts, getRepliedPosts } from "@/lib/forum";
 import ForumLoader from "../loader/ForumLoader";
 
 const MyActivityTabs = memo(

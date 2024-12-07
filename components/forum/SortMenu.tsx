@@ -33,7 +33,7 @@ const SortMenu = ({
         title=""
         type="transparent"
         IconLeft={() => (
-          <Image source={icons.sort} tintColor="#253048" className="w-7 h-7" />
+          <Image source={icons.sort} tintColor="#253048" className="w-6 h-6" />
         )}
         onPress={() => setOpenSortMenu(!openSortMenu)}
       />

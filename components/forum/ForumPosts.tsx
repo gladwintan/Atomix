@@ -34,6 +34,7 @@ const ForumPosts = () => {
     const { posts, success, error } = await getPosts(userClerkId);
     if (posts) {
       setPosts(posts);
+      setFilteredPosts(posts);
       console.log(posts);
       setTimeout(() => setLoading(false), 500);
     }
@@ -41,21 +42,6 @@ const ForumPosts = () => {
       SetLoadError({ error: error });
     }
   }, [userClerkId]);
-
-  // const [searchQuery, setSearchQuery] = useState(""); // For search input
-
-  // useEffect(() => {
-  //   const query = searchQuery.toLowerCase();
-  //   setFilteredPosts(
-  //     posts.filter(
-  //       (post) =>
-  //         post.title.toLowerCase().includes(query) ||
-  //         post.description.toLowerCase().includes(query) ||
-  //         post.topic.toLowerCase().includes(query) ||
-  //         query === ""
-  //     )
-  //   );
-  // }, [searchQuery]);
 
   return loading ? (
     <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
@@ -69,29 +55,10 @@ const ForumPosts = () => {
           progressBackgroundColor="#ffffff"
         />
       }
+      className="flex-1"
     >
-      {/* <Searchbar
-        placeholder="Search posts"
-        onChangeText={setSearchQuery}
-        value={searchQuery}
-        className="bg-transparent border border-gray-300 w-10/12 self-center mt-4"
-        inputStyle={{
-          fontFamily: "openSans",
-          fontSize: 14,
-          color: "#161d2e",
-        }}
-        icon={icons.search}
-        iconColor="#6b7280"
-      /> */}
-      <View className="items-end">
-        <SearchBar
-          handleSearch={(searchQuery) =>
-            router.push(`/(root)/forum/search?query=${searchQuery}`)
-          }
-        />
-      </View>
-
-      <View className="p-2 justify-end flex-row">
+      <View className="p-2 justify-end flex-row items-center">
+        <Text className="absolute left-3 font-openSans-semibold">Discover</Text>
         <FilterMenu posts={posts} setPosts={setFilteredPosts} />
         <SortMenu posts={posts} setPosts={setFilteredPosts} />
       </View>

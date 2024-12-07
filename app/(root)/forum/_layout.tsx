@@ -10,13 +10,13 @@ const Layout = () => {
         headerShown: false,
         gestureEnabled: false,
         animation: "none",
-        contentStyle : {
-          backgroundColor: 'white'
-        }
+        contentStyle: {
+          backgroundColor: "white",
+        },
       }}
     >
-      <Stack.Screen 
-        name="[postId]" 
+      <Stack.Screen
+        name="[postId]"
         options={{
           headerTitle: "",
           headerShown: true,
@@ -36,7 +36,37 @@ const Layout = () => {
               )}
               onPress={() => router.replace("/(root)/(tabs)/forum")}
             />
-          )
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="my-activity"
+        options={{
+          headerTitle: "My Activity",
+          headerTitleStyle: {
+            fontFamily: "openSans",
+            fontWeight: "700",
+            fontSize: 16,
+            color: "#161d2e",
+          },
+          headerShown: true,
+          headerShadowVisible: true,
+          headerStyle: { backgroundColor: "white" },
+          headerLeft: () => (
+            <CustomButton
+              title="back"
+              textVariant="back"
+              type="back"
+              IconLeft={() => (
+                <Image
+                  source={icons.arrowLeft}
+                  tintColor="#364463"
+                  className="w-3 h-3 mr-1"
+                />
+              )}
+              onPress={() => router.back()}
+            />
+          ),
         }}
       />
     </Stack>

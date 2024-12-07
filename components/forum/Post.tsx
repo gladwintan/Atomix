@@ -7,6 +7,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -276,7 +277,7 @@ const Post = ({ postId }: { postId: string }) => {
             />
           )}
           keyExtractor={(item, index) => item.replyId}
-          className="pb-2 bg-white"
+          className="pb-4 bg-white"
           scrollEnabled={false}
           ListEmptyComponent={() => (
             <View className="border-t-[1.5px] border-neutral-200 h-24 items-center justify-end">
@@ -289,14 +290,16 @@ const Post = ({ postId }: { postId: string }) => {
       </ScrollView>
 
       {showReplyMenu && (
-        <ReplyMenu
-          postId={postId}
-          parentReplyId={replyDetails.parentReplyId}
-          author={replyDetails.author}
-          postReplies={postReplies}
-          setPostReplies={setPostReplies}
-          setShowReplyMenu={setShowReplyMenu}
-        />
+        <View className={`${Keyboard.isVisible() ? "pb-20" : "mb-0"}`}>
+          <ReplyMenu
+            postId={postId}
+            parentReplyId={replyDetails.parentReplyId}
+            author={replyDetails.author}
+            postReplies={postReplies}
+            setPostReplies={setPostReplies}
+            setShowReplyMenu={setShowReplyMenu}
+          />
+        </View>
       )}
     </KeyboardAvoidingView>
   );
