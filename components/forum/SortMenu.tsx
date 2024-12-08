@@ -38,7 +38,10 @@ const SortMenu = ({
         onPress={() => setOpenSortMenu(!openSortMenu)}
       />
       {openSortMenu && (
-        <View>
+        <View className="absolute top-8 right-2 w-24 p-2 px-3 bg-white items-start z-50 border border-neutral-200 rounded-xl">
+          <Text className="font-openSans-semibold mb-1.5 text-dark-base">
+            Sort by
+          </Text>
           <FlatList
             data={sortOptions}
             renderItem={({ item }) => (
@@ -46,7 +49,16 @@ const SortMenu = ({
                 title={item.label}
                 type="transparent"
                 textVariant="primary"
-                className="my-2"
+                className="my-1.5 self-start"
+                IconRight={() =>
+                  item.value == sortOption && (
+                    <Image
+                      source={icons.check}
+                      tintColor="#253048"
+                      className="w-5 h-5 ml-1"
+                    />
+                  )
+                }
                 onPress={() => {
                   setSortOption(item.value);
                   setOpenSortMenu(false);
@@ -54,7 +66,6 @@ const SortMenu = ({
               />
             )}
             keyExtractor={(item, index) => item.label}
-            className="absolute top-1.5 right-0 w-24 py-2 bg-white z-50 border border-neutral-200 rounded-xl"
             scrollEnabled={false}
           />
         </View>

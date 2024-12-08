@@ -3,6 +3,7 @@ import arrowLeft from "@/assets/icons/arrow-left.png";
 import arrowRight from "@/assets/icons/arrow-right.png";
 import calendar from "@/assets/icons/calendar.png";
 import check from "@/assets/icons/check.png";
+import checkCircle from "@/assets/icons/check-circle.png";
 import chemistry from "@/assets/icons/chemistry.png";
 import close from "@/assets/icons/close.png";
 import code from "@/assets/icons/code.png";

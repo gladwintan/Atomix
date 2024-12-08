@@ -2,8 +2,6 @@ import CustomButton from "@/components/CustomButton";
 import SearchBar from "@/components/SearchBar";
 import FilterMenu from "@/components/forum/FilterMenu";
 import ForumPostCard from "@/components/forum/ForumPostCard";
-import ForumPosts from "@/components/forum/ForumPosts";
-import MyActivity from "@/components/forum/MyActivity";
 import SortMenu from "@/components/forum/SortMenu";
 import ForumLoader from "@/components/loader/ForumLoader";
 import { icons } from "@/constants";
