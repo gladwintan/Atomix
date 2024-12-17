@@ -55,8 +55,8 @@ const ReplyMenu = ({
   }, [parentReplyId]);
 
   return (
-    <TouchableWithoutFeedback className="bg-white shadow-lg">
-      <View className="p-4 bg-white w-[100vw]">
+    <TouchableWithoutFeedback className="bg-white">
+      <View className="p-4 pb-6 bg-white w-[100vw] shadow-xl">
         <View className="flex-row justify-between items-center">
           <Text className="font-openSans text-gray-500 mb-2 text-xs">
             Reply to {author}

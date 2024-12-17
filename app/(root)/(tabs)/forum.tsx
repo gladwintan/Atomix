@@ -7,7 +7,7 @@ import { icons } from "@/constants";
 import { getPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
@@ -15,9 +15,23 @@ import {
   RefreshControl,
   ScrollView,
   Text,
+  TouchableOpacity,
 } from "react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+const quickLinks = [
+  {
+    title: "My Activity",
+    icon: icons.profile,
+    link: "(root)/forum/my-activity",
+  },
+  {
+    title: "Create post",
+    icon: icons.post,
+    link: "(root)/forum/my-activity",
+  },
+];
 
 const Forum = () => {
   const { user } = useUser();
@@ -74,48 +88,46 @@ const Forum = () => {
               progressBackgroundColor="#ffffff"
             />
           }
+          stickyHeaderIndices={[1]}
           className="flex-1"
         >
           {/* Quick links */}
-          <View className="justify-around items-center flex-row my-6">
-            <View className="items-center">
-              <CustomButton
-                type="transparent"
-                textClassName="hidden"
-                IconLeft={() => (
+          <FlatList
+            data={quickLinks}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => router.push(item.link as Href)}
+                className="bg-white border-[0.5px] border-neutral-100 p-2 px-3.5 rounded-lg shadow-sm flex-row items-center justify-center space-x-1.5"
+              >
+                <View className="bg-secondary-50 p-2 rounded-full">
                   <Image
-                    source={icons.profile}
-                    tintColor="white"
-                    className="w-6 h-6"
+                    source={item.icon}
+                    tintColor="#364463"
+                    className="w-3.5 h-3.5"
                   />
-                )}
-                className="bg-secondary-600 rounded-md p-1"
-                onPress={() => router.push("/(root)/forum/my-activity")}
-              />
-              <Text className="font-openSans text-2xs mt-1">My Activity</Text>
-            </View>
-            <View className="items-center">
-              <CustomButton
-                type="transparent"
-                textClassName="hidden"
-                IconLeft={() => (
-                  <Image
-                    source={icons.add}
-                    tintColor="white"
-                    className="w-6 h-6"
-                  />
-                )}
-                className="bg-secondary-600 rounded-md p-1"
-                onPress={() => router.push("/(root)/forum/my-activity")}
-              />
-              <Text className="font-openSans text-2xs mt-1">Post</Text>
-            </View>
-          </View>
+                </View>
+                <Text className="font-openSans text-xs text-dark-base">
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => <View className="w-4" />}
+            className="p-4 bg-white"
+            scrollEnabled
+            horizontal
+          />
+
+          {/* Trending section */}
 
           {/* Discover section */}
-          <View className="p-2 justify-end flex-row items-center">
+          <View className="p-2 justify-end flex-row items-center bg-white">
             <Text className="absolute left-3 font-openSans-bold">Discover</Text>
-            <OptionsMenu posts={posts} setPosts={setFilteredPosts} />
+            <OptionsMenu
+              posts={posts}
+              setPosts={setFilteredPosts}
+              setLoading={setLoading}
+            />
           </View>
           <FlatList
             data={filteredPosts}

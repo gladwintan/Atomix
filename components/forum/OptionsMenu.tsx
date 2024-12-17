@@ -49,9 +49,11 @@ const sortOptions = [
 const OptionsMenu = ({
   posts,
   setPosts,
+  setLoading,
 }: {
   posts: Post[];
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<
@@ -63,11 +65,13 @@ const OptionsMenu = ({
   });
 
   const filterAndSortPosts = () => {
+    setLoading(true);
     let filteredPosts = posts;
     if (selectedFilterOptions.length != 0) {
       filteredPosts = filterPosts(posts, selectedFilterOptions);
     }
     setPosts(sortPosts(filteredPosts, sortOption.value, sortOption.descending));
+    setTimeout(() => setLoading(false), 500);
   };
 
   return (

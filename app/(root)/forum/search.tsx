@@ -92,6 +92,7 @@ const SearchPage = () => {
         <OptionsMenu
           posts={searchResults}
           setPosts={setFilteredSearchResults}
+          setLoading={setLoading}
         />
       </View>
 
