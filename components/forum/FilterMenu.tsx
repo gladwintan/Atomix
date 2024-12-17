@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Post } from "@/types/type";
+import { FilterOption, Post } from "@/types/type";
 import { icons } from "@/constants";
 import CustomButton from "../CustomButton";
 import { filterPosts, sortPosts } from "@/lib/forum";
@@ -39,16 +39,18 @@ const FilterMenu = ({
   posts: Post[];
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }) => {
-  const [filterOption, setFilterOption] = useState({ type: "", option: "" });
+  const [selectedFilterOptions, setSelectedFilterOptions] = useState<
+    FilterOption[]
+  >([]);
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
 
   useEffect(() => {
-    if (!filterOption) {
-      return;
+    if (selectedFilterOptions.length == 0) {
+      setPosts(posts);
     }
-    console.log(filterPosts(posts, filterOption.type, filterOption.option));
-    setPosts(filterPosts(posts, filterOption.type, filterOption.option));
-  }, [filterOption]);
+
+    setPosts(filterPosts(posts, selectedFilterOptions));
+  }, [selectedFilterOptions]);
 
   return (
     <View>
@@ -65,7 +67,10 @@ const FilterMenu = ({
         onPress={() => setOpenFilterMenu(!openFilterMenu)}
       />
       {openFilterMenu && (
-        <View>
+        <View className="absolute top-8 right-2 w-40 p-2 px-3 items-start bg-white z-50 border border-neutral-200 rounded-xl">
+          <Text className="font-openSans-semibold mb-1.5 text-dark-base">
+            Filter by
+          </Text>
           <FlatList
             data={filterOptions}
             renderItem={({ item }) => (
@@ -73,19 +78,36 @@ const FilterMenu = ({
                 title={item.label}
                 type="transparent"
                 textVariant="primary"
-                textClassName="text-center"
-                className="my-2"
+                className="my-2 self-start"
+                IconRight={() =>
+                  selectedFilterOptions.some(
+                    (option) => option.label == item.label
+                  ) && (
+                    <Image
+                      source={icons.check}
+                      tintColor="#253048"
+                      className="w-5 h-5 ml-1"
+                    />
+                  )
+                }
                 onPress={() => {
-                  setFilterOption({
-                    type: item.value.type,
-                    option: item.value.option,
-                  });
-                  setOpenFilterMenu(false);
+                  const optionSelected = selectedFilterOptions.some(
+                    (option) => option.label == item.label
+                  );
+                  if (optionSelected) {
+                    setSelectedFilterOptions(
+                      selectedFilterOptions.filter(
+                        (option) => !(option.label == item.label)
+                      )
+                    );
+                  } else {
+                    setSelectedFilterOptions([...selectedFilterOptions, item]);
+                    setOpenFilterMenu(false);
+                  }
                 }}
               />
             )}
             keyExtractor={(item, index) => item?.label}
-            className="absolute top-1.5 right-0 w-36 py-2 bg-white z-50 border border-neutral-200 rounded-xl"
             scrollEnabled={false}
           />
         </View>

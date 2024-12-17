@@ -1,8 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import SearchBar from "@/components/SearchBar";
-import FilterMenu from "@/components/forum/FilterMenu";
 import ForumPostCard from "@/components/forum/ForumPostCard";
-import SortMenu from "@/components/forum/SortMenu";
+import OptionsMenu from "@/components/forum/OptionsMenu";
 import ForumLoader from "@/components/loader/ForumLoader";
 import { icons } from "@/constants";
 import { getPosts } from "@/lib/forum";
@@ -42,7 +41,6 @@ const Forum = () => {
     if (posts) {
       setPosts(posts);
       setFilteredPosts(posts);
-      console.log(posts);
       setTimeout(() => setLoading(false), 500);
     }
     if (error) {
@@ -117,8 +115,7 @@ const Forum = () => {
           {/* Discover section */}
           <View className="p-2 justify-end flex-row items-center">
             <Text className="absolute left-3 font-openSans-bold">Discover</Text>
-            <FilterMenu posts={posts} setPosts={setFilteredPosts} />
-            <SortMenu posts={filteredPosts} setPosts={setFilteredPosts} />
+            <OptionsMenu posts={posts} setPosts={setFilteredPosts} />
           </View>
           <FlatList
             data={filteredPosts}
@@ -145,7 +142,7 @@ const Forum = () => {
             className="py-2 bg-white"
             scrollEnabled={false}
             ListEmptyComponent={() => (
-              <View className="h-[50vh] border">
+              <View className="h-[55vh] border">
                 <Text>No posts to show</Text>
               </View>
             )}

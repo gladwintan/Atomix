@@ -132,3 +132,8 @@ declare interface ReplyDetails {
   parentReplyId: string | null;
   author: string;
 }
+
+declare interface FilterOption {
+  label: string;
+  value: { type: string; option: string };
+}

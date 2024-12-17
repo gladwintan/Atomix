@@ -6,9 +6,9 @@ import CustomButton from "../CustomButton";
 import { sortPosts } from "@/lib/forum";
 
 const sortOptions = [
-  { label: "Recent", value: "Recent" },
-  { label: "Likes", value: "Likes" },
-  { label: "Replies", value: "Replies" },
+  { label: "Newest", value: "Newest", descending: true },
+  { label: "Likes", value: "Likes", descending: true },
+  { label: "Replies", value: "Replies", descending: true },
 ];
 
 const SortMenu = ({
@@ -18,14 +18,17 @@ const SortMenu = ({
   posts: Post[];
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }) => {
-  const [sortOption, setSortOption] = useState("");
+  const [sortOption, setSortOption] = useState({
+    value: "Newest",
+    descending: true,
+  });
   const [openSortMenu, setOpenSortMenu] = useState(false);
 
   useEffect(() => {
     if (!sortOption) {
       return;
     }
-    setPosts(sortPosts(posts, sortOption));
+    setPosts(sortPosts(posts, sortOption.value, sortOption.descending));
   }, [sortOption]);
   return (
     <View>
@@ -51,17 +54,26 @@ const SortMenu = ({
                 textVariant="primary"
                 className="my-1.5 self-start"
                 IconRight={() =>
-                  item.value == sortOption && (
+                  item.value == sortOption.value && (
                     <Image
-                      source={icons.check}
+                      source={
+                        sortOption.descending ? icons.arrowDown : icons.arrowUp
+                      }
                       tintColor="#253048"
                       className="w-5 h-5 ml-1"
                     />
                   )
                 }
                 onPress={() => {
-                  setSortOption(item.value);
-                  setOpenSortMenu(false);
+                  item.value == sortOption.value
+                    ? setSortOption({
+                        ...sortOption,
+                        descending: !sortOption.descending,
+                      })
+                    : setSortOption({
+                        value: item.value,
+                        descending: item.descending,
+                      });
                 }}
               />
             )}

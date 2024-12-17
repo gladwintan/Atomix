@@ -13,6 +13,7 @@ import { icons } from "@/constants";
 import { router } from "expo-router";
 import FilterMenu from "@/components/forum/FilterMenu";
 import SortMenu from "@/components/forum/SortMenu";
+import OptionsMenu from "@/components/forum/OptionsMenu";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -66,7 +67,7 @@ const SearchPage = () => {
 
   return (
     <SafeAreaView edges={["left", "right", "top"]} className="flex-1">
-      <View className="items-end">
+      <View className="items-end h-12">
         <CustomButton
           title="forum"
           textVariant="back"
@@ -84,10 +85,12 @@ const SearchPage = () => {
         <SearchBar handleSearch={handleSearch} />
       </View>
 
-      <View className="px-2 justify-end flex-row items-center">
-        <FilterMenu posts={searchResults} setPosts={setFilteredSearchResults} />
-        <SortMenu
-          posts={filteredSearchResults}
+      <View className="px-2 justify-between flex-row items-center">
+        <Text className="font-openSans ml-1 text-dark-base text-xs">
+          Showing {searchResults.length} of {searchResults.length} results
+        </Text>
+        <OptionsMenu
+          posts={searchResults}
           setPosts={setFilteredSearchResults}
         />
       </View>

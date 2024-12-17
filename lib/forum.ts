@@ -1,4 +1,4 @@
-import { Post } from "@/types/type";
+import { FilterOption, Post } from "@/types/type";
 import { fetchAPI } from "./fetch";
 
 export const getPosts = async (userClerkId: string | undefined) => {
@@ -485,41 +485,52 @@ export const removeLikeForReply = async (
   }
 };
 
-export const sortPosts = (posts: Post[], sortOption: string): Post[] => {
+export const sortPosts = (
+  posts: Post[],
+  sortOption: string,
+  descending: boolean
+): Post[] => {
   const postsCopy = [...posts];
+  let sortedPosts = postsCopy;
   switch (sortOption) {
-    case "Recent":
-      const sortedByRecency = postsCopy.sort(
+    case "Newest":
+      sortedPosts = postsCopy.sort(
         (a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
-      return sortedByRecency;
+      break;
     case "Likes":
-      const sortedByLikeCount = postsCopy.sort(
+      sortedPosts = postsCopy.sort(
         (a, b) => parseInt(b.like_count) - parseInt(a.like_count)
       );
-      return sortedByLikeCount;
+      break;
     case "Replies":
-      const sortedByReplyCount = postsCopy.sort(
+      sortedPosts = postsCopy.sort(
         (a, b) => parseInt(b.reply_count) - parseInt(a.reply_count)
       );
-      return sortedByReplyCount;
+      break;
     default:
-      return posts;
   }
+  return descending ? sortedPosts : sortedPosts.reverse();
 };
 
 export const filterPosts = (
   posts: Post[],
-  filterType: string,
-  filterOption: string
+  filterOptions: FilterOption[]
 ): Post[] => {
-  switch (filterType) {
-    case "difficulty":
-      return posts.filter((post) => post.difficulty === filterOption);
-    case "topic":
-      return posts.filter((post) => post.topic === filterOption);
-    default:
-      return posts;
-  }
+  const filteredPosts = posts.filter((post) => {
+    for (const filterOption of filterOptions) {
+      switch (filterOption.value.type) {
+        case "difficulty":
+          if (post.difficulty === filterOption.value.option) return true;
+          break;
+        case "topic":
+          if (post.topic === filterOption.value.option) return true;
+          break;
+        default:
+          return true;
+      }
+    }
+  });
+  return filteredPosts;
 };

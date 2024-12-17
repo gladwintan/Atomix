@@ -1,8 +1,12 @@
 import add from "@/assets/icons/add.png";
+import arrowDown from "@/assets/icons/arrow-down.png";
 import arrowLeft from "@/assets/icons/arrow-left.png";
 import arrowRight from "@/assets/icons/arrow-right.png";
+import arrowUp from "@/assets/icons/arrow-up.png";
 import calendar from "@/assets/icons/calendar.png";
 import check from "@/assets/icons/check.png";
+import checkbox from "@/assets/icons/checkbox.png";
+import checkboxBlank from "@/assets/icons/checkbox-blank.png";
 import checkCircle from "@/assets/icons/check-circle.png";
 import chemistry from "@/assets/icons/chemistry.png";
 import close from "@/assets/icons/close.png";
@@ -26,6 +30,7 @@ import lesson from "@/assets/icons/lesson.png";
 import likes from "@/assets/icons/likes.png";
 import lock from "@/assets/icons/lock.png";
 import ongoingEmpty from "@/assets/graphics/ongoing-empty.png";
+import options from "@/assets/icons/options.png";
 import password from "@/assets/icons/password.png";
 import pending from "@/assets/icons/pending.png";
 import post from "@/assets/icons/post.png";
@@ -58,10 +63,14 @@ export const onboarding = [
 
 export const icons = {
   add,
+  arrowDown,
   arrowLeft,
   arrowRight,
+  arrowUp,
   calendar,
   check,
+  checkbox,
+  checkboxBlank,
   chemistry,
   close,
   code,
@@ -87,6 +96,7 @@ export const icons = {
   pending,
   post,
   profile,
+  options,
   ongoingEmpty,
   quiz,
   reply,
