@@ -1,15 +1,17 @@
+import Carousel from "@/components/Carousel";
 import CustomButton from "@/components/CustomButton";
 import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";
 import OptionsMenu from "@/components/forum/OptionsMenu";
 import ForumLoader from "@/components/loader/ForumLoader";
 import { icons } from "@/constants";
-import { getPosts } from "@/lib/forum";
+import { getPosts, getTrendingPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
 import { Href, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
+  Dimensions,
   FlatList,
   Image,
   RefreshControl,
@@ -42,6 +44,7 @@ const Forum = () => {
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [trendingPosts, setTrendingPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     if (userClerkId) fetchPosts();
@@ -51,15 +54,30 @@ const Forum = () => {
     if (!userClerkId) return;
 
     setLoading(true);
-    const { posts, success, error } = await getPosts(userClerkId);
-    if (posts) {
-      setPosts(posts);
-      setFilteredPosts(posts);
-      setTimeout(() => setLoading(false), 500);
+    SetLoadError({ error: "" });
+    const [allPosts, trendingPosts] = await Promise.all([
+      getPosts(userClerkId),
+      getTrendingPosts(userClerkId),
+    ]);
+
+    if (allPosts.posts) {
+      setPosts(allPosts.posts);
+      setFilteredPosts(allPosts.posts);
     }
-    if (error) {
-      SetLoadError({ error: error });
+
+    if (trendingPosts.posts) {
+      setTrendingPosts(trendingPosts.posts);
     }
+
+    if (allPosts.error) {
+      SetLoadError({ error: allPosts.error });
+      return;
+    } else if (trendingPosts.error) {
+      SetLoadError({ error: trendingPosts.error });
+      return;
+    }
+
+    setTimeout(() => setLoading(false), 500);
   }, [userClerkId]);
 
   return (
@@ -88,7 +106,7 @@ const Forum = () => {
               progressBackgroundColor="#ffffff"
             />
           }
-          stickyHeaderIndices={[1]}
+          stickyHeaderIndices={[3]}
           className="flex-1"
         >
           {/* Quick links */}
@@ -113,16 +131,48 @@ const Forum = () => {
             )}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={() => <View className="w-4" />}
-            className="p-4 bg-white"
+            className="p-4 mt-1 mb-5 bg-white"
             scrollEnabled
             horizontal
           />
 
           {/* Trending section */}
+          <View className="left-3 flex-row space-x-1 items-center">
+            <Text className="font-openSans-bold text-dark-base">Trending</Text>
+            <Image
+              source={icons.trending}
+              tintColor="#161d2e"
+              className="w-4 h-4"
+            />
+          </View>
+          <Carousel
+            data={trendingPosts}
+            renderItem={({ item }) => (
+              <ForumPostCard
+                postId={item.id.toString()}
+                title={item.title}
+                description={item.description}
+                likeCount={item.like_count}
+                replyCount={item.reply_count}
+                topic={item.topic}
+                difficulty={item.difficulty}
+                author={item.author}
+                isAuthor={item.user_is_author}
+                userLikedPost={item.user_liked_post}
+                userRepliedPost={item.user_replied_post}
+                creationDate={item.created_at}
+              />
+            )}
+            keyExtractor={(item, index) => item?.id.toString()}
+            className="h-44 pt-2"
+            containerClassName="mb-8"
+          />
 
           {/* Discover section */}
           <View className="p-2 justify-end flex-row items-center bg-white">
-            <Text className="absolute left-3 font-openSans-bold">Discover</Text>
+            <Text className="absolute left-3 font-openSans-bold text-dark-base">
+              Discover
+            </Text>
             <OptionsMenu
               posts={posts}
               setPosts={setFilteredPosts}

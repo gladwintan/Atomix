@@ -42,6 +42,7 @@ import search from "@/assets/icons/search.png";
 import sort from "@/assets/icons/sort.png";
 import start from "@/assets/icons/start.png";
 import time from "@/assets/icons/time.png";
+import trending from "@/assets/icons/trending.png";
 import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
@@ -105,6 +106,7 @@ export const icons = {
   sort,
   start,
   time,
+  trending,
 };
 
 export const images = {

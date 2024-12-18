@@ -33,7 +33,7 @@ const ForumPostCard = ({
 }) => {
   return (
     <TouchableOpacity
-      className="p-4"
+      className="p-4 w-[100vw]"
       onPress={() => router.push(`/(root)/forum/${postId}` as Href)}
     >
       <View className="flex-row items-center space-x-2.5 mb-2.5">

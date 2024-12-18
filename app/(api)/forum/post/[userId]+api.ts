@@ -15,6 +15,11 @@ export async function GET(
     }
 
     const response = await sql`
+      WITH curr_user AS (
+        SELECT id 
+        FROM users 
+        WHERE clerk_id = ${userId} 
+      )
       SELECT 
         posts.id,
         posts.title,
@@ -28,18 +33,18 @@ export async function GET(
         COUNT(DISTINCT replies.id) AS reply_count,
         COUNT(DISTINCT 
           CASE 
-            WHEN post_likes.user_id = (SELECT id FROM users WHERE clerk_id = ${userId}) 
+            WHEN post_likes.user_id = (SELECT id FROM curr_user) 
             THEN post_likes.id 
           END
         ) > 0 AS user_liked_post,
         COUNT(DISTINCT 
           CASE 
-            WHEN replies.author_id = (SELECT id FROM users WHERE clerk_id = ${userId}) 
+            WHEN replies.author_id = (SELECT id FROM curr_user) 
             THEN replies.id 
           END
         ) > 0 AS user_replied_post,
         CASE 
-          WHEN posts.author_id = (SELECT id FROM users WHERE clerk_id = ${userId}) THEN true
+          WHEN posts.author_id = (SELECT id FROM curr_user) THEN true
           ELSE false
         END AS user_is_author
       FROM 

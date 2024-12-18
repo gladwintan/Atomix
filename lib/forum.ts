@@ -18,6 +18,26 @@ export const getPosts = async (userClerkId: string | undefined) => {
   }
 };
 
+export const getTrendingPosts = async (userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error fetching posts" };
+  }
+
+  try {
+    const fetchData = await fetchAPI(
+      `/(api)/forum/post/trending/${userClerkId}`,
+      {
+        method: "GET",
+      }
+    );
+    return { success: "Succesfully fetched posts", posts: fetchData?.data };
+  } catch (error) {
+    console.error("Error fetching posts from database");
+    return { error: "Error fetching posts" };
+  }
+};
+
 export const getMyPosts = async (userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated");
