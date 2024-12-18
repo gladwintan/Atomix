@@ -8,8 +8,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  RefreshControl,
 } from "react-native";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   createLikeForPost,
   deletePost,
@@ -67,34 +68,35 @@ const Post = ({ postId }: { postId: string }) => {
   const [isAuthor, setIsAuthor] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { postDetails, success, error } = await getPostDetailsWithReplies(
-        postId,
-        userClerkId
-      );
+    fetchPostDetails();
+  }, [postId, userClerkId]);
 
-      if (postDetails) {
-        setIsAuthor(postDetails.user_is_author);
-        setPostTitle(postDetails.title);
-        setPostDescription(postDetails.description);
-        setPostDifficulty(postDetails.difficulty);
-        setPostTopic(postDetails.topic);
-        setPostAuthor(postDetails.name);
-        setPostLikeCount(parseInt(postDetails.like_count));
-        setPostCreationDate(postDetails.created_at);
-        setPostLastUpdatedDate(postDetails.last_updated);
-        setPostReplies(createRepliesWithNestLevel(postDetails.replies));
-        setPostLiked(postDetails.user_liked_post);
-        setEditedPostDescription(postDetails.description);
+  const fetchPostDetails = useCallback(async () => {
+    setLoading(true);
+    const { postDetails, success, error } = await getPostDetailsWithReplies(
+      postId,
+      userClerkId
+    );
 
-        setTimeout(() => setLoading(false), 500);
-      } else if (error || !postDetails) {
-        setFetchError(true);
-      }
-    };
+    if (postDetails) {
+      setIsAuthor(postDetails.user_is_author);
+      setPostTitle(postDetails.title);
+      setPostDescription(postDetails.description);
+      setPostDifficulty(postDetails.difficulty);
+      setPostTopic(postDetails.topic);
+      setPostAuthor(postDetails.name);
+      setPostLikeCount(parseInt(postDetails.like_count));
+      setPostCreationDate(postDetails.created_at);
+      setPostLastUpdatedDate(postDetails.last_updated);
+      setPostReplies(createRepliesWithNestLevel(postDetails.replies));
+      setPostLiked(postDetails.user_liked_post);
+      setEditedPostDescription(postDetails.description);
 
-    fetchData();
-  }, [postId]);
+      setTimeout(() => setLoading(false), 500);
+    } else if (error || !postDetails) {
+      setFetchError(true);
+    }
+  }, [postId, userClerkId]);
 
   useEffect(() => {
     if (isEditing) {
@@ -156,19 +158,28 @@ const Post = ({ postId }: { postId: string }) => {
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       keyboardVerticalOffset={85}
     >
-      <ScrollView className="flex-1">
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={fetchPostDetails}
+            colors={["#9Bd35A", "#689F38"]}
+            progressBackgroundColor="#ffffff"
+          />
+        }
+        className="flex-1"
+      >
         <View className="px-3.5 pb-3">
-          <View className="items-end">
-            {isAuthor && (
-              <EditMenu
-                handleEdit={handleEditPost}
-                handleDelete={handleDeletePost}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                editState={editState}
-              />
-            )}
-          </View>
+          {isAuthor && (
+            <EditMenu
+              handleEdit={handleEditPost}
+              handleDelete={handleDeletePost}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              editState={editState}
+            />
+          )}
+
           <View className="flex-row items-center space-x-2.5 mb-2.5">
             <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
               {postDifficulty}
@@ -194,10 +205,12 @@ const Post = ({ postId }: { postId: string }) => {
               {formatPostTime(postCreationDate)}
             </Text>
           </View>
+
           <Text className="font-openSans-medium text-dark-base text-base">
             {postTitle}
           </Text>
 
+          {/* Post description */}
           <TextInput
             ref={textInputRef}
             editable={isEditing}
@@ -259,6 +272,7 @@ const Post = ({ postId }: { postId: string }) => {
           </View>
         </View>
 
+        {/* Replies */}
         <FlatList
           data={postReplies}
           renderItem={({ item }) => (
