@@ -3,7 +3,7 @@ import ContentLoader, { Rect } from "react-content-loader/native";
 import { Dimensions, Image, Text, View } from "react-native";
 import CustomButton from "../CustomButton";
 
-const ForumLoader = ({
+const ForumPostListLoader = ({
   fetchError,
   fetchPosts,
 }: {
@@ -95,4 +95,4 @@ const ForumLoader = ({
   );
 };
 
-export default ForumLoader;
+export default ForumPostListLoader;

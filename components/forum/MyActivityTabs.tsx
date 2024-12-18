@@ -3,7 +3,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Post } from "@/types/type";
 import ForumPostCard from "./ForumPostCard";
 import { useUser } from "@clerk/clerk-expo";
-import ForumLoader from "../loader/ForumLoader";
+import ForumPostListLoader from "../loader/ForumPostListLoader";
 
 const MyActivityTabs = memo(
   ({
@@ -50,7 +50,10 @@ const MyActivityTabs = memo(
     }, []);
 
     return loading ? (
-      <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
+      <ForumPostListLoader
+        fetchError={loadError.error}
+        fetchPosts={fetchPosts}
+      />
     ) : (
       <Animated.FlatList
         data={posts}

@@ -7,7 +7,7 @@ import ForumPostCard from "@/components/forum/ForumPostCard";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
 import { getPosts } from "@/lib/forum";
-import ForumLoader from "@/components/loader/ForumLoader";
+import ForumLoader from "@/components/loader/ForumPostListLoader";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { router } from "expo-router";

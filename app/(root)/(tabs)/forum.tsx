@@ -3,7 +3,7 @@ import CustomButton from "@/components/CustomButton";
 import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";
 import OptionsMenu from "@/components/forum/OptionsMenu";
-import ForumLoader from "@/components/loader/ForumLoader";
+import ForumMainPageLoader from "@/components/loader/ForumMainPageLoader";
 import { icons } from "@/constants";
 import { getPosts, getTrendingPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
@@ -95,7 +95,10 @@ const Forum = () => {
       </View>
 
       {loading ? (
-        <ForumLoader fetchError={loadError.error} fetchPosts={fetchPosts} />
+        <ForumMainPageLoader
+          fetchError={loadError.error}
+          fetchPosts={fetchPosts}
+        />
       ) : (
         <ScrollView
           refreshControl={
@@ -164,7 +167,7 @@ const Forum = () => {
               />
             )}
             keyExtractor={(item, index) => item?.id.toString()}
-            className="h-44 pt-2"
+            className="pt-2"
             containerClassName="mb-8"
           />
 
