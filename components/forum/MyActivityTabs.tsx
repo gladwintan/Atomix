@@ -142,7 +142,7 @@ const MyActivityTabs = memo(
             keyExtractor={(item, index) => item.id.toString()}
             ListEmptyComponent={ListEmptyComponent}
             scrollEnabled={false}
-            className="pb-2"
+            className="pb-5"
           />
         )}
       </Animated.ScrollView>

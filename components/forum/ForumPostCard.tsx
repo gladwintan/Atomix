@@ -58,7 +58,7 @@ const ForumPostCard = ({
             className="h-3.5 w-3.5"
           />
           <Text className="text-gray-600 text-xs">
-            posted {formatPostTime(creationDate)}
+            posted {formatPostTime(creationDate)} ago
           </Text>
         </View>
       </View>
