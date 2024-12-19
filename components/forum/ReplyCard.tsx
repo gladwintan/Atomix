@@ -121,8 +121,8 @@ const ReplyCard = ({
             >
               {isAuthor ? "you" : author}
             </Text>
-            <Text className="font-openSans text-gray-600 text-xs">•</Text>
-            <Text className="font-openSans text-gray-600 text-xs">
+            <Text className="font-openSans text-gray-500 text-xs">•</Text>
+            <Text className="font-openSans text-gray-500 text-xs">
               {formatPostTime(creationDate)}
             </Text>
           </View>
@@ -152,7 +152,7 @@ const ReplyCard = ({
       <View className="flex-row items-end justify-between mr-2 mt-2">
         <Text className="font-openSans-light text-3xs">
           {creationDate != replyLastUpdatedDate &&
-            "edited " + formatPostTime(replyLastUpdatedDate)}
+            "edited " + formatPostTime(replyLastUpdatedDate) + " ago"}
         </Text>
 
         <View className="flex-row items-center justify-center space-x-2.5">

@@ -203,7 +203,7 @@ const Post = ({ postId }: { postId: string }) => {
               •
             </Text>
             <Text className="font-openSans text-gray-500 text-xs">
-              {formatPostTime(postCreationDate)}
+              {formatPostTime(postCreationDate)} ago
             </Text>
           </View>
 
@@ -228,7 +228,7 @@ const Post = ({ postId }: { postId: string }) => {
           <View className="flex-row items-end justify-between mr-2 mt-4">
             <Text className="font-openSans-light text-3xs">
               {postCreationDate != postLastUpdatedDate &&
-                "edited " + formatPostTime(postLastUpdatedDate)}
+                "edited " + formatPostTime(postLastUpdatedDate) + " ago"}
             </Text>
             <View className="flex-row items-center justfy-center space-x-3">
               {/* Reply button */}

@@ -54,10 +54,10 @@ const ForumPostCard = ({
         <View className="flex-row items-center space-x-1">
           <Image
             source={icons.time}
-            tintColor="#4b5563"
+            tintColor="#6b7280"
             className="h-3.5 w-3.5"
           />
-          <Text className="text-gray-600 text-xs">
+          <Text className="text-gray-500 text-xs">
             posted {formatPostTime(creationDate)} ago
           </Text>
         </View>
