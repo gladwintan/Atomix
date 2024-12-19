@@ -34,11 +34,14 @@ import options from "@/assets/icons/options.png";
 import password from "@/assets/icons/password.png";
 import pending from "@/assets/icons/pending.png";
 import post from "@/assets/icons/post.png";
+import postEmpty from "@/assets/graphics/post-empty.png";
 import profile from "@/assets/icons/profile.png";
 import quiz from "@/assets/icons/quiz.png";
+import repliesEmpty from "@/assets/graphics/replies-empty.png";
 import reply from "@/assets/icons/reply.png";
 import resume from "@/assets/icons/resume.png";
 import search from "@/assets/icons/search.png";
+import searchEmpty from "@/assets/graphics/search-empty.png";
 import sort from "@/assets/icons/sort.png";
 import start from "@/assets/icons/start.png";
 import time from "@/assets/icons/time.png";
@@ -107,6 +110,12 @@ export const icons = {
   start,
   time,
   trending,
+};
+
+export const graphics = {
+  postEmpty,
+  repliesEmpty,
+  searchEmpty,
 };
 
 export const images = {

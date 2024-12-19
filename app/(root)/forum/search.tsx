@@ -9,11 +9,12 @@ import { useUser } from "@clerk/clerk-expo";
 import { getPosts } from "@/lib/forum";
 import ForumLoader from "@/components/loader/ForumPostListLoader";
 import CustomButton from "@/components/CustomButton";
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { router } from "expo-router";
 import FilterMenu from "@/components/forum/FilterMenu";
 import SortMenu from "@/components/forum/SortMenu";
 import OptionsMenu from "@/components/forum/OptionsMenu";
+import EmptyState from "@/components/EmptyState";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -127,9 +128,12 @@ const SearchPage = () => {
           className="py-2 mb-8 bg-white"
           scrollEnabled={true}
           ListEmptyComponent={() => (
-            <View className="h-[50vh] border">
-              <Text>No posts to show</Text>
-            </View>
+            <EmptyState
+              title="No search results found"
+              description="Try adjusting your search to find what you are looking for"
+              imageSrc={graphics.searchEmpty}
+              containerClassName="mt-10"
+            />
           )}
         />
       )}

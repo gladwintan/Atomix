@@ -5,6 +5,8 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import MyActivityTabs from "@/components/forum/MyActivityTabs";
 import CreatePostMenu from "@/components/forum/CreatePostMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
+import EmptyState from "@/components/EmptyState";
+import { graphics } from "@/constants";
 
 const MyActivity = () => {
   const [index, setIndex] = useState(0);
@@ -17,13 +19,46 @@ const MyActivity = () => {
   ]);
 
   const MyPosts = () => (
-    <MyActivityTabs fetchFunction={getMyPosts} scrollY={scrollY} />
+    <MyActivityTabs
+      fetchFunction={getMyPosts}
+      scrollY={scrollY}
+      ListEmptyComponent={() => (
+        <EmptyState
+          title="No posts created"
+          description="Create a post now"
+          imageSrc={graphics.postEmpty}
+          containerClassName="mt-10"
+        />
+      )}
+    />
   );
   const RepliedPosts = () => (
-    <MyActivityTabs fetchFunction={getRepliedPosts} scrollY={scrollY} />
+    <MyActivityTabs
+      fetchFunction={getRepliedPosts}
+      scrollY={scrollY}
+      ListEmptyComponent={() => (
+        <EmptyState
+          title="No posts replied to"
+          description="Reply to a post and join the discussion"
+          imageSrc={graphics.postEmpty}
+          containerClassName="mt-10"
+        />
+      )}
+    />
   );
   const LikedPosts = () => (
-    <MyActivityTabs fetchFunction={getLikedPosts} scrollY={scrollY} />
+    <MyActivityTabs
+      fetchFunction={getLikedPosts}
+      scrollY={scrollY}
+      ListEmptyComponent={() => (
+        <EmptyState
+          title="No posts liked"
+          description="Like a post and see them here"
+          imageSrc={graphics.postEmpty}
+          containerClassName="mt-10"
+        />
+      )}
+    />
   );
 
   const renderScene = useCallback(

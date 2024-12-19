@@ -106,7 +106,7 @@ const ReplyCard = ({
 
   return (
     <View
-      className={`px-3.5 py-3 border-neutral-200 ${nestLevel == 0 ? "border-t-[1px]" : "border-t-[0.5px]"}`}
+      className={`px-3.5 py-3 border-neutral-200 ${nestLevel == 0 ? "border-t" : "border-t-[0.5px]"}`}
       style={{ marginLeft: 15 * nestLevel }}
     >
       <View className="flex-row items-center justify-between">

@@ -9,6 +9,7 @@ const MyActivityTabs = memo(
   ({
     fetchFunction,
     scrollY,
+    ListEmptyComponent,
   }: {
     fetchFunction: (userClerkId: string | undefined) => Promise<{
       posts?: Post[];
@@ -16,6 +17,7 @@ const MyActivityTabs = memo(
       error?: string;
     }>;
     scrollY: Animated.Value;
+    ListEmptyComponent: React.ComponentType<any> | React.ReactElement | null;
   }) => {
     const { user } = useUser();
     const userClerkId = user?.id;
@@ -77,13 +79,7 @@ const MyActivityTabs = memo(
           <View className="h-1.5 border-t border-neutral-200" />
         )}
         keyExtractor={(item, index) => item.id.toString()}
-        ListEmptyComponent={() => (
-          <View className="h-24 items-center justify-end">
-            <Text className="font-openSans-medium text-dark-light">
-              No posts yet
-            </Text>
-          </View>
-        )}
+        ListEmptyComponent={ListEmptyComponent}
         className="py-2 bg-white"
         refreshControl={
           <RefreshControl

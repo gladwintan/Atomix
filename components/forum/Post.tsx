@@ -27,13 +27,14 @@ import {
 } from "@/lib/utils";
 import CustomButton from "../CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { useUser } from "@clerk/clerk-expo";
 import ReplyCard from "./ReplyCard";
 import { router } from "expo-router";
 import ReplyMenu from "./ReplyMenu";
 import EditMenu from "./EditMenu";
 import ForumPostLoader from "../loader/ForumPostLoader";
+import EmptyState from "../EmptyState";
 
 const Post = ({ postId }: { postId: string }) => {
   const { user } = useUser();
@@ -299,11 +300,12 @@ const Post = ({ postId }: { postId: string }) => {
           className="pb-4 bg-white"
           scrollEnabled={false}
           ListEmptyComponent={() => (
-            <View className="border-t-[1.5px] border-neutral-200 h-24 items-center justify-end">
-              <Text className="font-openSans-medium text-dark-light">
-                No replies yet
-              </Text>
-            </View>
+            <EmptyState
+              title="No replies yet"
+              description="Start a discussion by replying to the post"
+              imageSrc={graphics.repliesEmpty}
+              containerClassName="border-t border-neutral-200 pt-10"
+            />
           )}
         />
       </ScrollView>

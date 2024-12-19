@@ -1,17 +1,17 @@
 import Carousel from "@/components/Carousel";
 import CustomButton from "@/components/CustomButton";
+import EmptyState from "@/components/EmptyState";
 import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";
 import OptionsMenu from "@/components/forum/OptionsMenu";
 import ForumMainPageLoader from "@/components/loader/ForumMainPageLoader";
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { getPosts, getTrendingPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
 import { Href, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
-  Dimensions,
   FlatList,
   Image,
   RefreshControl,
@@ -167,6 +167,12 @@ const Forum = () => {
               />
             )}
             keyExtractor={(item, index) => item?.id.toString()}
+            ListEmptyComponent={() => (
+              <EmptyState
+                title="No trending posts"
+                imageSrc={graphics.postEmpty}
+              />
+            )}
             className="pt-2"
             containerClassName="mb-8"
           />
@@ -207,9 +213,10 @@ const Forum = () => {
             className="py-2 bg-white"
             scrollEnabled={false}
             ListEmptyComponent={() => (
-              <View className="h-[55vh] border">
-                <Text>No posts to show</Text>
-              </View>
+              <EmptyState
+                title="No posts to show"
+                imageSrc={graphics.postEmpty}
+              />
             )}
           />
         </ScrollView>
