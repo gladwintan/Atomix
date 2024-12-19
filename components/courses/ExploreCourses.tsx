@@ -14,12 +14,9 @@ const ExploreCourses = ({
 }) => {
   return (
     <>
-      <View className="mx-4 my-2 mt-5 flex-row items-center justify-between">
-        <Text className="font-openSans-semibold text-base text-dark-base">
-          Explore
-        </Text>
-        <Text className="text-xs font-openSans-light text-dark-base">All shown</Text>
-      </View>
+      <Text className="mx-4 my-2 mt-8 font-openSans-bold text-base text-dark-base">
+        Explore
+      </Text>
       <FlatList
         data={exploreCourses}
         renderItem={({ item }) => (
@@ -30,16 +27,16 @@ const ExploreCourses = ({
             completionStatus={item.completionStatus}
             onPress={() =>
               router.push(
-                `/courses/${formatCourseName(item.course_name)}` as Href,
+                `/courses/${formatCourseName(item.course_name)}` as Href
               )
             }
           />
         )}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => (
-          <View className="p-1 border-t border-slate-200" />
+          <View className="p-1 border-t border-neutral-100" />
         )}
-        className="bg-white"
+        className="bg-white pb-4"
         scrollEnabled={false}
       />
     </>

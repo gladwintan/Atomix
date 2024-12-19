@@ -51,14 +51,20 @@ const Forum = () => {
   }, [userClerkId]);
 
   const fetchPosts = useCallback(async () => {
-    if (!userClerkId) return;
-
     setLoading(true);
     SetLoadError({ error: "" });
     const [allPosts, trendingPosts] = await Promise.all([
       getPosts(userClerkId),
       getTrendingPosts(userClerkId),
     ]);
+
+    if (allPosts.error) {
+      SetLoadError({ error: allPosts.error });
+      return;
+    } else if (trendingPosts.error) {
+      SetLoadError({ error: trendingPosts.error });
+      return;
+    }
 
     if (allPosts.posts) {
       setPosts(allPosts.posts);
@@ -69,21 +75,13 @@ const Forum = () => {
       setTrendingPosts(trendingPosts.posts);
     }
 
-    if (allPosts.error) {
-      SetLoadError({ error: allPosts.error });
-      return;
-    } else if (trendingPosts.error) {
-      SetLoadError({ error: trendingPosts.error });
-      return;
-    }
-
     setTimeout(() => setLoading(false), 500);
   }, [userClerkId]);
 
   return (
     <SafeAreaView edges={["top", "right", "left"]} className="flex-1 bg-white">
       <View className="items-end h-12 border-b-[0.5px] border-neutral-100 justify-center">
-        <Text className="absolute left-3 font-openSans-bold text-base text-dark-base">
+        <Text className="absolute left-3 font-openSans-bold text-lg text-dark-base">
           Forum
         </Text>
 
@@ -110,6 +108,7 @@ const Forum = () => {
             />
           }
           stickyHeaderIndices={[3]}
+          scrollEventThrottle={16}
           className="flex-1"
         >
           {/* Quick links */}
@@ -141,11 +140,13 @@ const Forum = () => {
 
           {/* Trending section */}
           <View className="left-3 flex-row space-x-1 items-center">
-            <Text className="font-openSans-bold text-dark-base">Trending</Text>
+            <Text className="font-openSans-bold text-dark-base text-base">
+              Trending
+            </Text>
             <Image
               source={icons.trending}
               tintColor="#161d2e"
-              className="w-4 h-4"
+              className="w-5 h-5"
             />
           </View>
           <Carousel
@@ -179,7 +180,7 @@ const Forum = () => {
 
           {/* Discover section */}
           <View className="p-2 justify-end flex-row items-center bg-white">
-            <Text className="absolute left-3 font-openSans-bold text-dark-base">
+            <Text className="absolute left-3 font-openSans-bold text-dark-base text-base">
               Discover
             </Text>
             <OptionsMenu

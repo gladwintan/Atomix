@@ -63,7 +63,7 @@ const ForumPostCard = ({
         </View>
       </View>
 
-      <Text className="font-openSans-medium text-base text-dark-base mt-1">
+      <Text className="font-openSans-medium text-[15px] text-dark-base mt-1.5">
         {title}
       </Text>
 

@@ -13,7 +13,7 @@ import close from "@/assets/icons/close.png";
 import code from "@/assets/icons/code.png";
 import comment from "@/assets/icons/comment.png";
 import commentReplied from "@/assets/icons/comment-replied.png";
-import completedEmpty from "@/assets/graphics/completed-empty.png";
+import completedCoursesEmpty from "@/assets/graphics/completed-courses-empty.png";
 import completed from "@/assets/icons/completed.png";
 import content from "@/assets/icons/content.png";
 import course from "@/assets/icons/course.png";
@@ -29,7 +29,7 @@ import home from "@/assets/icons/home.png";
 import lesson from "@/assets/icons/lesson.png";
 import likes from "@/assets/icons/likes.png";
 import lock from "@/assets/icons/lock.png";
-import ongoingEmpty from "@/assets/graphics/ongoing-empty.png";
+import ongoingCoursesEmpty from "@/assets/graphics/ongoing-courses-empty.png";
 import options from "@/assets/icons/options.png";
 import password from "@/assets/icons/password.png";
 import pending from "@/assets/icons/pending.png";
@@ -82,7 +82,6 @@ export const icons = {
   comment,
   commentReplied,
   completed,
-  completedEmpty,
   content,
   deleteIcon,
   edit,
@@ -101,7 +100,6 @@ export const icons = {
   post,
   profile,
   options,
-  ongoingEmpty,
   quiz,
   reply,
   resume,
@@ -113,6 +111,8 @@ export const icons = {
 };
 
 export const graphics = {
+  completedCoursesEmpty,
+  ongoingCoursesEmpty,
   postEmpty,
   repliesEmpty,
   searchEmpty,

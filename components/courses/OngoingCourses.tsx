@@ -2,18 +2,19 @@ import { Href, router } from "expo-router";
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { formatCourseName } from "@/lib/utils";
 import { OngoingCourse } from "@/types/type";
 
 import OngoingCourseCard from "./OngoingCourseCard";
+import EmptyState from "../EmptyState";
 
 const OngoingCourses = ({
   ongoingCourses,
 }: {
   ongoingCourses: OngoingCourse[] | null;
 }) => {
-  return ongoingCourses ? (
+  return (
     <FlatList
       data={ongoingCourses}
       renderItem={({ item }) => (
@@ -23,32 +24,25 @@ const OngoingCourses = ({
           progress={item.progress}
           onPress={() =>
             router.push(
-              `/courses/${formatCourseName(item.course_name)}` as Href,
+              `/courses/${formatCourseName(item.course_name)}` as Href
             )
           }
         />
       )}
       keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={() => <View className="ml-5" />}
-      className="py-2 mb-8 bg-white"
+      ListEmptyComponent={() => (
+        <EmptyState
+          title="No ongoing courses"
+          description="Check out courses available"
+          imageSrc={graphics.ongoingCoursesEmpty}
+        />
+      )}
+      className="py-2 bg-white"
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
     />
-  ) : (
-    <View className="justify-center items-center mt-4 mb-8">
-      <Image
-        source={icons.ongoingEmpty}
-        className="w-[160] h-[64px]"
-        resizeMode="contain"
-      />
-      <Text className="mt-3 text-sm text-dark-base font-openSans-medium">
-        No ongoing courses
-      </Text>
-      <Text className="text-sm font-openSans-light text-dark-lighter">
-        Check out courses available
-      </Text>
-    </View>
   );
 };
 

@@ -2,18 +2,19 @@ import { Href, router } from "expo-router";
 import React from "react";
 import { FlatList, Image, View, StyleSheet, Text } from "react-native";
 
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { formatCourseName } from "@/lib/utils";
 import { OngoingCourse } from "@/types/type";
 
 import CompletedCourseCard from "./CompletedCourseCard";
+import EmptyState from "../EmptyState";
 
 const CompletedCourses = ({
   completedCourses,
 }: {
-  completedCourses: OngoingCourse[] | null;
+  completedCourses: OngoingCourse[];
 }) => {
-  return completedCourses ? (
+  return (
     <FlatList
       data={completedCourses}
       renderItem={({ item }) => (
@@ -23,32 +24,25 @@ const CompletedCourses = ({
           progress={item.progress}
           onPress={() =>
             router.push(
-              `/courses/${formatCourseName(item.course_name)}` as Href,
+              `/courses/${formatCourseName(item.course_name)}` as Href
             )
           }
         />
       )}
       keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={() => <View className="ml-5" />}
-      className="py-2 mb-8 bg-white"
+      ListEmptyComponent={() => (
+        <EmptyState
+          title="No completed courses"
+          description="Continue learning or start a new course"
+          imageSrc={graphics.completedCoursesEmpty}
+        />
+      )}
+      className="py-2 bg-white"
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
     />
-  ) : (
-    <View className="justify-center items-center mt-4 mb-8">
-      <Image
-        source={icons.completedEmpty}
-        className="w-[160px] h-[64px]"
-        resizeMode="contain"
-      />
-      <Text className="mt-3 text-sm text-dark-base font-openSans-medium">
-        No completed courses
-      </Text>
-      <Text className="text-sm font-openSans-light text-dark-lighter">
-        Continue learning or start a new course
-      </Text>
-    </View>
   );
 };
 

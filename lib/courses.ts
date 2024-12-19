@@ -3,11 +3,11 @@ import { OngoingCourse, ExploreCourse } from "@/types/type";
 import { fetchAPI } from "./fetch";
 
 export const getCoursesByCompletionStatus = async (
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return;
+    return { error: "Error fetching courses" };
   }
 
   try {
@@ -23,17 +23,17 @@ export const getCoursesByCompletionStatus = async (
     const startedCourses = fetchData2?.data;
 
     const ongoingCourses = startedCourses.filter(
-      (course: OngoingCourse) => !(parseFloat(course.progress) == 1.0),
+      (course: OngoingCourse) => !(parseFloat(course.progress) == 1.0)
     );
     const completedCourses = startedCourses.filter(
-      (course: OngoingCourse) => parseFloat(course.progress) == 1.0,
+      (course: OngoingCourse) => parseFloat(course.progress) == 1.0
     );
 
     const ongoingCourseNames = ongoingCourses.map(
-      (course: OngoingCourse) => course.course_name,
+      (course: OngoingCourse) => course.course_name
     );
     const completedCourseNames = completedCourses.map(
-      (course: OngoingCourse) => course.course_name,
+      (course: OngoingCourse) => course.course_name
     );
 
     const exploreCourses = allCourses?.map((course: ExploreCourse) => {
@@ -46,13 +46,14 @@ export const getCoursesByCompletionStatus = async (
     });
 
     return {
+      success: "Succesfully fetched courses",
       completedCourses: completedCourses.length == 0 ? null : completedCourses,
       ongoingCourses: ongoingCourses.length == 0 ? null : ongoingCourses,
       exploreCourses: exploreCourses,
     };
   } catch (error) {
-    console.error(error);
     console.error("Error while retrieving course progress from database");
+    return { error: "Error fetching courses" };
   }
 };
 
@@ -67,13 +68,13 @@ export const getOngoingCourses = async (userClerkId: string | undefined) => {
   });
   const ongoingCourses = fetchData?.data;
   return ongoingCourses?.filter(
-    (course: OngoingCourse) => !(parseFloat(course.progress) == 1.0),
+    (course: OngoingCourse) => !(parseFloat(course.progress) == 1.0)
   );
 };
 
 export const getCourseProgress = async (
   courseName: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
@@ -94,7 +95,7 @@ export const getCourseProgress = async (
 
 export const startNewCourse = async (
   courseName: string,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
@@ -120,7 +121,7 @@ export const startNewCourse = async (
 export const updateCourseProgress = async (
   courseName: string,
   lessonCompleted: number,
-  userClerkId: string | undefined,
+  userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");

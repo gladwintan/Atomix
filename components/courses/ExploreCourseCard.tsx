@@ -23,8 +23,10 @@ const ExploreCourseCard = ({
     <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <View className="w-full p-4">
         <View className="flex-row justify-between items-end w-full">
-          <Text className="text-sm font-openSans text-dark-base">{courseName}</Text>
-          <View className="bg-primary-50 p-1 rounded-md shadow-sm">
+          <Text className="text-sm font-openSans text-dark-base">
+            {courseName}
+          </Text>
+          <View className="bg-primary-50 p-1 rounded-md">
             <Image
               source={icons.chemistry}
               tintColor="#475980"
@@ -34,44 +36,52 @@ const ExploreCourseCard = ({
           </View>
         </View>
 
-        <Text className="font-openSans-light text-dark-base mt-3 text-[13px] leading-6">
+        <Text className="font-openSans text-dark-light mt-1.5 text-[13px]">
           {description}
         </Text>
 
-        <View className="flex-row justify-between items-center mt-6">
+        <View className="flex-row justify-between items-center mt-4">
           <View className="flex-row space-x-1.5">
-            <Text className="text-xs font-openSans text-dark-light">
+            <Text className="text-xs font-openSans text-gray-500">
               {totalLessons} lessons
             </Text>
-            <Text className="text-dark-light">•</Text>
-            <Text className="text-xs font-openSans text-dark-light">4 Quiz</Text>
-            <Text className="text-dark-light">•</Text>
-            <Text className="text-xs font-openSans text-dark-light">Intermediate</Text>
+            <Text className="text-gray-500">•</Text>
+            <Text className="text-xs font-openSans text-gray-500">4 Quiz</Text>
+            <Text className="text-gray-500">•</Text>
+            <Text className="text-xs font-openSans text-gray-500">
+              Intermediate
+            </Text>
           </View>
 
           {completionStatus == "completed" ? (
-            <View className="flex-row bg-green-light items-center p-1 rounded-md">
-              <Text className="font-openSans pl-1 text-green-dark text-xs">Completed</Text>
+            <View className="flex-row bg-green-light items-center p-1 px-2 rounded-md">
+              <Text className="font-openSans text-green-dark text-xs">
+                completed
+              </Text>
               <Image
                 source={icons.completed}
                 tintColor="#36633e"
                 resizeMode="contain"
-                className="ml-1 w-4 h-4"
+                className="ml-1 w-3.5 h-3.5"
               />
             </View>
           ) : completionStatus == "ongoing" ? (
-            <View className="flex-row bg-primary-50 items-center p-1 rounded-md">
-              <Text className="font-openSans pl-1 text-dark-lighter text-xs">Ongoing</Text>
+            <View className="flex-row bg-primary-50 items-center p-1 px-2 rounded-md">
+              <Text className="font-openSans text-dark-lighter text-xs">
+                ongoing
+              </Text>
               <Image
                 source={icons.resume}
                 tintColor="#364463"
                 resizeMode="contain"
-                className="w-5 h-5"
+                className="ml-0.5 w-3.5 h-3.5"
               />
             </View>
           ) : (
             <View className="flex-row items-center rounded-md">
-              <Text className="font-openSans pl-1 text-gray-600 text-xs">Details</Text>
+              <Text className="font-openSans text-gray-600 text-xs">
+                Details
+              </Text>
               <Image
                 source={icons.arrowRight}
                 tintColor="#4b5563"

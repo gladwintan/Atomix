@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import ReactNativeModal from "react-native-modal";
 
-import { icons } from "@/constants";
+import { graphics, icons } from "@/constants";
 import { LessonCardProps } from "@/types/type";
 
 const LessonCard = ({
@@ -22,17 +22,21 @@ const LessonCard = ({
       <View className="my-3">
         <View className="flex-row">
           <View className="mr-4 w-[30px] h-[30px] items-center justify-center rounded-full border-primary-700 border">
-            <Text className="text-dark-light text-sm font-openSans-light">{id}</Text>
+            <Text className="text-dark-light text-sm font-openSans-medium">
+              {id}
+            </Text>
           </View>
           <View
-            className={`w-10/12 p-2.5 relative bottom-2 ${id == lessonsCompleted + 1 && "bg-primary-50/40 rounded-lg"}`}
+            className={`w-10/12 p-2.5 relative bottom-2 ${id == lessonsCompleted + 1 && "bg-primary-50/60 rounded-lg"}`}
           >
-            <Text className="text-sm text-dark-base font-openSans">{title}</Text>
-            <Text className="mt-2.5 text-[13px] font-openSans-light text-dark-base leading-5">
+            <Text className="text-sm text-dark-base font-openSans-medium">
+              {title}
+            </Text>
+            <Text className="mt-2 text-[13px] font-openSans text-dark-light">
               {description}
             </Text>
 
-            <View className="mt-4 flex-row items-center justify-between">
+            <View className="mt-3.5 flex-row items-center justify-between">
               <View className="flex-row items-center space-x-1.5">
                 <Text className="text-xs text-gray-500 font-openSans">
                   Difficulty {difficulty}
@@ -44,7 +48,7 @@ const LessonCard = ({
                     source={icons.time}
                     tintColor="#6b7280"
                     resizeMode="contain"
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5"
                   />
                   <Text className="ml-1 text-xs text-gray-500 font-openSans">
                     {time}
@@ -58,7 +62,7 @@ const LessonCard = ({
                   className="bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative"
                 >
                   <Text className="text-[#36633e] text-xs font-openSans-medium">
-                    Completed
+                    completed
                   </Text>
                   <Image
                     source={icons.check}
@@ -84,7 +88,9 @@ const LessonCard = ({
                 </TouchableOpacity>
               ) : (
                 <View className="bg-[#91B0F2]/75 p-1 px-2 rounded-md flex-row items-center justify-center relative">
-                  <Text className="text-white text-xs font-openSans-medium">Locked</Text>
+                  <Text className="text-white text-xs font-openSans-semibold">
+                    Locked
+                  </Text>
                   <Image
                     source={icons.lock}
                     tintColor="white"
@@ -100,11 +106,11 @@ const LessonCard = ({
             <ReactNativeModal isVisible={showRestartMenu}>
               <View className="rounded-2xl p-4 h-[250px] w-[300px] self-center bg-white space-y-5 items-center justify-center">
                 <Image
-                  source={icons.completedEmpty}
+                  source={graphics.completedCoursesEmpty}
                   className="w-[160px] h-[64px]"
                   resizeMode="contain"
                 />
-                <Text className="text-center text-[#161d2e] text-sm mb-3 font-medium px-2">
+                <Text className="text-center text-dark-base font-openSans text-sm mb-3 px-2">
                   You have already completed this lesson
                 </Text>
                 <View className="flex-row space-x-2">
@@ -112,7 +118,9 @@ const LessonCard = ({
                     onPress={() => setShowRestartMenu(false)}
                     className="w-28 items-center justify-center border border-slate-300 p-2 rounded-lg"
                   >
-                    <Text className="text-[#161d2e]">Cancel</Text>
+                    <Text className="font-openSans text-dark-base text-xs">
+                      Cancel
+                    </Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -120,9 +128,9 @@ const LessonCard = ({
                       setShowRestartMenu(false);
                       onPress();
                     }}
-                    className="w-28 bg-[#91B0F2] items-center justify-center p-2 rounded-lg"
+                    className="w-28 bg-primary-500 items-center justify-center p-2 rounded-lg"
                   >
-                    <Text className="text-white font-semibold">
+                    <Text className="text-white font-openSans-bold text-xs">
                       Start lesson
                     </Text>
                   </TouchableOpacity>
@@ -135,7 +143,7 @@ const LessonCard = ({
 
       {!lastLesson && (
         <View
-          className={`${id <= lessonsCompleted ? "border-[#B3CCFF]" : "border-slate-300"} 
+          className={`${id <= lessonsCompleted ? "border-[#B3CCFF]" : "border-gray-300"} 
             absolute bottom-6 ml-3 h-16 w-0 border-2 rounded-b-full rounded-t-full`}
         />
       )}

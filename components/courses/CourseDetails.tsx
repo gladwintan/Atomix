@@ -27,14 +27,14 @@ const CourseDetails = ({
     <>
       <View className="p-3 px-5 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
         <View className="w-3/4">
-          <Text className="text-base text-dark-lighter font-semibold">
+          <Text className="text-base text-dark-base font-openSans-semibold">
             {courseName}
           </Text>
-          <Text className="mt-1 text-sm text-dark-lighter font-light">
+          <Text className="mt-1 text-sm text-dark-light font-openSans">
             {courseDescription}
           </Text>
         </View>
-        <View className="p-3 bg-white rounded-full absolute right-4">
+        <View className="p-2.5 bg-white rounded-full absolute right-4">
           <Image
             source={icons.chemistry}
             tintColor="#93B5FF"
@@ -49,12 +49,13 @@ const CourseDetails = ({
           source={icons.lesson}
           tintColor="#253048"
           resizeMode="contain"
-          className="w-5 h-5"
+          className="w-4 h-4"
         />
-        <Text className="text-dark-lighter font-semibold text-base ml-1">
+        <Text className="text-dark-base font-openSans-semibold text-sm ml-1">
           Lessons
         </Text>
       </View>
+
       <FlatList
         data={lessons}
         renderItem={({ item }) => (
