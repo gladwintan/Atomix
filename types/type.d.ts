@@ -1,11 +1,12 @@
 import { TextInputProps, TouchableOpacityProps } from "react-native";
 
 declare interface ButtonProps extends TouchableOpacityProps {
-  title: string;
+  title?: string;
   textVariant?:
     | "primary"
     | "default"
     | "secondary"
+    | "white"
     | "danger"
     | "success"
     | "answerSuccess"
@@ -18,10 +19,14 @@ declare interface ButtonProps extends TouchableOpacityProps {
     | "booleanSuccess"
     | "answer"
     | "answerSuccess"
-    | "back";
+    | "back"
+    | "transparent"
+    | "cancel"
+    | "confirm";
   IconLeft?: React.ComponentType<any>;
   IconRight?: React.ComponentType<any>;
   className?: string;
+  textClassName?: string;
 }
 
 declare interface InputFieldProps extends TextInputProps {
@@ -89,4 +94,46 @@ declare interface MultipleResponseQuestion {
   answer: string[];
   onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
+}
+
+declare interface Post {
+  id: number;
+  title: string;
+  description: string;
+  difficulty: string;
+  topic: string;
+  like_count: string;
+  reply_count: string;
+  created_at: string;
+  last_updated: string;
+  author: string;
+  user_is_author: boolean;
+  user_liked_post: boolean;
+  user_replied_post?: boolean;
+  replies?: PostReply[];
+}
+
+declare interface PostReply {
+  replyId: string;
+  parentReplyId: string | null;
+  postId: string;
+  content: string;
+  author: string;
+  isAuthor: boolean;
+  creationDate: string;
+  lastUpdatedDate: string;
+  likeCount: number;
+  replyCount: number;
+  userLiked: boolean;
+  nestLevel: number;
+}
+
+declare interface ReplyDetails {
+  parentReplyId: string | null;
+  author: string;
+}
+
+declare interface FilterOption {
+  label: string;
+  value: { type: string; option: string };
 }
