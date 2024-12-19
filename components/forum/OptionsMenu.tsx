@@ -50,10 +50,12 @@ const OptionsMenu = ({
   posts,
   setPosts,
   setLoading,
+  menuContainerClassName,
 }: {
   posts: Post[];
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  menuContainerClassName?: string;
 }) => {
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<
@@ -75,7 +77,7 @@ const OptionsMenu = ({
   };
 
   return (
-    <View>
+    <View className={`${menuContainerClassName}`}>
       <CustomButton
         title=""
         type="transparent"

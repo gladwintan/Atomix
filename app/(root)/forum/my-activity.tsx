@@ -117,6 +117,8 @@ const MyActivity = () => {
               height: 4,
               borderTopLeftRadius: 5,
               borderTopRightRadius: 5,
+              marginLeft: 30,
+              width: 100,
             }}
             scrollEnabled
           />

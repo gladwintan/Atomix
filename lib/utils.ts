@@ -22,30 +22,30 @@ export const formatPostTime = (date: string): string => {
   const diff = currentDate.getTime() - pastDate.getTime(); // Difference in milliseconds
 
   const units: [string, number][] = [
-    ["years", Math.floor(diff / (1000 * 60 * 60 * 24 * 365))],
-    ["months", Math.floor(diff / (1000 * 60 * 60 * 24 * 30))],
-    ["weeks", Math.floor(diff / (1000 * 60 * 60 * 24 * 7))],
-    ["days", Math.floor(diff / (1000 * 60 * 60 * 24))],
-    ["hours", Math.floor(diff / (1000 * 60 * 60))],
-    ["minutes", Math.floor(diff / (1000 * 60))],
-    ["seconds", Math.floor(diff / 1000)],
+    ["y", Math.floor(diff / (1000 * 60 * 60 * 24 * 365))],
+    ["mon", Math.floor(diff / (1000 * 60 * 60 * 24 * 30))],
+    ["w", Math.floor(diff / (1000 * 60 * 60 * 24 * 7))],
+    ["d", Math.floor(diff / (1000 * 60 * 60 * 24))],
+    ["h", Math.floor(diff / (1000 * 60 * 60))],
+    ["min", Math.floor(diff / (1000 * 60))],
+    ["s", Math.floor(diff / 1000)],
   ];
 
   for (const [unit, value] of units) {
     if (value == 1 && unit == "years") {
-      return "last year";
+      return "last yr";
     }
     if (value == 1 && unit == "months") {
-      return "last month";
+      return "last mon";
     }
     if (value == 1 && unit == "weeks") {
-      return "last week";
+      return "last wk";
     }
     if (value == 1 && unit == "days") {
       return "yesterday";
     }
     if (value >= 1) {
-      return value + " " + unit + " ago";
+      return value + unit;
     }
   }
 
