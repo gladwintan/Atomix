@@ -3,11 +3,11 @@ import { FilterOption, SortOption } from "@/types/type";
 export const filterOptions: FilterOption[] = [
   {
     label: "H1 Chemistry",
-    value: { type: "difficulty", option: "H1 Chemistry" },
+    value: { type: "level", option: "H1 Chemistry" },
   },
   {
     label: "H2 Chemistry",
-    value: { type: "difficulty", option: "H2 Chemistry" },
+    value: { type: "level", option: "H2 Chemistry" },
   },
   {
     label: "Atomic Structure",

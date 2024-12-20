@@ -9,7 +9,11 @@ export async function GET(request: Request) {
         courses.course_id,
         courses.course_name,
         courses.description,
-        courses.total_lessons
+        courses.lessons,
+        courses.quizzes,
+        courses.difficulty,
+        courses.level,
+        courses.subject
       FROM 
         courses
       ORDER BY

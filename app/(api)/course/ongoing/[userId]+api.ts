@@ -2,7 +2,7 @@ import { neon } from "@neondatabase/serverless";
 
 export async function GET(
   request: Request,
-  { userId }: Record<string, string>,
+  { userId }: Record<string, string>
 ) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
@@ -10,30 +10,32 @@ export async function GET(
     if (!userId) {
       return Response.json(
         { error: "Missing required fields" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const response = await sql`
       SELECT 
-        progress.progress,
-        progress.updated_at,
+        course_progress.course_id,
+        course_progress.progress,
+        course_progress.updated_at,
         courses.course_name,
-        progress.lessons_completed
+        course_progress.lessons_completed,
+        1 AS quizzes_completed
       FROM 
-        progress
+        course_progress
       JOIN
         courses
       ON 
-        progress.course_id = courses.course_id
+        course_progress.course_id = courses.course_id
       JOIN 
         users
       ON 
-        progress.user_id = users.id
+        course_progress.user_id = users.id
       WHERE 
         users.clerk_id = ${userId}
       ORDER BY
-        progress.updated_at DESC`;
+        course_progress.updated_at DESC`;
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {

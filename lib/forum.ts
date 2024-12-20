@@ -541,7 +541,7 @@ export const filterPosts = (
   const filteredPosts = posts.filter((post) => {
     for (const filterOption of filterOptions) {
       switch (filterOption.value.type) {
-        case "difficulty":
+        case "level":
           if (post.difficulty === filterOption.value.option) return true;
           break;
         case "topic":

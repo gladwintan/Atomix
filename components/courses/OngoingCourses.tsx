@@ -22,6 +22,7 @@ const OngoingCourses = ({
           courseName={item.course_name}
           lastLesson={item.updated_at}
           progress={item.progress}
+          quizzesUncompleted={item.quizzes_completed}
           onPress={() =>
             router.push(
               `/courses/${formatCourseName(item.course_name)}` as Href

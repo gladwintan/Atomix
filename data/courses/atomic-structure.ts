@@ -1,15 +1,13 @@
 import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png";
-import {
-  Lesson,
-} from "@/types/type";
+import { Lesson } from "@/types/type";
+
+export const images = {
+  dOrbitals,
+};
 
 export const info = {
   courseName: "Atomic Structure",
   courseDescription: "Learn about atomic orbitals and ionisation energy",
-};
-
-export const images = {
-  dOrbitals,
 };
 
 export const lessons: Lesson[] = [

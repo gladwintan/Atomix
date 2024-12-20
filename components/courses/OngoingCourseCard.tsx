@@ -8,11 +8,13 @@ const OngoingCourseCard = ({
   courseName,
   progress,
   lastLesson,
+  quizzesUncompleted,
   onPress,
 }: {
   courseName: string;
   progress: string;
   lastLesson: string;
+  quizzesUncompleted: number;
   onPress: () => void;
 }) => {
   return (
@@ -65,7 +67,7 @@ const OngoingCourseCard = ({
               <Text className="text-xs text-dark-base font-openSans">Quiz</Text>
               {/* To update uncompleted quizzes with data  */}
               <Text className="text-2xs text-gray-500 font-openSans">
-                4 uncompleted
+                {quizzesUncompleted} uncompleted
               </Text>
             </View>
           </View>

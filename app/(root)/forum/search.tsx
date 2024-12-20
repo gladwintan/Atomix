@@ -6,15 +6,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ForumPostCard from "@/components/forum/ForumPostCard";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
-import { getPosts } from "@/lib/forum";
+import { filterPosts, getPosts, sortPosts } from "@/lib/forum";
 import ForumLoader from "@/components/loader/ForumPostListLoader";
 import CustomButton from "@/components/CustomButton";
 import { graphics, icons } from "@/constants";
 import { router } from "expo-router";
-import FilterMenu from "@/components/forum/FilterMenu";
-import SortMenu from "@/components/forum/SortMenu";
 import OptionsMenu from "@/components/OptionsMenu";
 import EmptyState from "@/components/EmptyState";
+import { filterOptions, sortOptions } from "@/data/forum/dropdown-options";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -91,8 +90,12 @@ const SearchPage = () => {
           Showing {searchResults.length} of {searchResults.length} results
         </Text>
         <OptionsMenu
-          posts={searchResults}
-          setPosts={setFilteredSearchResults}
+          filterOptions={filterOptions}
+          sortOptions={sortOptions}
+          data={searchResults}
+          setData={setFilteredSearchResults}
+          filterFunction={filterPosts}
+          sortFunction={sortPosts}
           setLoading={setLoading}
         />
       </View>

@@ -12,7 +12,7 @@ import {
   RefreshControl,
 } from "react-native";
 
-import CourseLoader from "@/components/loader/CourseLoader";
+import CourseMainPageLoader from "@/components/loader/CourseMainPageLoader";
 import CompletedCourses from "@/components/courses/CompletedCourses";
 import ExploreCourses from "@/components/courses/ExploreCourses";
 import OngoingCourses from "@/components/courses/OngoingCourses";
@@ -142,7 +142,7 @@ const Course = () => {
 
       {loading ? (
         <View className="h-full bg-white pt-5 rounded-t-3xl">
-          <CourseLoader
+          <CourseMainPageLoader
             fetchError={loadError.error}
             fetchCourses={fetchCourses}
           />

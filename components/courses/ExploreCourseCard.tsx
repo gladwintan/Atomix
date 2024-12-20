@@ -1,22 +1,27 @@
 import { Image, View, Text, TouchableOpacity } from "react-native";
 
 import { icons } from "@/constants";
+import { getCourseLevelTagColour } from "@/lib/utils";
 
 const ExploreCourseCard = ({
   courseName,
   description,
-  totalLessons,
+  lessons,
   completionStatus,
   difficulty,
   quizzes,
+  level,
+  subject,
   onPress,
 }: {
   courseName: string;
   description: string;
-  totalLessons: number;
+  lessons: number;
   completionStatus: string;
-  difficulty?: string;
-  quizzes?: number;
+  difficulty: string;
+  quizzes: number;
+  level: string;
+  subject: string;
   onPress: () => void;
 }) => {
   return (
@@ -26,14 +31,11 @@ const ExploreCourseCard = ({
           <Text className="text-sm font-openSans text-dark-base">
             {courseName}
           </Text>
-          <View className="bg-primary-50 p-1 rounded-md">
-            <Image
-              source={icons.chemistry}
-              tintColor="#475980"
-              resizeMode="contain"
-              className="w-4 h-4"
-            />
-          </View>
+          <Text
+            className={`${getCourseLevelTagColour(level)} p-0.5 px-1 rounded-full font-openSans-semibold text-white text-3xs`}
+          >
+            {level} {subject}
+          </Text>
         </View>
 
         <Text className="font-openSans text-dark-light mt-1.5 text-[13px]">
@@ -43,13 +45,15 @@ const ExploreCourseCard = ({
         <View className="flex-row justify-between items-center mt-4">
           <View className="flex-row space-x-1.5">
             <Text className="text-xs font-openSans text-gray-500">
-              {totalLessons} lessons
+              {lessons} Lessons
             </Text>
             <Text className="text-gray-500">•</Text>
-            <Text className="text-xs font-openSans text-gray-500">4 Quiz</Text>
+            <Text className="text-xs font-openSans text-gray-500">
+              {quizzes} Quizzes
+            </Text>
             <Text className="text-gray-500">•</Text>
             <Text className="text-xs font-openSans text-gray-500">
-              Intermediate
+              {difficulty}
             </Text>
           </View>
 

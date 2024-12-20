@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { SafeAreaView } from "react-native";
 
 import BinaryQuestion from "@/components/questions/BinaryQuestionCard";
-import { images } from "@/courses/AtomicStructure";
+import { images } from "@/data/courses/atomic-structure";
 
 import { ProgressContext } from "./_layout";
 

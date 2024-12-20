@@ -1,23 +1,25 @@
-import { OngoingCourse, ExploreCourse } from "@/types/type";
+import { OngoingCourse, ExploreCourse, FilterOption } from "@/types/type";
 
 import { fetchAPI } from "./fetch";
+import OngoingCourses from "@/components/courses/OngoingCourses";
 
 export const getCoursesByCompletionStatus = async (
   userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Error fetching courses" };
+    return { error: "Error loading courses" };
   }
 
   try {
-    const fetchData1 = await fetchAPI(`/(api)/course/get`, {
-      method: "GET",
-    });
-
-    const fetchData2 = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-      method: "GET",
-    });
+    const [fetchData1, fetchData2] = await Promise.all([
+      fetchAPI(`/(api)/course/get`, {
+        method: "GET",
+      }),
+      fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
+        method: "GET",
+      }),
+    ]);
 
     const allCourses = fetchData1?.data;
     const startedCourses = fetchData2?.data;
@@ -29,31 +31,31 @@ export const getCoursesByCompletionStatus = async (
       (course: OngoingCourse) => parseFloat(course.progress) == 1.0
     );
 
-    const ongoingCourseNames = ongoingCourses.map(
-      (course: OngoingCourse) => course.course_name
+    const ongoingCoursesId = ongoingCourses.map(
+      (course: OngoingCourse) => course.course_id
     );
-    const completedCourseNames = completedCourses.map(
-      (course: OngoingCourse) => course.course_name
+    const completedCoursesId = completedCourses.map(
+      (course: OngoingCourse) => course.course_id
     );
 
-    const exploreCourses = allCourses?.map((course: ExploreCourse) => {
-      if (ongoingCourseNames.includes(course.course_name)) {
+    const exploreCourses = allCourses.map((course: ExploreCourse) => {
+      if (ongoingCoursesId.includes(course.course_id)) {
         return { ...course, completionStatus: "ongoing" };
-      } else if (completedCourseNames.includes(course.course_name)) {
+      } else if (completedCoursesId.includes(course.course_id)) {
         return { ...course, completionStatus: "completed" };
       }
       return { ...course, completionStatus: "uncompleted" };
     });
 
     return {
-      success: "Succesfully fetched courses",
-      completedCourses: completedCourses.length == 0 ? null : completedCourses,
-      ongoingCourses: ongoingCourses.length == 0 ? null : ongoingCourses,
+      success: "Succesfully loaded courses",
+      completedCourses: completedCourses,
+      ongoingCourses: ongoingCourses,
       exploreCourses: exploreCourses,
     };
   } catch (error) {
     console.error("Error while retrieving course progress from database");
-    return { error: "Error fetching courses" };
+    return { error: "Error loading courses" };
   }
 };
 
@@ -143,4 +145,44 @@ export const updateCourseProgress = async (
     console.error("Error saving progress to database");
     return { success: false };
   }
+};
+
+export const sortCourses = (
+  courses: ExploreCourse[],
+  sortOption: string,
+  descending: boolean
+): ExploreCourse[] => {
+  const coursesCopy = [...courses];
+  let sortedCourses = coursesCopy;
+  switch (sortOption) {
+    case "Lessons":
+      sortedCourses = coursesCopy.sort((a, b) => b.lessons - a.lessons);
+      break;
+    case "Quizzes":
+      sortedCourses = coursesCopy.sort((a, b) => b.quizzes - a.quizzes);
+      break;
+    default:
+  }
+  return descending ? sortedCourses : sortedCourses.reverse();
+};
+
+export const filterCourses = (
+  courses: ExploreCourse[],
+  filterOptions: FilterOption[]
+): ExploreCourse[] => {
+  const filteredCourses = courses.filter((course) => {
+    for (const filterOption of filterOptions) {
+      switch (filterOption.value.type) {
+        case "difficulty":
+          if (course.difficulty === filterOption.value.option) return true;
+          break;
+        case "level":
+          if (course.level === filterOption.value.option) return true;
+          break;
+        default:
+          return true;
+      }
+    }
+  });
+  return filteredCourses;
 };

@@ -41,7 +41,7 @@ declare interface InputFieldProps extends TextInputProps {
 }
 
 declare interface Course {
-  id?: number;
+  course_id: number;
   course_name: string;
 }
 
@@ -49,11 +49,16 @@ declare interface OngoingCourse extends Course {
   progress: string;
   updated_at: string;
   lessons_completed: number;
+  quizzes_completed: number;
 }
 
 declare interface ExploreCourse extends Course {
   description: string;
-  total_lessons: number;
+  difficulty: string;
+  lessons: number;
+  quizzes: number;
+  level: string;
+  subject: string;
   completionStatus: "uncompleted" | "completed" | "ongoing";
 }
 

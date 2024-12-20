@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CourseDetails from "@/components/courses/CourseDetails";
-import { info, lessons } from "@/courses/AtomicStructure";
+import { info, lessons } from "@/data/courses/atomic-structure";
 import { getCourseProgress } from "@/lib/courses";
 
 const AtomicStructure = () => {
