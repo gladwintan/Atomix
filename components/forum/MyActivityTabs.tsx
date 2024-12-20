@@ -13,6 +13,8 @@ import { useUser } from "@clerk/clerk-expo";
 import ForumPostListLoader from "../loader/ForumPostListLoader";
 import OptionsMenu from "../OptionsMenu";
 import SearchBar from "../SearchBar";
+import { filterOptions, sortOptions } from "@/data/forum/dropdown-options";
+import { filterPosts, sortPosts } from "@/lib/forum";
 
 const MyActivityTabs = memo(
   ({
@@ -105,8 +107,12 @@ const MyActivityTabs = memo(
       >
         <View className="px-2 mt-1 flex-row justify-end items-center h-12">
           <OptionsMenu
-            posts={filteredPosts}
-            setPosts={setFilteredPosts}
+            filterOptions={filterOptions}
+            sortOptions={sortOptions}
+            data={posts}
+            setData={setFilteredPosts}
+            filterFunction={filterPosts}
+            sortFunction={sortPosts}
             setLoading={setLoading}
             menuContainerClassName="absolute left-3"
           />
