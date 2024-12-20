@@ -7,8 +7,8 @@ const ForumPostListLoader = ({
   fetchError,
   fetchPosts,
 }: {
-  fetchError: string;
-  fetchPosts: () => void;
+  fetchError?: string;
+  fetchPosts?: () => void;
 }) => {
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;

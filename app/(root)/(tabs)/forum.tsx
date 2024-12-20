@@ -5,6 +5,7 @@ import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";
 import OptionsMenu from "@/components/forum/OptionsMenu";
 import ForumMainPageLoader from "@/components/loader/ForumMainPageLoader";
+import ForumPostListLoader from "@/components/loader/ForumPostListLoader";
 import { graphics, icons } from "@/constants";
 import { getPosts, getTrendingPosts } from "@/lib/forum";
 import { Post } from "@/types/type";
@@ -41,6 +42,7 @@ const Forum = () => {
 
   const [loading, setLoading] = useState(true);
   const [loadError, SetLoadError] = useState({ error: "" });
+  const [filtering, setFiltering] = useState(false);
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
@@ -186,40 +188,44 @@ const Forum = () => {
             <OptionsMenu
               posts={posts}
               setPosts={setFilteredPosts}
-              setLoading={setLoading}
+              setLoading={setFiltering}
             />
           </View>
-          <FlatList
-            data={filteredPosts}
-            renderItem={({ item }) => (
-              <ForumPostCard
-                postId={item.id.toString()}
-                title={item.title}
-                description={item.description}
-                likeCount={item.like_count}
-                replyCount={item.reply_count}
-                topic={item.topic}
-                difficulty={item.difficulty}
-                author={item.author}
-                isAuthor={item.user_is_author}
-                userLikedPost={item.user_liked_post}
-                userRepliedPost={item.user_replied_post}
-                creationDate={item.created_at}
-              />
-            )}
-            ItemSeparatorComponent={() => (
-              <View className="h-1.5 border-t border-neutral-200" />
-            )}
-            keyExtractor={(item, index) => item?.id.toString()}
-            className="py-2 bg-white"
-            scrollEnabled={false}
-            ListEmptyComponent={() => (
-              <EmptyState
-                title="No posts to show"
-                imageSrc={graphics.postEmpty}
-              />
-            )}
-          />
+          {filtering ? (
+            <ForumPostListLoader />
+          ) : (
+            <FlatList
+              data={filteredPosts}
+              renderItem={({ item }) => (
+                <ForumPostCard
+                  postId={item.id.toString()}
+                  title={item.title}
+                  description={item.description}
+                  likeCount={item.like_count}
+                  replyCount={item.reply_count}
+                  topic={item.topic}
+                  difficulty={item.difficulty}
+                  author={item.author}
+                  isAuthor={item.user_is_author}
+                  userLikedPost={item.user_liked_post}
+                  userRepliedPost={item.user_replied_post}
+                  creationDate={item.created_at}
+                />
+              )}
+              ItemSeparatorComponent={() => (
+                <View className="h-1.5 border-t border-neutral-200" />
+              )}
+              keyExtractor={(item, index) => item?.id.toString()}
+              className="py-2 bg-white"
+              scrollEnabled={false}
+              ListEmptyComponent={() => (
+                <EmptyState
+                  title="No posts to show"
+                  imageSrc={graphics.postEmpty}
+                />
+              )}
+            />
+          )}
         </ScrollView>
       )}
     </SafeAreaView>
