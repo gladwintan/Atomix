@@ -137,3 +137,9 @@ declare interface FilterOption {
   label: string;
   value: { type: string; option: string };
 }
+
+declare interface SortOption {
+  label: string;
+  value: string;
+  descending: boolean;
+}

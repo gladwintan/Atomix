@@ -1,59 +1,43 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { FilterOption, Post } from "@/types/type";
+import { View, Text, Image, FlatList, ScrollView } from "react-native";
+import { useState } from "react";
+import { FilterOption, SortOption } from "@/types/type";
 import { icons } from "@/constants";
-import CustomButton from "../CustomButton";
-import { filterPosts, sortPosts } from "@/lib/forum";
+import CustomButton from "./CustomButton";
 import ReactNativeModal from "react-native-modal";
 
-const filterOptions = [
-  {
-    label: "H1 Chemistry",
-    value: { type: "difficulty", option: "H1 Chemistry" },
-  },
-  {
-    label: "H2 Chemistry",
-    value: { type: "difficulty", option: "H2 Chemistry" },
-  },
-  {
-    label: "Atomic Structure",
-    value: { type: "topic", option: "Atomic Structure" },
-  },
-  {
-    label: "Chemical Bonding",
-    value: { type: "topic", option: "Chemical Bonding" },
-  },
-  {
-    label: "Acid-Base Equilibrium",
-    value: { type: "topic", option: "Acid-Base Equilibrium" },
-  },
-  {
-    label: "Intro to Organic Chem",
-    value: { type: "topic", option: "Intro to Organic Chem" },
-  },
-];
-
-const sortOptions = [
-  { label: "Newest", value: "Newest", descending: true },
-  { label: "Likes", value: "Likes", descending: true },
-  { label: "Replies", value: "Replies", descending: true },
-];
-
-const OptionsMenu = ({
-  posts,
-  setPosts,
+/**
+ * OptionsMenu is a generic React component that provides filtering and sorting capabilities for a dataset.
+ *
+ * @template T - The type of the items in the data array.
+ *
+ * @param {Object} props - The component props.
+ * @param {FilterOption[]} props.filterOptions - An array of filtering options to apply to the data.
+ * @param {SortOption[]} props.sortOptions - An array of sorting options to apply to the data.
+ * @param {T[]} props.data - The data array to be filtered and sorted.
+ * @param {React.Dispatch<React.SetStateAction<T[]>>} props.setData - A state setter function to update the data after applying filters or sorting.
+ * @param {(data: T[], selectedFilterOptions: FilterOption[]) => T[]} props.filterFunction - A function to filter the data based on selected filter options.
+ * @param {(data: T[], value: string, descending: boolean) => T[]} props.sortFunction - A function to sort the data based on a selected value and order.
+ * @param {React.Dispatch<React.SetStateAction<boolean>>} props.setLoading - A state setter function to indicate loading state during data manipulation.
+ * @param {string} [props.menuContainerClassName] - TailWind classname for styling the container of the options menu.
+ *
+ * @returns {React.ReactElement} The rendered options menu component.
+ */
+const OptionsMenu = <T,>({
+  filterOptions,
+  sortOptions,
+  data,
+  setData,
+  filterFunction,
+  sortFunction,
   setLoading,
   menuContainerClassName,
 }: {
-  posts: Post[];
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  filterOptions: FilterOption[];
+  sortOptions: SortOption[];
+  data: T[];
+  setData: React.Dispatch<React.SetStateAction<T[]>>;
+  filterFunction: (data: T[], selectedFilterOptions: FilterOption[]) => T[];
+  sortFunction: (data: T[], value: string, descending: boolean) => T[];
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   menuContainerClassName?: string;
 }) => {
@@ -61,18 +45,17 @@ const OptionsMenu = ({
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<
     FilterOption[]
   >([]);
-  const [sortOption, setSortOption] = useState({
-    value: "Newest",
-    descending: true,
-  });
+  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
 
-  const filterAndSortPosts = () => {
+  const filterAndSortData = () => {
     setLoading(true);
-    let filteredPosts = posts;
+    let filteredData = data;
     if (selectedFilterOptions.length != 0) {
-      filteredPosts = filterPosts(posts, selectedFilterOptions);
+      filteredData = filterFunction(data, selectedFilterOptions);
     }
-    setPosts(sortPosts(filteredPosts, sortOption.value, sortOption.descending));
+    setData(
+      sortFunction(filteredData, sortOption.value, sortOption.descending)
+    );
     setTimeout(() => setLoading(false), 500);
   };
 
@@ -95,7 +78,7 @@ const OptionsMenu = ({
           isVisible
           backdropOpacity={0.3}
           onBackdropPress={() => {
-            filterAndSortPosts();
+            filterAndSortData();
             setShowOptionsMenu(false);
           }}
           className="m-0 justify-end"
@@ -184,10 +167,7 @@ const OptionsMenu = ({
                             ...sortOption,
                             descending: !sortOption.descending,
                           })
-                        : setSortOption({
-                            value: item.value,
-                            descending: item.descending,
-                          });
+                        : setSortOption(item);
                     }}
                   />
                 )}

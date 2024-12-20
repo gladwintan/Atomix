@@ -11,7 +11,7 @@ import { Post } from "@/types/type";
 import ForumPostCard from "./ForumPostCard";
 import { useUser } from "@clerk/clerk-expo";
 import ForumPostListLoader from "../loader/ForumPostListLoader";
-import OptionsMenu from "./OptionsMenu";
+import OptionsMenu from "../OptionsMenu";
 import SearchBar from "../SearchBar";
 
 const MyActivityTabs = memo(

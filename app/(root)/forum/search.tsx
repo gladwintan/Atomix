@@ -13,7 +13,7 @@ import { graphics, icons } from "@/constants";
 import { router } from "expo-router";
 import FilterMenu from "@/components/forum/FilterMenu";
 import SortMenu from "@/components/forum/SortMenu";
-import OptionsMenu from "@/components/forum/OptionsMenu";
+import OptionsMenu from "@/components/OptionsMenu";
 import EmptyState from "@/components/EmptyState";
 
 const SearchPage = () => {

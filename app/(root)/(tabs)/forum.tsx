@@ -3,11 +3,18 @@ import CustomButton from "@/components/CustomButton";
 import EmptyState from "@/components/EmptyState";
 import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";
-import OptionsMenu from "@/components/forum/OptionsMenu";
+import OptionsMenu from "@/components/OptionsMenu";
 import ForumMainPageLoader from "@/components/loader/ForumMainPageLoader";
 import ForumPostListLoader from "@/components/loader/ForumPostListLoader";
 import { graphics, icons } from "@/constants";
-import { getPosts, getTrendingPosts } from "@/lib/forum";
+import { filterOptions, sortOptions } from "@/data/forum/dropdown-options";
+import { quickLinks } from "@/data/forum/navigation";
+import {
+  filterPosts,
+  getPosts,
+  getTrendingPosts,
+  sortPosts,
+} from "@/lib/forum";
 import { Post } from "@/types/type";
 import { useUser } from "@clerk/clerk-expo";
 import { Href, router } from "expo-router";
@@ -22,19 +29,6 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const quickLinks = [
-  {
-    title: "My Activity",
-    icon: icons.profile,
-    link: "(root)/forum/my-activity",
-  },
-  {
-    title: "Create post",
-    icon: icons.post,
-    link: "(root)/forum/my-activity",
-  },
-];
 
 const Forum = () => {
   const { user } = useUser();
@@ -186,8 +180,12 @@ const Forum = () => {
               Discover
             </Text>
             <OptionsMenu
-              posts={posts}
-              setPosts={setFilteredPosts}
+              filterOptions={filterOptions}
+              sortOptions={sortOptions}
+              data={posts}
+              setData={setFilteredPosts}
+              filterFunction={filterPosts}
+              sortFunction={sortPosts}
               setLoading={setFiltering}
             />
           </View>

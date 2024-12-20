@@ -29,7 +29,7 @@ interface GenericFlatListProps<T> {
  * @param {(item: T, index: number) => string} keyExtractor - A function to extract unique keys for each item.
  * @param {string} [containerClassName] - Tailwind ClassName for styling of main container.
  * @param {string} [dotClassName] - Tailwind ClassName for styling of dot indicator.
- * @param {string} [dotContainerClassName] - Tailwind ClassName for styling of dot indicator container.
+ * @param {string} [dotContainerClassName] - Tailwind classname for styling of dot indicator container.
  * @param {object} [props] - Additional FlatList properties.
  *
  * @returns {React.ReactElement} The rendered FlatList with an interactive indicator.
