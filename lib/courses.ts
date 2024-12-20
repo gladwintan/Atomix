@@ -59,6 +59,24 @@ export const getCoursesByCompletionStatus = async (
   }
 };
 
+export const getAllCourses = async (userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error loading courses" };
+  }
+
+  try {
+    const fetchData = await fetchAPI(`/(api)/course/get`, {
+      method: "GET",
+    });
+
+    return { success: "Successfully loaded courses", courses: fetchData?.data };
+  } catch (error) {
+    console.error(error);
+    return { error: "Error loading courses" };
+  }
+};
+
 export const getOngoingCourses = async (userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated");

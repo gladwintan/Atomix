@@ -7,6 +7,9 @@ const Layout = () => {
         gestureEnabled: false,
         animation: "none",
         headerShown: false,
+        contentStyle: {
+          backgroundColor: "white",
+        },
       }}
     >
       <Stack.Screen name="atomic-structure" />

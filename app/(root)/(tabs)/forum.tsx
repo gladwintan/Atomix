@@ -1,5 +1,4 @@
 import Carousel from "@/components/Carousel";
-import CustomButton from "@/components/CustomButton";
 import EmptyState from "@/components/EmptyState";
 import SearchBar from "@/components/SearchBar";
 import ForumPostCard from "@/components/forum/ForumPostCard";

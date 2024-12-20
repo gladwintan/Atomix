@@ -19,6 +19,8 @@ import OngoingCourses from "@/components/courses/OngoingCourses";
 import { icons } from "@/constants";
 import { getCoursesByCompletionStatus } from "@/lib/courses";
 import { ExploreCourse, OngoingCourse } from "@/types/type";
+import SearchBar from "@/components/SearchBar";
+import { router } from "expo-router";
 
 const Course = () => {
   const { user } = useUser();
@@ -90,12 +92,21 @@ const Course = () => {
   return (
     <View className="h-full bg-primary-base">
       {/* Summary stats */}
-      <Animated.View className="bg-primary-base overflow-hidden" style={{}}>
+      <Animated.View className="bg-primary-base overflow-hidden">
         <Text
-          className={`px-5 pb-2 text-lg text-white font-openSans-bold ${elementHeight != 0.0 && "self-center"}`}
+          className={`px-5 mb-5 text-lg text-white font-openSans-bold ${elementHeight != 0.0 && "self-center"}`}
         >
           Course
         </Text>
+        <View className="px-3 absolute top-0 w-full items-end z-50 shadow-sm">
+          <SearchBar
+            handleSearch={(searchQuery) =>
+              router.push(`/(root)/courses/search?query=${searchQuery}`)
+            }
+            searchBarStyle="rounded-full"
+          />
+        </View>
+
         <Animated.View
           className="overflow-hidden"
           style={{ height: headerHeight, opacity: headerOpacity }}
