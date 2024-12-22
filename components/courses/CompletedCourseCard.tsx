@@ -2,20 +2,24 @@ import { Image, View, Text, TouchableOpacity } from "react-native";
 
 import { icons } from "@/constants";
 import { formatDate } from "@/lib/utils";
+import { Href, router } from "expo-router";
 
 const CompletedCourseCard = ({
+  courseId,
   courseName,
   progress,
   lastLesson,
-  onPress,
 }: {
+  courseId: number;
   courseName: string;
   progress: string;
   lastLesson: string;
-  onPress: () => void;
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => router.push(`/courses/${courseId}` as Href)}
+    >
       <View className="w-[120px] min-h-[120px] p-2 justify-between items-center rounded-xl shadow-sm shadow-neutral-300 bg-white">
         <Text className="text-sm text-dark-base font-openSans text-center">
           {courseName}

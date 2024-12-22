@@ -43,6 +43,7 @@ const ExploreCourses = ({
           data={filteredCourses}
           renderItem={({ item }) => (
             <ExploreCourseCard
+              courseId={item.course_id}
               courseName={item.course_name}
               description={item.description}
               lessons={item.lessons}
@@ -51,11 +52,6 @@ const ExploreCourses = ({
               level={item.level}
               subject={item.subject}
               completionStatus={item.completionStatus}
-              onPress={() =>
-                router.push(
-                  `/courses/${formatCourseName(item.course_name)}` as Href
-                )
-              }
             />
           )}
           keyExtractor={(item, index) => index.toString()}

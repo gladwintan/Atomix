@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 
 import BinaryQuestionCard from "@/components/questions/BinaryQuestionCard";
-import { images } from "@/data/courses/atomic-structure";
 
 import { ProgressContext } from "./_layout";
 
@@ -13,7 +12,6 @@ const Question4 = () => {
   return (
     <SafeAreaView className="h-full bg-white">
       <BinaryQuestionCard
-        imageSrc={images.dOrbitals}
         question="The above is correct"
         answer={true}
         onPressNextQuestion={() => {

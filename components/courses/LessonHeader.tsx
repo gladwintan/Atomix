@@ -3,20 +3,27 @@ import { Image, TouchableOpacity, View } from "react-native";
 import * as Progress from "react-native-progress";
 
 import { icons } from "@/constants";
+import { updateLessonProgress } from "@/lib/courses";
+import { useUser } from "@clerk/clerk-expo";
 
 const LessonHeader = ({
   progress,
-  courseName,
+  courseId,
+  lessonId,
 }: {
   progress: number;
-  courseName: string;
+  courseId: string;
+  lessonId: string;
 }) => {
+  const { user } = useUser();
+  const userClerkId = user?.id;
   return (
     <View className="p-2 flex-row items-center justify-center">
       <TouchableOpacity
-        onPress={() =>
-          router.replace(`/(root)/courses/${courseName}` as Href)
-        }
+        onPress={() => {
+          updateLessonProgress(progress.toString(), lessonId, userClerkId);
+          router.replace(`/(root)/courses/${courseId}` as Href);
+        }}
         className="absolute right-4"
       >
         <Image source={icons.close} tintColor="gray" className="w-6 h-6" />

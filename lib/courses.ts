@@ -1,7 +1,6 @@
 import { OngoingCourse, ExploreCourse, FilterOption } from "@/types/type";
 
 import { fetchAPI } from "./fetch";
-import OngoingCourses from "@/components/courses/OngoingCourses";
 
 export const getCoursesByCompletionStatus = async (
   userClerkId: string | undefined
@@ -93,28 +92,61 @@ export const getOngoingCourses = async (userClerkId: string | undefined) => {
 };
 
 export const getCourseProgress = async (
-  courseName: string,
+  courseId: string,
   userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return;
+    return { error: "Error loading courses" };
   }
 
-  if (!courseName) {
-    console.error("Course name missing");
-    return;
+  try {
+    const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
+      method: "GET",
+    });
+    const course = fetchData?.data.filter(
+      (course: any) => course.course_id == courseId
+    );
+    const lessonsCompleted = course[0]?.lessons_completed ?? -1;
+    return {
+      success: "Successfully loaded courses",
+      lessonsCompleted: lessonsCompleted,
+    };
+  } catch (error) {
+    console.error(error);
+    return { error: "Error loading courses" };
+  }
+};
+
+export const getLessonProgressses = async (
+  courseId: string,
+  userClerkId: string | undefined
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return { error: "Error getting lesson progress" };
   }
 
-  const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-    method: "GET",
-  });
-  const courses = fetchData?.data;
-  return courses?.filter((course: any) => course.course_name == courseName);
+  try {
+    const fetchData = await fetchAPI(
+      `/(api)/course/lesson/${userClerkId}?course=${courseId}`,
+      {
+        method: "GET",
+      }
+    );
+
+    return {
+      success: "Successfully fetched lesson progress",
+      progress: fetchData?.data[0]?.lesson_progress,
+    };
+  } catch (error) {
+    console.error(error);
+    return { error: "Error getting lesson progress" };
+  }
 };
 
 export const startNewCourse = async (
-  courseName: string,
+  courseId: string,
   userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
@@ -126,7 +158,7 @@ export const startNewCourse = async (
     await fetchAPI("/(api)/course/start", {
       method: "POST",
       body: JSON.stringify({
-        courseName: courseName,
+        courseId: courseId,
         clerkId: userClerkId,
       }),
     });
@@ -138,9 +170,9 @@ export const startNewCourse = async (
   }
 };
 
-export const updateCourseProgress = async (
-  courseName: string,
-  lessonCompleted: number,
+export const startLesson = async (
+  courseId: string,
+  lessonId: string,
   userClerkId: string | undefined
 ) => {
   if (!userClerkId) {
@@ -149,11 +181,38 @@ export const updateCourseProgress = async (
   }
 
   try {
-    await fetchAPI("/(api)/course/update-progress", {
+    await fetchAPI("/(api)/course/lesson/start", {
+      method: "POST",
+      body: JSON.stringify({
+        courseId: courseId,
+        lessonId: lessonId,
+        clerkId: userClerkId,
+      }),
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error starting lesson");
+    return { success: false };
+  }
+};
+
+export const updateLessonProgress = async (
+  progress: string,
+  lessonId: string,
+  userClerkId: string | undefined
+) => {
+  if (!userClerkId) {
+    console.error("User not authenticated");
+    return;
+  }
+
+  try {
+    await fetchAPI("/(api)/course/lesson/update-progress", {
       method: "PUT",
       body: JSON.stringify({
-        courseName: courseName,
-        lessonCompleted: lessonCompleted,
+        progress: progress,
+        lessonId: lessonId,
         clerkId: userClerkId,
       }),
     });

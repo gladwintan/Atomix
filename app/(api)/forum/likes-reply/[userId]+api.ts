@@ -2,16 +2,16 @@ import { neon } from "@neondatabase/serverless";
 
 export async function GET(
   request: Request,
-  { userId }: Record<string, string>,
+  { userId }: Record<string, string>
 ) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
-    const replyId = new URL(request.url).searchParams.get('reply')
+    const replyId = new URL(request.url).searchParams.get("reply");
 
-    if (!replyId) {
+    if (!userId || !replyId) {
       return Response.json(
         { error: "Missing required fields" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -29,7 +29,7 @@ export async function GET(
         AND
         reply_id = ${replyId}
     `;
-    
+
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {
     console.error("Error getting likes for reply:", error);

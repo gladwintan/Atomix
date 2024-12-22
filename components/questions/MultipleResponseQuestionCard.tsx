@@ -14,19 +14,19 @@ const MultipleResponseQuestionCard = ({
   answer,
   onPressNextQuestion,
   imageSrc,
-}: MultipleResponseQuestion) => {
+}: MultipleResponseQuestion & { onPressNextQuestion: () => void }) => {
   const [optionsGiven, setOptionsGiven] = useState(options);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
 
   const checkAnswer = () => {
     const arr = selectedAnswer.filter((selection) =>
-      answer.includes(selection),
+      answer.includes(selection)
     );
     return arr.length == answer.length;
   };
 
   return (
-    <View className="items-center p-2">
+    <View className="items-center p-2 w-[100vw]">
       {imageSrc && (
         <Image
           source={imageSrc}
@@ -51,16 +51,16 @@ const MultipleResponseQuestionCard = ({
               } else {
                 setSelectedAnswer(
                   selectedAnswer.filter(
-                    (selection) => selection != option.option,
-                  ),
+                    (selection) => selection != option.option
+                  )
                 );
               }
               setOptionsGiven(
                 optionsGiven.map((item, index) =>
                   item.option == option.option
                     ? { option: item.option, selected: !item.selected }
-                    : item,
-                ),
+                    : item
+                )
               );
             }}
           />

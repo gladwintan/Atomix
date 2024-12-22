@@ -1,4 +1,3 @@
-import { Href, router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, Image } from "react-native";
 
@@ -11,12 +10,12 @@ const BinaryQuestionCard = ({
   answer,
   imageSrc,
   onPressNextQuestion,
-}: BinaryQuestion) => {
+}: BinaryQuestion & { onPressNextQuestion: () => void }) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [answered, setAnswered] = useState(false);
 
   return (
-    <View className="bg-white p-2">
+    <View className="bg-white p-2 w-[100vw]">
       <View>
         {imageSrc && (
           <Image

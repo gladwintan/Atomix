@@ -7,25 +7,16 @@ import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { startNewCourse } from "@/lib/courses";
 import { Lesson } from "@/types/type";
+import { useEffect } from "react";
 
-const CourseDetails = ({
-  courseName,
-  courseDescription,
-  lessonsCompleted,
-  lessons,
-  setLessonsCompleted,
-}: {
-  courseName: string;
-  courseDescription: string;
-  lessonsCompleted: number;
-  lessons: Lesson[];
-  setLessonsCompleted: (completed: number) => void;
-}) => {
+const CourseDetails = ({ courseId }: { courseId: number }) => {
   const { user } = useUser();
   const userClerkId = user?.id;
+
+  useEffect(() => {}, []);
   return (
     <>
-      <View className="p-3 px-5 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
+      {/* <View className="p-3 px-5 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
         <View className="w-3/4">
           <Text className="text-base text-dark-base font-openSans-semibold">
             {courseName}
@@ -84,7 +75,7 @@ const CourseDetails = ({
           }}
           className="w-1/2 self-center"
         />
-      )}
+      )} */}
     </>
   );
 };

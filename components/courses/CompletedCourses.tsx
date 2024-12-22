@@ -19,14 +19,10 @@ const CompletedCourses = ({
       data={completedCourses}
       renderItem={({ item }) => (
         <CompletedCourseCard
+          courseId={item.course_id}
           courseName={item.course_name}
           lastLesson={item.updated_at}
           progress={item.progress}
-          onPress={() =>
-            router.push(
-              `/courses/${formatCourseName(item.course_name)}` as Href
-            )
-          }
         />
       )}
       keyExtractor={(item, index) => index.toString()}

@@ -13,6 +13,7 @@ const LessonCard = ({
   difficulty,
   lessonsCompleted,
   lastLesson,
+  lastCompletedAt,
   onPress,
 }: LessonCardProps) => {
   const [showRestartMenu, setShowRestartMenu] = useState(false);

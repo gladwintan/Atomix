@@ -1,4 +1,7 @@
-import { Stack } from "expo-router";
+import CustomButton from "@/components/CustomButton";
+import { icons } from "@/constants";
+import { Stack, router } from "expo-router";
+import { Image } from "react-native";
 
 const Layout = () => {
   return (
@@ -12,10 +15,31 @@ const Layout = () => {
         },
       }}
     >
-      <Stack.Screen name="atomic-structure" />
-      <Stack.Screen name="chemical-bonding" />
-      <Stack.Screen name="acid-base-equilibrium" />
-      <Stack.Screen name="intro-to-organic-chem" />
+      <Stack.Screen
+        name="[courseId]"
+        options={{
+          headerShown: true,
+          gestureEnabled: false,
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "white" },
+          headerLeft: () => (
+            <CustomButton
+              title="courses"
+              textVariant="back"
+              type="back"
+              IconLeft={() => (
+                <Image
+                  source={icons.arrowLeft}
+                  tintColor="#364463"
+                  className="w-4 h-4"
+                />
+              )}
+              onPress={() => router.replace("/(root)/(tabs)/course")}
+            />
+          ),
+        }}
+      />
     </Stack>
   );
 };

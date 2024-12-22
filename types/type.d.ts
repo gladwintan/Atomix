@@ -1,4 +1,8 @@
-import { TextInputProps, TouchableOpacityProps } from "react-native";
+import {
+  ImageSourcePropType,
+  TextInputProps,
+  TouchableOpacityProps,
+} from "react-native";
 
 declare interface ButtonProps extends TouchableOpacityProps {
   title?: string;
@@ -68,38 +72,49 @@ declare interface Lesson {
   description: string;
   time: string;
   difficulty: number;
-  lastLesson: boolean;
-  link?: Href;
+  contents?: Content[];
+  status?: "uncompleted" | "ongoing" | "completed";
+  progress?: number;
+  lastCompletedAt?: string | null;
 }
 
 declare interface LessonCardProps extends Lesson {
   lessonsCompleted: number;
+  lastLesson: boolean;
   onPress: () => void;
 }
 
-declare interface BinaryQuestion {
+declare interface Question {
   question: string;
-  answer: boolean;
-  onPressNextQuestion: () => void;
   imageSrc?: ImageSourcePropType;
 }
+declare interface BinaryQuestion extends Question {
+  answer: boolean;
+}
 
-declare interface FillInTheBlankQuestion {
-  question: string;
+declare interface FillInTheBlankQuestion extends Question {
   options: string[];
   questionWithBlanks: { text: string; index: number }[];
   answer: string[];
-  onPressNextQuestion: () => void;
+}
+
+declare interface MultipleResponseQuestion extends Question {
+  options: { option: string; selected: boolean }[];
+  answer: string[];
+}
+
+declare interface Notes {
+  title: string;
+  description: string;
   imageSrc?: ImageSourcePropType;
 }
 
-declare interface MultipleResponseQuestion {
-  options: { option: string; selected: boolean }[];
-  question: string;
-  answer: string[];
-  onPressNextQuestion: () => void;
-  imageSrc?: ImageSourcePropType;
-}
+declare type Content = (
+  | BinaryQuestion
+  | FillInTheBlankQuestion
+  | MultipleResponseQuestion
+  | Notes
+) & { type: string };
 
 declare interface Post {
   id: number;

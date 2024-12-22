@@ -15,19 +15,19 @@ const FillInTheBlankQuestionCard = ({
   answer,
   onPressNextQuestion,
   imageSrc,
-}: FillInTheBlankQuestion) => {
+}: FillInTheBlankQuestion & { onPressNextQuestion: () => void }) => {
   const [remainingOptions, setRemainingOptions] = useState(options);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
 
   const checkAnswer = () => {
     const arr = selectedAnswer.filter(
-      (selection, index) => selection == answer[index],
+      (selection, index) => selection == answer[index]
     );
     return arr.length == answer.length;
   };
 
   return (
-    <View className="bg-white p-3">
+    <View className="bg-white p-3 w-[100vw]">
       {imageSrc && (
         <Image
           source={imageSrc}
@@ -57,8 +57,8 @@ const FillInTheBlankQuestionCard = ({
                 onPress={() => {
                   setSelectedAnswer(
                     selectedAnswer.filter(
-                      (selection) => selection != selectedAnswer[text.index],
-                    ),
+                      (selection) => selection != selectedAnswer[text.index]
+                    )
                   );
                   setRemainingOptions([
                     ...remainingOptions,
@@ -75,7 +75,7 @@ const FillInTheBlankQuestionCard = ({
             <Text key={index} className="text-base text-dark-base">
               {text.text} ________
             </Text>
-          ),
+          )
         )}
       </View>
       <View className="px-10 flex-row flex-wrap gap-x-6 gap-y-4 justify-center">
@@ -88,7 +88,7 @@ const FillInTheBlankQuestionCard = ({
             onPress={() => {
               setSelectedAnswer([...selectedAnswer, option]);
               setRemainingOptions(
-                remainingOptions.filter((remaining) => remaining != option),
+                remainingOptions.filter((remaining) => remaining != option)
               );
             }}
           />

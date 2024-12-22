@@ -4,9 +4,9 @@ export async function POST(request: Request) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
-    const { courseId, clerkId } = await request.json();
+    const { courseId, lessonId, clerkId } = await request.json();
 
-    if (!courseId || !clerkId) {
+    if (!courseId || !lessonId || !clerkId) {
       return Response.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -14,20 +14,30 @@ export async function POST(request: Request) {
     }
 
     const response = await sql`
-      INSERT INTO course_progress (
-        user_id, 
-        course_id
+      INSERT INTO lesson_progress (
+        user_id,
+        course_progress_id,
+        lesson_id
       )
-      SELECT 
+      SELECT
         users.id,
-        courses.course_id 
+        course_progress.progress_id,
+        ${lessonId}
       FROM 
-        users,
-        courses
+        users
+      JOIN
+        course_progress
+      ON
+        course_progress.user_id = users.id
       WHERE 
-        users.clerk_id = ${clerkId} 
+        users.clerk_id = ${clerkId}
         AND
-        courses.course_id = ${courseId}  
+        course_progress.course_id = ${courseId} 
+      ON CONFLICT 
+        (lesson_id, user_id)
+      DO UPDATE SET
+        status = 'ongoing',
+        progress = 0
     `;
 
     return Response.json({ data: response }, { status: 201 });

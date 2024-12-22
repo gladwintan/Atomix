@@ -3,22 +3,26 @@ import * as Progress from "react-native-progress";
 
 import { icons } from "@/constants";
 import { formatDate } from "@/lib/utils";
+import { Href, router } from "expo-router";
 
 const OngoingCourseCard = ({
+  courseId,
   courseName,
   progress,
   lastLesson,
   quizzesUncompleted,
-  onPress,
 }: {
+  courseId: number;
   courseName: string;
   progress: string;
   lastLesson: string;
   quizzesUncompleted: number;
-  onPress: () => void;
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => router.push(`/courses/${courseId}` as Href)}
+    >
       <View className="w-[290px] p-3 px-5 space-y-1.5 rounded-xl bg-white border-[0.5px] border-neutral-200">
         <View className="flex-row justify-between items-center w-full mb-1.5">
           <Text className="text-sm text-dark-base font-openSans-medium">

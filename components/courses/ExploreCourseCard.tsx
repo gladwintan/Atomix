@@ -2,8 +2,10 @@ import { Image, View, Text, TouchableOpacity } from "react-native";
 
 import { icons } from "@/constants";
 import { getCourseLevelTagColour } from "@/lib/utils";
+import { Href, router } from "expo-router";
 
 const ExploreCourseCard = ({
+  courseId,
   courseName,
   description,
   lessons,
@@ -12,8 +14,8 @@ const ExploreCourseCard = ({
   quizzes,
   level,
   subject,
-  onPress,
 }: {
+  courseId: number;
   courseName: string;
   description: string;
   lessons: number;
@@ -22,10 +24,12 @@ const ExploreCourseCard = ({
   quizzes: number;
   level: string;
   subject: string;
-  onPress: () => void;
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => router.push(`/courses/${courseId}` as Href)}
+    >
       <View className="w-full p-4">
         <View className="flex-row justify-between items-end w-full">
           <Text className="text-sm font-openSans text-dark-base">
