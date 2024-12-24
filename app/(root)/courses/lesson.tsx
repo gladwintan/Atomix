@@ -18,7 +18,7 @@ import NotesCard from "@/components/courses/Notes";
 import CustomButton from "@/components/CustomButton";
 import { updateLessonProgress } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";
-import LessonLoader from "@/components/loader/CourseDetailsLoader copy";
+import LessonLoader from "@/components/loader/LessonLoader";
 
 const Lesson = () => {
   const {
@@ -53,11 +53,22 @@ const Lesson = () => {
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
+    if (currentProgress < 0.0 || currentProgress > 1.0) {
+      console.error("Lesson progress not found");
+      setCurrentProgress(0.0);
+    }
+
     const lessonDetails = courses.find(
       (course) => course.id === parseInt(courseId)
     )?.course?.lessons[parseInt(lesson)];
 
     if (!lessonDetails?.contents || !lessonDetails.id) {
+      console.error(
+        "Lesson details not found for lesson " +
+          lesson +
+          " with course ID: " +
+          courseId
+      );
       setLoading(false);
       setLoadError("Error loading lesson");
       return;

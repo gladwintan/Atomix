@@ -1,6 +1,5 @@
 import { icons } from "@/constants";
-import ContentLoader, { Rect } from "react-content-loader/native";
-import { Dimensions, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import CustomButton from "../CustomButton";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -31,7 +30,10 @@ const LessonLoader = ({
           />
         </View>
       ) : (
-        <ActivityIndicator />
+        <ActivityIndicator
+          size="large"
+          theme={{ colors: { primary: "#8FABE5" } }}
+        />
       )}
     </View>
   );
