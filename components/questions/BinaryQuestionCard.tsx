@@ -17,7 +17,7 @@ const BinaryQuestionCard = ({
   const [answered, setAnswered] = useState(false);
 
   return (
-    <View className="bg-white p-2 w-[100vw]">
+    <View className="bg-white p-2 w-[100vw] flex-1">
       <View>
         {imageSrc && (
           <Image

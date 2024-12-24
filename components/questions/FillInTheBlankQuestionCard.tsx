@@ -33,7 +33,7 @@ const FillInTheBlankQuestionCard = ({
   }, [selectedAnswer]);
 
   return (
-    <View className="bg-white p-3 w-[100vw]">
+    <View className="bg-white p-3 w-[100vw] flex-1">
       {imageSrc && (
         <Image
           source={imageSrc}

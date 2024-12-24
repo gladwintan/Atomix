@@ -21,7 +21,7 @@ const AnswerVerification = ({
       backdropOpacity={0.1}
       className="w-full rounded-3xl absolute -bottom-5 p-6 self-center bg-white"
     >
-      <View className="h-full mb-2">
+      <View className="h-full mb-3">
         <Text className="text-center text-base text-dark-base font-openSans-semibold">
           {correctAnswer ? "You are correct!" : "Please try again!"}
         </Text>

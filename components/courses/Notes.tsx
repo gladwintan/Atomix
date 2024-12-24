@@ -10,8 +10,8 @@ const NotesCard = ({
   onPress,
 }: Notes & { onPress: () => void }) => {
   return (
-    <View className="w-[100vw] h-full">
-      <View className="px-4">
+    <View className="w-[100vw] flex-1">
+      <View className="px-4 flex-1">
         <Text className="font-openSans-medium text-base">{title}</Text>
         <Text className="font-openSans text-sm">{description}</Text>
       </View>
@@ -20,7 +20,6 @@ const NotesCard = ({
         type="continue"
         textVariant="white"
         onPress={onPress}
-        className="absolute bottom-3"
       />
     </View>
   );

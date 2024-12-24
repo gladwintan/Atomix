@@ -9,10 +9,10 @@ import BinaryQuestionCard from "@/components/questions/BinaryQuestionCard";
 import FillInTheBlankQuestionCard from "@/components/questions/FillInTheBlankQuestionCard";
 import MultipleResponseQuestionCard from "@/components/questions/MultipleResponseQuestionCard";
 import NotesCard from "@/components/courses/Notes";
-import CustomButton from "@/components/CustomButton";
 import { updateLessonProgress } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";
 import LessonLoader from "@/components/loader/LessonLoader";
+import LessonCompletionCard from "@/components/courses/LessonCompletionCard";
 
 const Lesson = () => {
   const {
@@ -106,13 +106,8 @@ const Lesson = () => {
     }
   };
 
-  const handleLessonCompleted = () => {
-    router.replace(`/(root)/courses/${courseId}`);
-    updateLessonProgress(currentProgress.toString(), lessonId, userClerkId);
-  };
-
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <LessonLoader
         loading={loading}
         fetchError={loadError}
@@ -124,15 +119,7 @@ const Lesson = () => {
         lessonId={lessonId}
       />
       {lessonCompleted ? (
-        <View>
-          <Text>Lesson Completed</Text>
-          <CustomButton
-            title="Back to course"
-            type="continue"
-            textVariant="white"
-            onPress={handleLessonCompleted}
-          />
-        </View>
+        <LessonCompletionCard courseId={courseId} lessonId={lessonId} />
       ) : (
         <FlatList
           ref={flatListRef}
@@ -188,7 +175,7 @@ const Lesson = () => {
             }
           }}
           keyExtractor={(item, index) => index.toString()}
-          className=" mt-3 pb-5 bg-white h-full"
+          className="mt-3 bg-white"
           pagingEnabled
           scrollEnabled={false}
           onContentSizeChange={() => setTimeout(scrollToSavedProgress, 500)}
