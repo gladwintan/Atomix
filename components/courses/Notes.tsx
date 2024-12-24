@@ -10,10 +10,18 @@ const NotesCard = ({
   onPress,
 }: Notes & { onPress: () => void }) => {
   return (
-    <View className="w-[100vw]">
-      <Text>{title}</Text>
-      <Text>{description}</Text>
-      <CustomButton title="Next" type="continue" onPress={onPress} />
+    <View className="w-[100vw] h-full">
+      <View className="px-4">
+        <Text className="font-openSans-medium text-base">{title}</Text>
+        <Text className="font-openSans text-sm">{description}</Text>
+      </View>
+      <CustomButton
+        title="Next"
+        type="continue"
+        textVariant="white"
+        onPress={onPress}
+        className="absolute bottom-3"
+      />
     </View>
   );
 };

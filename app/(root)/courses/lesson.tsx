@@ -135,6 +135,7 @@ const Lesson = () => {
           <CustomButton
             title="Back to course"
             type="continue"
+            textVariant="white"
             onPress={handleLessonCompleted}
           />
         </View>
@@ -192,7 +193,7 @@ const Lesson = () => {
             }
           }}
           keyExtractor={(item, index) => index.toString()}
-          className=" mt-1 mb-5 bg-white"
+          className=" mt-3 pb-5 bg-white h-full"
           pagingEnabled
           scrollEnabled={false}
           onContentSizeChange={() => setTimeout(scrollToSavedProgress, 500)}
