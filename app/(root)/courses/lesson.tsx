@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Dimensions } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { Content } from "@/types/type";
@@ -9,7 +9,6 @@ import BinaryQuestionCard from "@/components/questions/BinaryQuestionCard";
 import FillInTheBlankQuestionCard from "@/components/questions/FillInTheBlankQuestionCard";
 import MultipleResponseQuestionCard from "@/components/questions/MultipleResponseQuestionCard";
 import NotesCard from "@/components/courses/Notes";
-import { updateLessonProgress } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";
 import LessonLoader from "@/components/loader/LessonLoader";
 import LessonCompletionCard from "@/components/courses/LessonCompletionCard";
@@ -21,9 +20,6 @@ const Lesson = () => {
     progress,
   }: { courseId: string; lesson: string; progress: string } =
     useLocalSearchParams();
-
-  const { user } = useUser();
-  const userClerkId = user?.id;
 
   console.log(
     "course Id: " +
@@ -56,14 +52,17 @@ const Lesson = () => {
       (course) => course.id === parseInt(courseId)
     )?.course?.lessons[parseInt(lesson)];
 
-    if (!lessonDetails?.contents || !lessonDetails.id) {
+    if (
+      !lessonDetails?.contents ||
+      lessonDetails?.contents.length == 0 ||
+      !lessonDetails.id
+    ) {
       console.error(
         "Lesson details not found for lesson " +
           lesson +
           " with course ID: " +
           courseId
       );
-      setLoading(false);
       setLoadError("Error loading lesson");
       return;
     }

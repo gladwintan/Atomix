@@ -19,9 +19,10 @@ import {
   startLesson,
   startNewCourse,
 } from "@/lib/courses";
-import { Lesson } from "@/types/type";
+import { LessonWithProgress } from "@/types/type";
 import { icons } from "@/constants";
 import CourseDetailsLoader from "@/components/loader/CourseDetailsLoader";
+import { createLessonDetailsWithProgress } from "@/lib/coursesUtils";
 
 const CourseDetails = () => {
   const { user } = useUser();
@@ -30,11 +31,11 @@ const CourseDetails = () => {
   const { courseId }: { courseId: string } = useLocalSearchParams();
 
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState({ error: "" });
+  const [loadError, setLoadError] = useState("");
 
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
-  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [lessons, setLessons] = useState<LessonWithProgress[]>([]);
   const [lessonsCompleted, setLessonsCompleted] = useState(-1);
 
   useEffect(() => {
@@ -43,55 +44,43 @@ const CourseDetails = () => {
 
   const fetchCourseDetails = useCallback(async () => {
     setLoading(true);
-    setLoadError({ error: "" });
+    setLoadError("");
 
     const [courseProgress, lessonProgresses] = await Promise.all([
       getCourseProgress(courseId, userClerkId),
       getLessonProgressses(courseId, userClerkId),
     ]);
 
-    if (courseProgress.error) {
-      setLoadError({ error: courseProgress.error });
-      return;
-    }
-    if (lessonProgresses.error) {
-      setLoadError({ error: lessonProgresses.error });
+    if (courseProgress.error || lessonProgresses.error) {
+      setLoadError(courseProgress.error || lessonProgresses.error || "");
       return;
     }
 
-    setLessonsCompleted(courseProgress.lessonsCompleted);
+    if (courseProgress) {
+      setLessonsCompleted(courseProgress.lessonsCompleted);
+    }
 
     const course = courses.find(
       (course) => course.id === parseInt(courseId)
     )?.course;
 
-    if (lessonProgresses.progress && course) {
-      const lessons = course.lessons;
-      for (let i = 0; i < lessons.length; i++) {
-        const lessonProgress = lessonProgresses.progress[i];
-        if (lessonProgress) {
-          lessons[i] = {
-            ...lessons[i],
-            progress: lessonProgress.progress,
-            status: lessonProgress.status,
-            lastCompletedAt: lessonProgress.completed_at,
-          };
-        } else {
-          lessons[i] = {
-            ...lessons[i],
-            progress: 0.0,
-            status: "uncompleted",
-            lastCompletedAt: null,
-          };
-        }
-      }
+    if (!course) {
+      setLoadError("Course not found");
+      return;
     }
 
-    if (course) {
-      setCourseName(course.courseName);
-      setCourseDescription(course.courseDescription);
-      setLessons(course.lessons);
+    setCourseName(course.courseName);
+    setCourseDescription(course.courseDescription);
+
+    if (lessonProgresses.progresses) {
+      setLessons(
+        createLessonDetailsWithProgress(
+          course.lessons,
+          lessonProgresses.progresses
+        )
+      );
     }
+
     setTimeout(() => setLoading(false), 500);
   }, [userClerkId, courseId]);
 
@@ -99,7 +88,7 @@ const CourseDetails = () => {
     <SafeAreaView edges={["left", "right"]} className="flex-1 bg-white">
       {loading ? (
         <CourseDetailsLoader
-          fetchError={loadError.error}
+          fetchError={loadError}
           fetchDetails={fetchCourseDetails}
         />
       ) : (
@@ -151,19 +140,17 @@ const CourseDetails = () => {
             renderItem={({ item, index }) => (
               <LessonCard
                 id={item.id}
+                courseId={courseId}
                 title={item.title}
                 description={item.description}
                 lessonsCompleted={lessonsCompleted}
                 time={item.time}
                 difficulty={item.difficulty}
+                lessonSequence={index + 1}
                 lastLesson={index == lessons.length - 1}
                 lastCompletedAt={item.lastCompletedAt}
-                onPress={() => {
-                  router.replace(
-                    `/(root)/courses/lesson?courseId=${courseId}&lesson=${index}&progress=${item.progress == 1.0 ? 0.0 : item.progress}`
-                  );
-                  startLesson(courseId, item.id.toString(), userClerkId);
-                }}
+                status={item.status}
+                progress={item.progress}
               />
             )}
             keyExtractor={(item, index) => item.id.toString()}

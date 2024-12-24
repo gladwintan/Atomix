@@ -3,19 +3,33 @@ import { Image, View, Text, TouchableOpacity } from "react-native";
 import ReactNativeModal from "react-native-modal";
 
 import { graphics, icons } from "@/constants";
-import { LessonCardProps } from "@/types/type";
+import { LessonWithProgress } from "@/types/type";
+import { router } from "expo-router";
+import { startLesson } from "@/lib/courses";
+import { useUser } from "@clerk/clerk-expo";
 
 const LessonCard = ({
   id,
+  courseId,
   title,
   description,
   time,
   difficulty,
+  lessonSequence,
   lessonsCompleted,
   lastLesson,
+  status,
+  progress,
   lastCompletedAt,
-  onPress,
-}: LessonCardProps) => {
+}: Omit<LessonWithProgress, "contents"> & {
+  courseId: string;
+  lessonSequence: number;
+  lessonsCompleted: number;
+  lastLesson: boolean;
+}) => {
+  const { user } = useUser();
+  const userClerkId = user?.id;
+
   const [showRestartMenu, setShowRestartMenu] = useState(false);
 
   return (
@@ -24,11 +38,11 @@ const LessonCard = ({
         <View className="flex-row">
           <View className="mr-4 w-[30px] h-[30px] items-center justify-center rounded-full border-primary-700 border">
             <Text className="text-dark-light text-sm font-openSans-medium">
-              {id}
+              {lessonSequence}
             </Text>
           </View>
           <View
-            className={`w-10/12 p-2.5 relative bottom-2 ${id == lessonsCompleted + 1 && "bg-primary-50/60 rounded-lg"}`}
+            className={`w-10/12 p-2.5 relative bottom-2 ${lessonSequence == lessonsCompleted + 1 && "bg-primary-50/60 rounded-lg"}`}
           >
             <Text className="text-sm text-dark-base font-openSans-medium">
               {title}
@@ -57,7 +71,7 @@ const LessonCard = ({
                 </View>
               </View>
 
-              {lessonsCompleted != -1 && id <= lessonsCompleted ? (
+              {lessonsCompleted != -1 && lessonSequence <= lessonsCompleted ? (
                 <TouchableOpacity
                   onPress={() => setShowRestartMenu(true)}
                   className="bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative"
@@ -72,9 +86,14 @@ const LessonCard = ({
                     className="ml-1 w-4 h-4"
                   />
                 </TouchableOpacity>
-              ) : id == lessonsCompleted + 1 ? (
+              ) : lessonSequence == lessonsCompleted + 1 ? (
                 <TouchableOpacity
-                  onPress={onPress}
+                  onPress={() => {
+                    router.replace(
+                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence}&progress=${progress}`
+                    );
+                    startLesson(courseId, id.toString(), userClerkId);
+                  }}
                   className="bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative"
                 >
                   <Text className="text-white text-xs font-openSans-semibold">
@@ -127,7 +146,10 @@ const LessonCard = ({
                   <TouchableOpacity
                     onPress={() => {
                       setShowRestartMenu(false);
-                      onPress();
+                      router.replace(
+                        `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence}&progress=0.0`
+                      );
+                      startLesson(courseId, id.toString(), userClerkId);
                     }}
                     className="w-28 bg-primary-500 items-center justify-center p-2 rounded-lg"
                   >
@@ -144,7 +166,7 @@ const LessonCard = ({
 
       {!lastLesson && (
         <View
-          className={`${id <= lessonsCompleted ? "border-[#B3CCFF]" : "border-gray-300"} 
+          className={`${lessonSequence <= lessonsCompleted ? "border-[#B3CCFF]" : "border-gray-300"} 
             absolute bottom-6 ml-3 h-16 w-0 border-2 rounded-b-full rounded-t-full`}
         />
       )}

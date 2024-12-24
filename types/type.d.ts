@@ -72,16 +72,13 @@ declare interface Lesson {
   description: string;
   time: string;
   difficulty: number;
-  contents?: Content[];
-  status?: "uncompleted" | "ongoing" | "completed";
-  progress?: number;
-  lastCompletedAt?: string | null;
+  contents: Content[];
 }
 
-declare interface LessonCardProps extends Lesson {
-  lessonsCompleted: number;
-  lastLesson: boolean;
-  onPress: () => void;
+declare interface LessonWithProgress extends Lesson {
+  status: "uncompleted" | "ongoing" | "completed";
+  progress: number;
+  lastCompletedAt: string | null;
 }
 
 declare interface Question {

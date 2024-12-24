@@ -97,7 +97,7 @@ export const getCourseProgress = async (
 ) => {
   if (!userClerkId) {
     console.error("User not authenticated");
-    return { error: "Error loading courses" };
+    return { error: "Error getting course progress" };
   }
 
   try {
@@ -114,7 +114,7 @@ export const getCourseProgress = async (
     };
   } catch (error) {
     console.error(error);
-    return { error: "Error loading courses" };
+    return { error: "Error getting course progress" };
   }
 };
 
@@ -137,7 +137,7 @@ export const getLessonProgressses = async (
 
     return {
       success: "Successfully fetched lesson progress",
-      progress: fetchData?.data[0]?.lesson_progress,
+      progresses: fetchData?.data[0]?.lesson_progress,
     };
   } catch (error) {
     console.error(error);
