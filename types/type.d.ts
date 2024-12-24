@@ -112,12 +112,11 @@ declare interface Notes {
   imageSrc?: ImageSourcePropType;
 }
 
-declare type Content = (
-  | BinaryQuestion
-  | FillInTheBlankQuestion
-  | MultipleResponseQuestion
-  | Notes
-) & { type: string };
+declare type Content =
+  | (BinaryQuestion & { type: "Binary Question" })
+  | (FillInTheBlankQuestion & { type: "Fill In The Blank Question" })
+  | (MultipleResponseQuestion & { type: "Multiple Response Question" })
+  | (Notes & { type: "Notes" });
 
 declare interface Post {
   id: number;

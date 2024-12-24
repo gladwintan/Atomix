@@ -1,13 +1,7 @@
 import { View, Text, FlatList, Dimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import {
-  BinaryQuestion,
-  Content,
-  FillInTheBlankQuestion,
-  MultipleResponseQuestion,
-  Notes,
-} from "@/types/type";
+import { Content } from "@/types/type";
 import { courses } from "@/data/courses/course-list";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LessonHeader from "@/components/courses/LessonHeader";
@@ -144,58 +138,53 @@ const Lesson = () => {
           ref={flatListRef}
           data={lessonContent}
           renderItem={({ item, index }) => {
-            let typedItem;
             switch (item.type) {
               case "Notes":
-                typedItem = item as Notes;
                 return (
                   <NotesCard
-                    title={typedItem.title}
-                    description={typedItem.description}
+                    title={item.title}
+                    description={item.description}
                     onPress={handleNext}
                   />
                 );
               case "Binary Question":
-                typedItem = item as BinaryQuestion;
                 return (
                   <BinaryQuestionCard
-                    question={typedItem.question}
-                    answer={typedItem.answer}
-                    imageSrc={typedItem.imageSrc}
-                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
-                    correctAnswerMessage={typedItem.correctAnswerMessage}
+                    question={item.question}
+                    answer={item.answer}
+                    imageSrc={item.imageSrc}
+                    incorrectAnswerMessage={item.incorrectAnswerMessage}
+                    correctAnswerMessage={item.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );
               case "Fill In The Blank Question":
-                typedItem = item as FillInTheBlankQuestion;
                 return (
                   <FillInTheBlankQuestionCard
-                    question={typedItem.question}
-                    questionWithBlanks={typedItem.questionWithBlanks}
-                    options={typedItem.options}
-                    answer={typedItem.answer}
-                    imageSrc={typedItem.imageSrc}
-                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
-                    correctAnswerMessage={typedItem.correctAnswerMessage}
+                    question={item.question}
+                    questionWithBlanks={item.questionWithBlanks}
+                    options={item.options}
+                    answer={item.answer}
+                    imageSrc={item.imageSrc}
+                    incorrectAnswerMessage={item.incorrectAnswerMessage}
+                    correctAnswerMessage={item.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );
               case "Multiple Response Question":
-                typedItem = item as MultipleResponseQuestion;
                 return (
                   <MultipleResponseQuestionCard
-                    question={typedItem.question}
-                    options={typedItem.options}
-                    answer={typedItem.answer}
-                    imageSrc={typedItem.imageSrc}
-                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
-                    correctAnswerMessage={typedItem.correctAnswerMessage}
+                    question={item.question}
+                    options={item.options}
+                    answer={item.answer}
+                    imageSrc={item.imageSrc}
+                    incorrectAnswerMessage={item.incorrectAnswerMessage}
+                    correctAnswerMessage={item.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );
               default:
-                return <View></View>;
+                return <Text>No content</Text>;
             }
           }}
           keyExtractor={(item, index) => index.toString()}
