@@ -160,7 +160,7 @@ const CourseDetails = () => {
                 lastCompletedAt={item.lastCompletedAt}
                 onPress={() => {
                   router.replace(
-                    `/(root)/courses/lesson?courseId=${courseId}&lesson=${index}&progress=${item.progress}`
+                    `/(root)/courses/lesson?courseId=${courseId}&lesson=${index}&progress=${item.progress == 1.0 ? 0.0 : item.progress}`
                   );
                   startLesson(courseId, item.id.toString(), userClerkId);
                 }}

@@ -21,7 +21,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
     case "back":
       return "text-dark-light text-xs font-openSans";
     default:
-      return "text-base-dark font-openSans-semibold";
+      return "text-xs font-openSans-medium";
   }
 };
 
@@ -30,7 +30,7 @@ const getButtonStyle = (type: ButtonProps["type"]) => {
     case "outline":
       return "bg-transparent border-neutral-300 border-[0.5px] p-2 rounded-lg shadow-none";
     case "continue":
-      return "w-5/6 self-center bg-primary-500 rounded-full p-3";
+      return "w-5/6 self-center bg-primary-600 rounded-full p-2.5";
     case "boolean":
       return "w-36 p-2 bg-white border-2 border-slate-200 rounded-xl shadow-none";
     case "booleanSuccess":

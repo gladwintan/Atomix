@@ -10,7 +10,7 @@ const NotesCard = ({
   onPress,
 }: Notes & { onPress: () => void }) => {
   return (
-    <View>
+    <View className="w-[100vw]">
       <Text>{title}</Text>
       <Text>{description}</Text>
       <CustomButton title="Next" type="continue" onPress={onPress} />

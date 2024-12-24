@@ -30,7 +30,7 @@ const MultipleResponseQuestionCard = ({
       {imageSrc && (
         <Image
           source={imageSrc}
-          className="self-center w-11/12 max-w-md"
+          className="self-center w-10/12 max-w-md"
           resizeMode="contain"
         />
       )}
