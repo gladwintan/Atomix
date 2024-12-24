@@ -13,6 +13,8 @@ const lesson1: Content[] = [
     imageSrc: dOrbitals,
     question: "The above is correct",
     answer: true,
+    incorrectAnswerMessage: "Hint: check the orbitals",
+    correctAnswerMessage: "Those are all the d orbitals",
   },
   {
     type: "Fill In The Blank Question",
@@ -29,6 +31,8 @@ const lesson1: Content[] = [
     ],
     options: ["group", "period", "decreases", "increases"],
     answer: ["group", "increases", "period", "decreases"],
+    incorrectAnswerMessage: "Think about the IE",
+    correctAnswerMessage: "Remember this trend",
   },
   {
     type: "Multiple Response Question",
@@ -40,12 +44,16 @@ const lesson1: Content[] = [
       { option: "f", selected: false },
     ],
     answer: ["s"],
+    incorrectAnswerMessage: "Recall the shapes of all the orbitals",
+    correctAnswerMessage: "s is spherical and p is dumbbell shaped",
   },
   {
     type: "Binary Question",
     imageSrc: dOrbitals,
     question: "The above is correct",
     answer: true,
+    incorrectAnswerMessage: "Hint: check the orbitals",
+    correctAnswerMessage: "Those are all the d orbitals",
   },
 ];
 

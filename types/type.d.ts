@@ -87,7 +87,10 @@ declare interface LessonCardProps extends Lesson {
 declare interface Question {
   question: string;
   imageSrc?: ImageSourcePropType;
+  incorrectAnswerMessage: string;
+  correctAnswerMessage: string;
 }
+
 declare interface BinaryQuestion extends Question {
   answer: boolean;
 }

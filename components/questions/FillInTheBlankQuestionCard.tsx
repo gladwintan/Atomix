@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Image, View, Text } from "react-native";
 
@@ -13,18 +13,24 @@ const FillInTheBlankQuestionCard = ({
   options,
   questionWithBlanks,
   answer,
+  correctAnswerMessage,
+  incorrectAnswerMessage,
   onPressNextQuestion,
   imageSrc,
 }: FillInTheBlankQuestion & { onPressNextQuestion: () => void }) => {
   const [remainingOptions, setRemainingOptions] = useState(options);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
 
-  const checkAnswer = () => {
+  const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
+
+  useEffect(() => {
+    if (selectedAnswer.length != answer.length) return;
+
     const arr = selectedAnswer.filter(
       (selection, index) => selection == answer[index]
     );
-    return arr.length == answer.length;
-  };
+    setAnsweredCorrectly(arr.length == answer.length);
+  }, [selectedAnswer]);
 
   return (
     <View className="bg-white p-3 w-[100vw]">
@@ -94,26 +100,19 @@ const FillInTheBlankQuestionCard = ({
           />
         ))}
       </View>
-      {selectedAnswer.length == answer.length &&
-        (checkAnswer() ? (
-          <AnswerVerification
-            correctAnswer={true}
-            message="Yay! you are correct"
-            onPress={() => {
-              setSelectedAnswer([]);
-              onPressNextQuestion();
-            }}
-          />
-        ) : (
-          <AnswerVerification
-            correctAnswer={false}
-            message="Please try again!"
-            onPress={() => {
-              setSelectedAnswer([]);
-              setRemainingOptions(options);
-            }}
-          />
-        ))}
+      {selectedAnswer.length == answer.length && (
+        <AnswerVerification
+          correctAnswer={answeredCorrectly}
+          incorrectAnswerMessage={incorrectAnswerMessage}
+          correctAnswerMessage={correctAnswerMessage}
+          onPress={() => {
+            setSelectedAnswer([]);
+            answeredCorrectly
+              ? onPressNextQuestion()
+              : setRemainingOptions(options);
+          }}
+        />
+      )}
     </View>
   );
 };

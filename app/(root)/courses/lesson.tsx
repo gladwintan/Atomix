@@ -162,6 +162,8 @@ const Lesson = () => {
                     question={typedItem.question}
                     answer={typedItem.answer}
                     imageSrc={typedItem.imageSrc}
+                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
+                    correctAnswerMessage={typedItem.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );
@@ -174,6 +176,8 @@ const Lesson = () => {
                     options={typedItem.options}
                     answer={typedItem.answer}
                     imageSrc={typedItem.imageSrc}
+                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
+                    correctAnswerMessage={typedItem.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );
@@ -185,6 +189,8 @@ const Lesson = () => {
                     options={typedItem.options}
                     answer={typedItem.answer}
                     imageSrc={typedItem.imageSrc}
+                    incorrectAnswerMessage={typedItem.incorrectAnswerMessage}
+                    correctAnswerMessage={typedItem.correctAnswerMessage}
                     onPressNextQuestion={handleNext}
                   />
                 );

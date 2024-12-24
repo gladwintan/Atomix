@@ -9,6 +9,8 @@ const BinaryQuestionCard = ({
   question,
   answer,
   imageSrc,
+  correctAnswerMessage,
+  incorrectAnswerMessage,
   onPressNextQuestion,
 }: BinaryQuestion & { onPressNextQuestion: () => void }) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
@@ -51,25 +53,17 @@ const BinaryQuestionCard = ({
           />
         </View>
       </View>
-      {answered &&
-        (isCorrectAnswer ? (
-          <AnswerVerification
-            correctAnswer={isCorrectAnswer}
-            message="Yay! you are correct"
-            onPress={() => {
-              setAnswered(false);
-              onPressNextQuestion();
-            }}
-          />
-        ) : (
-          <AnswerVerification
-            correctAnswer={isCorrectAnswer}
-            message="Please try again!"
-            onPress={() => {
-              setAnswered(false);
-            }}
-          />
-        ))}
+      {answered && (
+        <AnswerVerification
+          correctAnswer={isCorrectAnswer}
+          incorrectAnswerMessage={incorrectAnswerMessage}
+          correctAnswerMessage={correctAnswerMessage}
+          onPress={() => {
+            setAnswered(false);
+            isCorrectAnswer && onPressNextQuestion();
+          }}
+        />
+      )}
     </View>
   );
 };

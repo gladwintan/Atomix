@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Image, View, Text } from "react-native";
 
@@ -12,18 +12,24 @@ const MultipleResponseQuestionCard = ({
   options,
   question,
   answer,
+  correctAnswerMessage,
+  incorrectAnswerMessage,
   onPressNextQuestion,
   imageSrc,
 }: MultipleResponseQuestion & { onPressNextQuestion: () => void }) => {
   const [optionsGiven, setOptionsGiven] = useState(options);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
 
-  const checkAnswer = () => {
+  const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
+
+  useEffect(() => {
+    if (selectedAnswer.length != answer.length) return;
+
     const arr = selectedAnswer.filter((selection) =>
       answer.includes(selection)
     );
-    return arr.length == answer.length;
-  };
+    setAnsweredCorrectly(arr.length == answer.length);
+  }, [selectedAnswer]);
 
   return (
     <View className="items-center p-2 w-[100vw]">
@@ -67,26 +73,19 @@ const MultipleResponseQuestionCard = ({
         ))}
       </View>
 
-      {selectedAnswer.length == answer.length &&
-        (checkAnswer() ? (
-          <AnswerVerification
-            correctAnswer={true}
-            message="Yay! you are correct"
-            onPress={() => {
-              setSelectedAnswer([]);
-              onPressNextQuestion();
-            }}
-          />
-        ) : (
-          <AnswerVerification
-            correctAnswer={false}
-            message="Please try again!"
-            onPress={() => {
-              setSelectedAnswer([]);
-              setOptionsGiven(options);
-            }}
-          />
-        ))}
+      {selectedAnswer.length == answer.length && (
+        <AnswerVerification
+          correctAnswer={answeredCorrectly}
+          incorrectAnswerMessage={incorrectAnswerMessage}
+          correctAnswerMessage={correctAnswerMessage}
+          onPress={() => {
+            setSelectedAnswer([]);
+            answeredCorrectly
+              ? onPressNextQuestion()
+              : setOptionsGiven(options);
+          }}
+        />
+      )}
     </View>
   );
 };
