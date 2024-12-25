@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import CustomButton from "../CustomButton";
 import { router } from "expo-router";
 import { updateLessonProgress } from "@/lib/courses";
@@ -15,9 +15,12 @@ const LessonCompletionCard = ({
   const { user } = useUser();
   const userClerkId = user?.id;
 
-  const handleLessonCompletion = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleLessonCompletion = async () => {
+    setLoading(true);
+    await updateLessonProgress("1.0", lessonId, userClerkId);
     router.replace(`/(root)/courses/${courseId}`);
-    updateLessonProgress("1.0", lessonId, userClerkId);
   };
 
   return (
@@ -32,6 +35,7 @@ const LessonCompletionCard = ({
         type="continue"
         textVariant="white"
         onPress={handleLessonCompletion}
+        disabled={loading}
       />
     </View>
   );

@@ -29,3 +29,14 @@ export const createLessonDetailsWithProgress = (
   }
   return lessonsWithProgress;
 };
+
+export const getCourseLevelTagColour = (level: string): string => {
+  switch (level) {
+    case "H1":
+      return "bg-tag-h1";
+    case "H2":
+      return "bg-tag-h2";
+    default:
+      return "bg-secondary-600";
+  }
+};

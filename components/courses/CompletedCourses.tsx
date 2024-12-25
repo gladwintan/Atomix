@@ -3,7 +3,6 @@ import React from "react";
 import { FlatList, Image, View, StyleSheet, Text } from "react-native";
 
 import { graphics, icons } from "@/constants";
-import { formatCourseName } from "@/lib/utils";
 import { OngoingCourse } from "@/types/type";
 
 import CompletedCourseCard from "./CompletedCourseCard";

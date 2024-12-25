@@ -108,6 +108,7 @@ export const getCourseProgress = async (
       (course: any) => course.course_id == courseId
     );
     const lessonsCompleted = course[0]?.lessons_completed ?? -1;
+
     return {
       success: "Successfully loaded courses",
       lessonsCompleted: lessonsCompleted,

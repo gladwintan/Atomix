@@ -1,7 +1,7 @@
 import { Image, View, Text, TouchableOpacity } from "react-native";
 
 import { icons } from "@/constants";
-import { getCourseLevelTagColour } from "@/lib/utils";
+import { getCourseLevelTagColour } from "@/lib/coursesUtils";
 import { Href, router } from "expo-router";
 
 const ExploreCourseCard = ({

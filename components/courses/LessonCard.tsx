@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import ReactNativeModal from "react-native-modal";
+import * as Progress from "react-native-progress";
 
 import { graphics, icons } from "@/constants";
 import { LessonWithProgress } from "@/types/type";
 import { router } from "expo-router";
 import { startLesson } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";
+import { formatDate } from "@/lib/utils";
 
 const LessonCard = ({
   id,
@@ -36,8 +38,20 @@ const LessonCard = ({
     <View className="pb-8">
       <View className="my-3">
         <View className="flex-row">
-          <View className="mr-4 w-[30px] h-[30px] items-center justify-center rounded-full border-primary-700 border">
-            <Text className="text-dark-light text-sm font-openSans-medium">
+          <View
+            className={`mr-3 w-[35px] h-[35px] items-center justify-center rounded-full border-primary-600 ${status == "uncompleted" && "border"}`}
+          >
+            {status != "uncompleted" && (
+              <Progress.Circle
+                progress={progress}
+                thickness={3}
+                borderWidth={0}
+                unfilledColor="#f3f4f6"
+                color="#3da84f"
+                strokeCap="round"
+              />
+            )}
+            <Text className="absolute text-dark-light text-sm font-openSans-medium">
               {lessonSequence}
             </Text>
           </View>
@@ -69,9 +83,10 @@ const LessonCard = ({
                     {time}
                   </Text>
                 </View>
+                {lastCompletedAt && <Text>{formatDate(lastCompletedAt)}</Text>}
               </View>
 
-              {lessonsCompleted != -1 && lessonSequence <= lessonsCompleted ? (
+              {status == "completed" ? (
                 <TouchableOpacity
                   onPress={() => setShowRestartMenu(true)}
                   className="bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative"
@@ -86,11 +101,31 @@ const LessonCard = ({
                     className="ml-1 w-4 h-4"
                   />
                 </TouchableOpacity>
+              ) : status == "ongoing" ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    router.replace(
+                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=${progress}`
+                    );
+                    startLesson(courseId, id.toString(), userClerkId);
+                  }}
+                  className="bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative"
+                >
+                  <Text className="text-white text-xs font-openSans-semibold">
+                    resume
+                  </Text>
+                  <Image
+                    source={icons.resume}
+                    tintColor="white"
+                    resizeMode="contain"
+                    className="ml-1 w-4 h-4"
+                  />
+                </TouchableOpacity>
               ) : lessonSequence == lessonsCompleted + 1 ? (
                 <TouchableOpacity
                   onPress={() => {
                     router.replace(
-                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence}&progress=${progress}`
+                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=${progress}`
                     );
                     startLesson(courseId, id.toString(), userClerkId);
                   }}
@@ -147,7 +182,7 @@ const LessonCard = ({
                     onPress={() => {
                       setShowRestartMenu(false);
                       router.replace(
-                        `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence}&progress=0.0`
+                        `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=0.0`
                       );
                       startLesson(courseId, id.toString(), userClerkId);
                     }}

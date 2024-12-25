@@ -44,7 +44,8 @@ export async function PUT(request: Request) {
       )
       UPDATE 
         course_progress
-      SET 
+      SET
+        updated_at = NOW(),
         lessons_completed = lessons.sequence_number,
         progress = (lessons.sequence_number::float / courses.lessons)
       FROM

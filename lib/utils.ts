@@ -1,8 +1,4 @@
-import { Post, PostReply } from "@/types/type";
-
-export const formatCourseName = (courseName: string) => {
-  return courseName.split(" ").join("-").toLowerCase();
-};
+import { PostReply } from "@/types/type";
 
 export const formatDate = (date: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -146,17 +142,6 @@ export const getPostTopicTagColour = (topic: string): string => {
     //   return "#84be6c";
     // case "topic 2":
     //   return "#beb36c";
-    default:
-      return "bg-secondary-600";
-  }
-};
-
-export const getCourseLevelTagColour = (level: string): string => {
-  switch (level) {
-    case "H1":
-      return "bg-tag-h1";
-    case "H2":
-      return "bg-tag-h2";
     default:
       return "bg-secondary-600";
   }

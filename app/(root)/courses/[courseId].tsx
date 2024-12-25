@@ -56,7 +56,7 @@ const CourseDetails = () => {
       return;
     }
 
-    if (courseProgress) {
+    if (courseProgress.lessonsCompleted != -1) {
       setLessonsCompleted(courseProgress.lessonsCompleted);
     }
 
