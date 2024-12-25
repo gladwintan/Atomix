@@ -9,6 +9,7 @@ import { router } from "expo-router";
 import { startLesson } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";
 import { formatDate } from "@/lib/utils";
+import CustomButton from "../CustomButton";
 
 const LessonCard = ({
   id,
@@ -34,29 +35,35 @@ const LessonCard = ({
 
   const [showRestartMenu, setShowRestartMenu] = useState(false);
 
+  const handleStartLesson = () => {
+    router.replace(
+      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=${status == "completed" ? "0.0" : progress}`
+    );
+    startLesson(courseId, id.toString(), userClerkId);
+  };
+
   return (
-    <View className="pb-8">
+    <View className="mb-8">
       <View className="my-3">
         <View className="flex-row">
           <View
-            className={`mr-3 w-[35px] h-[35px] items-center justify-center rounded-full border-primary-600 ${status == "uncompleted" && "border"}`}
+            className={`mr-3 w-[35px] h-[35px] items-center justify-center`}
           >
-            {status != "uncompleted" && (
-              <Progress.Circle
-                progress={progress}
-                thickness={3}
-                borderWidth={0}
-                unfilledColor="#f3f4f6"
-                color="#3da84f"
-                strokeCap="round"
-              />
-            )}
-            <Text className="absolute text-dark-light text-sm font-openSans-medium">
+            <Progress.Circle
+              progress={progress}
+              thickness={3}
+              borderWidth={0}
+              unfilledColor="#f3f4f6"
+              color={status != "uncompleted" ? "#3fa650" : "none"}
+              strokeCap="round"
+            />
+            <Text className="absolute text-dark-light text-sm font-openSans-semibold">
               {lessonSequence}
             </Text>
           </View>
+
           <View
-            className={`w-10/12 p-2.5 relative bottom-2 ${lessonSequence == lessonsCompleted + 1 && "bg-primary-50/60 rounded-lg"}`}
+            className={`w-10/12 p-2.5 relative bottom-2 ${lessonSequence == lessonsCompleted + 1 && "bg-primary-50/70 rounded-lg"}`}
           >
             <Text className="text-sm text-dark-base font-openSans-medium">
               {title}
@@ -83,66 +90,59 @@ const LessonCard = ({
                     {time}
                   </Text>
                 </View>
-                {lastCompletedAt && <Text>{formatDate(lastCompletedAt)}</Text>}
               </View>
 
+              {/* Render buttons based on completion status of lesson */}
               {status == "completed" ? (
-                <TouchableOpacity
+                // Completed button to show restart lesson menu
+                <CustomButton
+                  title="completed"
+                  textClassName="text-[#36633e]"
+                  className="bg-[#E8F8EB]/80 shadow-none p-1 px-2 rounded-md"
+                  IconRight={() => (
+                    <Image
+                      source={icons.check}
+                      tintColor="#36633e"
+                      resizeMode="contain"
+                      className="ml-1 w-4 h-4"
+                    />
+                  )}
                   onPress={() => setShowRestartMenu(true)}
-                  className="bg-[#E8F8EB]/80 p-1 px-2 rounded-md flex-row items-center justify-center relative"
-                >
-                  <Text className="text-[#36633e] text-xs font-openSans-medium">
-                    completed
-                  </Text>
-                  <Image
-                    source={icons.check}
-                    tintColor="#36633e"
-                    resizeMode="contain"
-                    className="ml-1 w-4 h-4"
-                  />
-                </TouchableOpacity>
+                />
               ) : status == "ongoing" ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    router.replace(
-                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=${progress}`
-                    );
-                    startLesson(courseId, id.toString(), userClerkId);
-                  }}
-                  className="bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative"
-                >
-                  <Text className="text-white text-xs font-openSans-semibold">
-                    resume
-                  </Text>
-                  <Image
-                    source={icons.resume}
-                    tintColor="white"
-                    resizeMode="contain"
-                    className="ml-1 w-4 h-4"
-                  />
-                </TouchableOpacity>
+                // Resume button to continue lesson with saved progress
+                <CustomButton
+                  title="resume"
+                  textVariant="secondary"
+                  className="p-1 px-2 rounded-md shadow-none"
+                  IconRight={() => (
+                    <Image
+                      source={icons.resume}
+                      tintColor="white"
+                      resizeMode="contain"
+                      className="ml-1 w-4 h-4"
+                    />
+                  )}
+                  onPress={handleStartLesson}
+                />
               ) : lessonSequence == lessonsCompleted + 1 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    router.replace(
-                      `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=${progress}`
-                    );
-                    startLesson(courseId, id.toString(), userClerkId);
-                  }}
-                  className="bg-[#91B0F2] p-1 px-2 rounded-md flex-row items-center justify-center relative"
-                >
-                  <Text className="text-white text-xs font-openSans-semibold">
-                    Start lesson
-                  </Text>
-                  <Image
-                    source={icons.start}
-                    tintColor="white"
-                    resizeMode="contain"
-                    className="ml-1 w-4 h-4"
-                  />
-                </TouchableOpacity>
+                // Start button to start lesson and create progress
+                <CustomButton
+                  title="Start lesson"
+                  textVariant="secondary"
+                  className="p-1 px-2 rounded-md shadow-none"
+                  IconRight={() => (
+                    <Image
+                      source={icons.resume}
+                      tintColor="white"
+                      resizeMode="contain"
+                      className="ml-1 w-4 h-4"
+                    />
+                  )}
+                  onPress={handleStartLesson}
+                />
               ) : (
-                <View className="bg-[#91B0F2]/75 p-1 px-2 rounded-md flex-row items-center justify-center relative">
+                <View className="bg-[#91B0F2]/75 p-1 px-2 rounded-md flex-row items-center justify-center">
                   <Text className="text-white text-xs font-openSans-semibold">
                     Locked
                   </Text>
@@ -155,10 +155,20 @@ const LessonCard = ({
                 </View>
               )}
             </View>
+
+            {lastCompletedAt && (
+              <Text className="absolute text-3xs -bottom-4 right-2 text-dark-light font-openSans">
+                Last completed on {formatDate(lastCompletedAt)}
+              </Text>
+            )}
           </View>
 
           {showRestartMenu && (
-            <ReactNativeModal isVisible={showRestartMenu}>
+            // Restart lesson menu
+            <ReactNativeModal
+              isVisible={showRestartMenu}
+              onBackdropPress={() => setShowRestartMenu(false)}
+            >
               <View className="rounded-2xl p-4 h-[250px] w-[300px] self-center bg-white space-y-5 items-center justify-center">
                 <Image
                   source={graphics.completedCoursesEmpty}
@@ -179,13 +189,7 @@ const LessonCard = ({
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => {
-                      setShowRestartMenu(false);
-                      router.replace(
-                        `/(root)/courses/lesson?courseId=${courseId}&lesson=${lessonSequence - 1}&progress=0.0`
-                      );
-                      startLesson(courseId, id.toString(), userClerkId);
-                    }}
+                    onPress={handleStartLesson}
                     className="w-28 bg-primary-500 items-center justify-center p-2 rounded-lg"
                   >
                     <Text className="text-white font-openSans-bold text-xs">
@@ -201,8 +205,8 @@ const LessonCard = ({
 
       {!lastLesson && (
         <View
-          className={`${lessonSequence <= lessonsCompleted ? "border-[#B3CCFF]" : "border-gray-300"} 
-            absolute bottom-6 ml-3 h-16 w-0 border-2 rounded-b-full rounded-t-full`}
+          className={`${lessonSequence <= lessonsCompleted ? "bg-[#3fa650]" : "bg-gray-200"} 
+            absolute -bottom-2 ml-4 h-14 w-1 rounded-b-full rounded-t-full`}
         />
       )}
     </View>

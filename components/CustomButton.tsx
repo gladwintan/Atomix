@@ -7,7 +7,7 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
     case "primary":
       return "text-base-dark font-openSans";
     case "secondary":
-      return "text-white text-xs font-openSans";
+      return "text-white text-xs font-openSans-semibold";
     case "white":
       return "text-white font-openSans-bold";
     case "danger":

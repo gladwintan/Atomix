@@ -27,7 +27,7 @@ export async function PUT(request: Request) {
           completed_at = 
             CASE 
               WHEN ${progress} = 1.0 THEN NOW()
-              ELSE NULL
+              ELSE lesson_progress.completed_at
             END
         FROM 
           users

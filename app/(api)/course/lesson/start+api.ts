@@ -34,10 +34,10 @@ export async function POST(request: Request) {
         AND
         course_progress.course_id = ${courseId} 
       ON CONFLICT 
-        (lesson_id, user_id)
+        (user_id, lesson_id)
       DO UPDATE SET
         status = 'ongoing',
-        progress = 0
+        progress = 0.5
     `;
 
     return Response.json({ data: response }, { status: 201 });
