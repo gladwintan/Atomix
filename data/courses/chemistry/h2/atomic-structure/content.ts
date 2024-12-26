@@ -57,8 +57,62 @@ const lesson1: Content[] = [
   },
 ];
 
+const lesson2: Content[] = [
+  {
+    type: "Notes",
+    title: "Notes",
+    description: "Atomic orbital notes",
+    imageSrc: dOrbitals,
+  },
+  {
+    type: "Binary Question",
+    imageSrc: dOrbitals,
+    question: "The above is correct",
+    answer: true,
+    incorrectAnswerMessage: "Hint: check the orbitals",
+    correctAnswerMessage: "Those are all the d orbitals",
+  },
+];
+
+const lesson3: Content[] = [
+  {
+    type: "Notes",
+    title: "Notes",
+    description: "Atomic orbital notes",
+    imageSrc: dOrbitals,
+  },
+  {
+    type: "Binary Question",
+    imageSrc: dOrbitals,
+    question: "The above is correct",
+    answer: true,
+    incorrectAnswerMessage: "Hint: check the orbitals",
+    correctAnswerMessage: "Those are all the d orbitals",
+  },
+];
+
+const lesson4: Content[] = [
+  {
+    type: "Notes",
+    title: "Notes",
+    description: "Atomic orbital notes",
+    imageSrc: dOrbitals,
+  },
+  {
+    type: "Binary Question",
+    imageSrc: dOrbitals,
+    question: "The above is correct",
+    answer: true,
+    incorrectAnswerMessage: "Hint: check the orbitals",
+    correctAnswerMessage: "Those are all the d orbitals",
+  },
+];
+
 const contents = {
   lesson1: lesson1,
+  lesson2: lesson2,
+  lesson3: lesson3,
+  lesson4: lesson4,
 };
 
 export default contents;

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         (user_id, lesson_id)
       DO UPDATE SET
         status = 'ongoing',
-        progress = 0.5
+        progress = 0.0
     `;
 
     return Response.json({ data: response }, { status: 201 });

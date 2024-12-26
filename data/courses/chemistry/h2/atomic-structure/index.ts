@@ -17,7 +17,7 @@ const lessons: Lesson[] = [
     description: "Ionisation energy",
     time: "10 mins",
     difficulty: 2,
-    contents: [],
+    contents: contents.lesson2,
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const lessons: Lesson[] = [
     description: "Variations in I.E. across period and down group",
     time: "9 mins",
     difficulty: 3,
-    contents: [],
+    contents: contents.lesson3,
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const lessons: Lesson[] = [
     description: "Exceptions to the I.E. trend",
     time: "6 mins",
     difficulty: 2,
-    contents: [],
+    contents: contents.lesson3,
   },
 ];
 
