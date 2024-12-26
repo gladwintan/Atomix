@@ -1,8 +1,40 @@
-import lessons from "./lesson-details";
+import { Lesson } from "@/types/type";
+import contents from "./content";
 
-export default {
-  courseName: "Atomic Structure",
-  courseDescription:
-    "Learn about atomic orbitals and trends in ionisation energy",
-  lessons: lessons,
-};
+// id matches lesson id on database
+const lessons: Lesson[] = [
+  {
+    id: 1,
+    title: "Atomic Orbitals",
+    description: "Identify and draw s, p, d orbitals",
+    time: "5 mins",
+    difficulty: 2,
+    contents: contents.lesson1,
+  },
+  {
+    id: 2,
+    title: "I.E. and Atomic radius",
+    description: "Ionisation energy",
+    time: "10 mins",
+    difficulty: 2,
+    contents: [],
+  },
+  {
+    id: 3,
+    title: "I.E. trends",
+    description: "Variations in I.E. across period and down group",
+    time: "9 mins",
+    difficulty: 3,
+    contents: [],
+  },
+  {
+    id: 4,
+    title: "Anomalies of I.E. trend",
+    description: "Exceptions to the I.E. trend",
+    time: "6 mins",
+    difficulty: 2,
+    contents: [],
+  },
+];
+
+export default lessons;

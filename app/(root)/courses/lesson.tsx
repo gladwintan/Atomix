@@ -21,14 +21,6 @@ const Lesson = () => {
   }: { courseId: string; lesson: string; progress: string } =
     useLocalSearchParams();
 
-  console.log(
-    "course Id: " +
-      courseId +
-      " lesson number: " +
-      lesson +
-      " progress: " +
-      progress
-  );
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
 
@@ -50,7 +42,7 @@ const Lesson = () => {
 
     const lessonDetails = courses.find(
       (course) => course.id === parseInt(courseId)
-    )?.course?.lessons[parseInt(lesson)];
+    )?.lessons[parseInt(lesson)];
 
     if (
       !lessonDetails?.contents ||

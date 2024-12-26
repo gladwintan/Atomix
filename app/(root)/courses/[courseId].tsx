@@ -60,17 +60,15 @@ const CourseDetails = () => {
       setLessonsCompleted(courseProgress.lessonsCompleted);
     }
 
-    const course = courses.find(
-      (course) => course.id === parseInt(courseId)
-    )?.course;
+    const course = courses.find((course) => course.id === parseInt(courseId));
 
     if (!course) {
       setLoadError("Course not found");
       return;
     }
 
-    setCourseName(course.courseName);
-    setCourseDescription(course.courseDescription);
+    setCourseName(course.name);
+    setCourseDescription(course.description);
 
     if (lessonProgresses.progresses) {
       setLessons(
