@@ -1,50 +1,76 @@
-# Welcome to your Expo app 👋
+# Atomix
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Atomix is an innovative educational platform that transforms learning into an engaging and collaborative journey. Featuring interactive forums for meaningful discussions, well-structured courses, and dynamic quizzes, Atomix inspires students to connect, share knowledge, and unlock their full potential.
 
-## Get started
+## Table of Contents
 
-1. Install dependencies
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Roadmap](#project-roadmap)
+- [Contributors](#contributors)
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+### 1. :star2: Forum
 
-   ```bash
-    npx expo start
-   ```
+- Engage in meaningful discussions and share insights with peers.
+- Create new posts or reply to existing ones to discuss questions or share insights.
+- Posts are categorized by topics and level for easier discovery.
+- **My Activity** section organises all the posts you created, replied and liked.
 
-In the output, you'll find options to open the app in a
+### 2. :books: Courses
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Explore a variety of courses designed for effective learning.
+- Courses are broken down into lessons with clear learning objectives.
+- Track your progress through each course and lesson.
+- Engaging lessons designed to enhance learning effectiveness.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 3. :dart: Quizzes
 
-## Get a fresh project
+- Test your knowledge with interactive quizzes and track your progress.
 
-When you're ready, run:
+### 4. :bar_chart: Progress Tracking
 
-```bash
-npm run reset-project
-```
+- Monitor your learning journey with personalized dashboards.
+- View your completed lessons, quizzes, and overall performance.
+- Progress is synced across devices, allowing you to continue learning anytime, anywhere.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Tech Stack
 
-## Learn more
+- React Native
+- Expo
+- Neon PostgreSQL
+- Clerk
+- Tailwind CSS (NativeWind)
 
-To learn more about developing your project with Expo, look at the following resources:
+## Project Roadmap
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### In Progress
 
-## Join the community
+#### Quiz
 
-Join our community of developers creating universal apps.
+- Quiz navigation tab and content
+- Dedicated quizzes for each course
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### User Profile
+
+- User profile navigation tab and content
+- Allow users to upload images for their profiles
+
+#### Forum
+
+- Improve post tagging system to provide support for other subjects and levels
+
+#### Course
+
+- Add course content for various topics
+
+### Future Enhancements
+
+- AI chatbot for students to clarify quetions
+- Support for videos in lesson content
+- Add support for course content of other subjects
+
+## Contributors
+
+[@gladwintan](https://github.com/gladwintan)
