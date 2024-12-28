@@ -23,8 +23,8 @@ const OngoingCourseCard = ({
       activeOpacity={0.5}
       onPress={() => router.push(`/courses/${courseId}` as Href)}
     >
-      <View className="w-[290px] p-3 px-5 space-y-1.5 rounded-xl bg-white border-[0.5px] border-neutral-200">
-        <View className="flex-row justify-between items-center w-full mb-1.5">
+      <View className="w-[290px] p-3 px-5 rounded-xl bg-white border-[0.5px] border-neutral-200">
+        <View className="flex-row justify-between items-center w-full mb-3">
           <Text className="text-sm text-dark-base font-openSans-medium">
             {courseName}
           </Text>
@@ -38,7 +38,7 @@ const OngoingCourseCard = ({
           </View>
         </View>
 
-        <View className="flex-row justify-between mb-4">
+        <View className="flex-row justify-between mb-5">
           <View className="flex-row items-center">
             <View className="bg-primary-600 p-1 rounded-full">
               <Image

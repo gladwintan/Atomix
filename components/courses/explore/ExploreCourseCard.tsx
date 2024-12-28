@@ -32,7 +32,7 @@ const ExploreCourseCard = ({
     >
       <View className="w-full p-4">
         <View className="flex-row justify-between items-end w-full">
-          <Text className="text-sm font-openSans text-dark-base">
+          <Text className="text-sm font-openSans-medium text-dark-base">
             {courseName}
           </Text>
           <Text
@@ -42,7 +42,7 @@ const ExploreCourseCard = ({
           </Text>
         </View>
 
-        <Text className="font-openSans text-dark-light mt-1.5 text-[13px]">
+        <Text className="font-openSans text-dark-lighter mt-2 text-[13px]">
           {description}
         </Text>
 
@@ -79,8 +79,8 @@ const ExploreCourseCard = ({
                 ongoing
               </Text>
               <Image
-                source={icons.resume}
-                tintColor="#364463"
+                source={icons.pending}
+                tintColor="#253048"
                 resizeMode="contain"
                 className="ml-0.5 w-3.5 h-3.5"
               />

@@ -21,7 +21,7 @@ const ExploreCourses = ({
 
   return (
     <>
-      <View className=" mt-8 px-2 flex-row justify-between">
+      <View className="mt-5 mb-4 px-2 flex-row justify-between">
         <Text className="ml-2 font-openSans-bold text-base text-dark-base">
           Explore
         </Text>
@@ -55,9 +55,9 @@ const ExploreCourses = ({
           )}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => (
-            <View className="p-1 border-t border-neutral-100" />
+            <View className="p-1.5 border-t border-neutral-100" />
           )}
-          className="bg-white pb-4"
+          className="bg-white pb-10"
           scrollEnabled={false}
         />
       )}

@@ -7,14 +7,15 @@ import { OngoingCourse } from "@/types/type";
 
 import OngoingCourseCard from "./OngoingCourseCard";
 import EmptyState from "../../EmptyState";
+import Carousel from "@/components/Carousel";
 
 const OngoingCourses = ({
   ongoingCourses,
 }: {
-  ongoingCourses: OngoingCourse[] | null;
+  ongoingCourses: OngoingCourse[];
 }) => {
   return (
-    <FlatList
+    <Carousel
       data={ongoingCourses}
       renderItem={({ item }) => (
         <OngoingCourseCard
@@ -26,7 +27,7 @@ const OngoingCourses = ({
         />
       )}
       keyExtractor={(item, index) => index.toString()}
-      ItemSeparatorComponent={() => <View className="ml-5" />}
+      ItemSeparatorComponent={() => <View className="ml-4" />}
       ListEmptyComponent={() => (
         <EmptyState
           title="No ongoing courses"
@@ -34,7 +35,7 @@ const OngoingCourses = ({
           imageSrc={graphics.ongoingCoursesEmpty}
         />
       )}
-      className="py-2 bg-white"
+      className="bg-white pb-3"
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
@@ -46,6 +47,7 @@ export default OngoingCourses;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
+    alignItems: "center",
   },
 });

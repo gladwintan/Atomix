@@ -10,9 +10,7 @@ const TabIcon = ({
   source: ImageSourcePropType;
   focused: boolean;
 }) => (
-  <View
-    className={`h-12 w-12 items-center justify-center bg-white text-neutral-400`}
-  >
+  <View className={`h-12 w-12 items-center justify-center bg-white`}>
     {focused && (
       <View className="absolute top-0 h-[5px] rounded-b-md bg-primary-600 w-full"></View>
     )}
@@ -32,6 +30,7 @@ const Layout = () => {
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontFamily: "openSans",
+          fontWeight: 500,
           fontSize: 10,
           height: 20,
           marginTop: 1,
@@ -49,13 +48,14 @@ const Layout = () => {
         },
         tabBarActiveTintColor: "#8FABE5",
         tabBarInactiveTintColor: "#737373",
+        sceneStyle: { backgroundColor: "white" },
+        headerShown: false,
       }}
     >
       <Tabs.Screen
         name="home"
         options={{
           title: "Home",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.home} focused={focused} />
           ),
@@ -65,9 +65,6 @@ const Layout = () => {
         name="course"
         options={{
           title: "Course",
-          headerStyle: { backgroundColor: "gray" },
-          headerShown: true,
-          header: () => <View className="h-16 bg-[#93b5ff]"></View>,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.course} focused={focused} />
           ),
@@ -77,7 +74,6 @@ const Layout = () => {
         name="quiz"
         options={{
           title: "Quiz",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.quiz} focused={focused} />
           ),
@@ -87,7 +83,6 @@ const Layout = () => {
         name="forum"
         options={{
           title: "Forum",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.forum} focused={focused} />
           ),
@@ -97,7 +92,6 @@ const Layout = () => {
         name="profile"
         options={{
           title: "Profile",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon source={icons.profile} focused={focused} />
           ),
