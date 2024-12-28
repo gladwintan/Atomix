@@ -4,14 +4,14 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Content } from "@/types/type";
 import { courses } from "@/data/courses/course-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LessonHeader from "@/components/courses/LessonHeader";
+import LessonHeader from "@/components/courses/lesson/LessonHeader";
 import BinaryQuestionCard from "@/components/questions/BinaryQuestionCard";
 import FillInTheBlankQuestionCard from "@/components/questions/FillInTheBlankQuestionCard";
 import MultipleResponseQuestionCard from "@/components/questions/MultipleResponseQuestionCard";
-import NotesCard from "@/components/courses/Notes";
+import NotesCard from "@/components/courses/lesson/Notes";
 import { useUser } from "@clerk/clerk-expo";
 import LessonLoader from "@/components/loader/LessonLoader";
-import LessonCompletionCard from "@/components/courses/LessonCompletionCard";
+import LessonCompletionCard from "@/components/courses/lesson/LessonCompletionCard";
 
 const Lesson = () => {
   const {

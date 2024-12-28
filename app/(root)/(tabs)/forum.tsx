@@ -75,10 +75,15 @@ const Forum = () => {
 
   return (
     <SafeAreaView edges={["top", "right", "left"]} className="flex-1 bg-white">
-      <View className="items-end h-12 border-b-[0.5px] border-neutral-100 justify-center">
-        <Text className="absolute left-3 font-openSans-bold text-lg text-dark-base">
-          Forum
-        </Text>
+      <View className="items-end h-14 border-b border-neutral-100 justify-center">
+        <View className="absolute left-3 top-0">
+          <Text className="font-openSans-bold text-lg text-dark-base">
+            Forum
+          </Text>
+          <Text className="font-openSans text-xs text-dark-light">
+            Discuss any questions you have here!
+          </Text>
+        </View>
 
         <SearchBar
           handleSearch={(searchQuery) =>
@@ -154,7 +159,7 @@ const Forum = () => {
                 likeCount={item.like_count}
                 replyCount={item.reply_count}
                 topic={item.topic}
-                difficulty={item.difficulty}
+                level={item.difficulty}
                 author={item.author}
                 isAuthor={item.user_is_author}
                 userLikedPost={item.user_liked_post}
@@ -201,7 +206,7 @@ const Forum = () => {
                   likeCount={item.like_count}
                   replyCount={item.reply_count}
                   topic={item.topic}
-                  difficulty={item.difficulty}
+                  level={item.difficulty}
                   author={item.author}
                   isAuthor={item.user_is_author}
                   userLikedPost={item.user_liked_post}

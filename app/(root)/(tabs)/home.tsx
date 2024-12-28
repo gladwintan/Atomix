@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import OngoingCourseCard from "@/components/courses/OngoingCourseCard";
+import OngoingCourseCard from "@/components/courses/ongoing/OngoingCourseCard";
 import { getOngoingCourses } from "@/lib/courses";
 import { fetchAPI } from "@/lib/fetch";
 import { formatCourseName } from "@/lib/utils";
@@ -16,7 +16,7 @@ export default function Home() {
 
   const [username, setUsername] = useState<string>("");
   const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(
-    null,
+    null
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function Home() {
                 progress={item.progress}
                 onPress={() =>
                   router.push(
-                    `/courses/${formatCourseName(item.course_name)}` as Href,
+                    `/courses/${formatCourseName(item.course_name)}` as Href
                   )
                 }
               />

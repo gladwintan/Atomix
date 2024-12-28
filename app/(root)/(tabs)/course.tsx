@@ -13,9 +13,9 @@ import {
 } from "react-native";
 
 import CourseMainPageLoader from "@/components/loader/CourseMainPageLoader";
-import CompletedCourses from "@/components/courses/CompletedCourses";
-import ExploreCourses from "@/components/courses/ExploreCourses";
-import OngoingCourses from "@/components/courses/OngoingCourses";
+import CompletedCourses from "@/components/courses/completed/CompletedCourses";
+import ExploreCourses from "@/components/courses/explore/ExploreCourses";
+import OngoingCourses from "@/components/courses/ongoing/OngoingCourses";
 import { icons } from "@/constants";
 import { getCoursesByCompletionStatus } from "@/lib/courses";
 import { ExploreCourse, OngoingCourse } from "@/types/type";

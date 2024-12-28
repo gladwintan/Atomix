@@ -2,7 +2,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { icons } from "@/constants";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Href, router } from "expo-router";
-import { formatPostTime, getPostTopicTagColour } from "@/lib/utils";
+import { formatPostTime } from "@/lib/utils";
+import { getPostLevelTagColour, getPostTopicTagColour } from "@/lib/forumUtils";
 
 const ForumPostCard = ({
   postId,
@@ -10,7 +11,7 @@ const ForumPostCard = ({
   replyCount,
   title,
   description,
-  difficulty,
+  level,
   topic,
   author,
   isAuthor,
@@ -23,7 +24,7 @@ const ForumPostCard = ({
   replyCount: string;
   title: string;
   description: string;
-  difficulty: string;
+  level: string;
   topic: string;
   author: string;
   isAuthor: boolean;
@@ -37,8 +38,10 @@ const ForumPostCard = ({
       onPress={() => router.push(`/(root)/forum/${postId}` as Href)}
     >
       <View className="flex-row items-center space-x-2.5 mb-2.5">
-        <Text className="font-openSans-semibold text-xs bg-primary-700 text-white px-1 py-0.5 rounded-full">
-          {difficulty}
+        <Text
+          className={`font-openSans-semibold text-xs text-white px-1 py-0.5 rounded-full ${getPostLevelTagColour(level)}`}
+        >
+          {level}
         </Text>
         <Text
           className={`font-openSans-semibold text-xs text-white px-1 py-0.5 rounded-md ${getPostTopicTagColour(topic)}`}

@@ -127,7 +127,7 @@ const MyActivity = () => {
           label: ({ route, labelText, focused, color }) => (
             <View className="w-[100px] h-[25px] items-center justify-center">
               <Text
-                className={`font-openSans text-dark-base ${focused ? "text-sm font-op" : "text-xs"} `}
+                className={`font-openSans text-dark-base ${focused ? "text-sm" : "text-xs"} `}
                 style={{ textAlign: "center", textAlignVertical: "center" }}
               >
                 {labelText ?? route.title}

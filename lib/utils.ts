@@ -127,22 +127,3 @@ export const removeReplyTree = (
 
   return replies.filter((reply) => !idsToRemove.has(reply.replyId));
 };
-
-export const getPostTopicTagColour = (topic: string): string => {
-  switch (topic) {
-    case "Atomic Structure":
-      return "bg-tag-atomic";
-    case "Chemical Bonding":
-      return "bg-tag-bonding";
-    case "Acid-Base Equilibrium":
-      return "bg-tag-acidBase";
-    case "Intro to Organic Chem":
-      return "bg-tag-organic";
-    // case "topic 1":
-    //   return "#84be6c";
-    // case "topic 2":
-    //   return "#beb36c";
-    default:
-      return "bg-secondary-600";
-  }
-};

@@ -2,12 +2,11 @@ import { Href, router } from "expo-router";
 import { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 
-import { formatCourseName } from "@/lib/utils";
 import { ExploreCourse } from "@/types/type";
 
 import ExploreCourseCard from "./ExploreCourseCard";
-import CourseListLoader from "../loader/CourseListLoader";
-import OptionsMenu from "../OptionsMenu";
+import CourseListLoader from "../../loader/CourseListLoader";
+import OptionsMenu from "../../OptionsMenu";
 import { filterOptions, sortOptions } from "@/data/courses/dropdown-options";
 import { filterCourses, sortCourses } from "@/lib/courses";
 

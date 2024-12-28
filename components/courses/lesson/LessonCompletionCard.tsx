@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
-import CustomButton from "../CustomButton";
+import CustomButton from "../../CustomButton";
 import { router } from "expo-router";
 import { updateLessonProgress } from "@/lib/courses";
 import { useUser } from "@clerk/clerk-expo";

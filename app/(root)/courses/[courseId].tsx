@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import LessonCard from "@/components/courses/LessonCard";
+import LessonCard from "@/components/courses/lesson/LessonCard";
 import CustomButton from "@/components/CustomButton";
 import { useUser } from "@clerk/clerk-expo";
 import { useCallback, useEffect, useState } from "react";
@@ -102,26 +102,26 @@ const CourseDetails = () => {
           stickyHeaderIndices={[1]}
           contentContainerStyle={{ paddingBottom: 40 }}
         >
-          <View className="p-3 px-5 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
-            <View className="w-3/4">
+          <View className="p-3 px-4 bg-primary-100 mx-3 rounded-2xl flex-row items-center">
+            <View className="w-10/12 pr-1.5">
               <Text className="text-base text-dark-base font-openSans-semibold">
                 {courseName}
               </Text>
-              <Text className="mt-1 text-sm text-dark-light font-openSans">
+              <Text className="mt-1 text-sm text-dark-lighter font-openSans">
                 {courseDescription}
               </Text>
             </View>
-            <View className="p-2.5 bg-white rounded-full absolute right-4">
+            <View className="p-2.5 bg-white rounded-full">
               <Image
                 source={icons.chemistry}
                 tintColor="#93B5FF"
                 resizeMode="contain"
-                className="w-12 h-12"
+                className="w-10 h-10"
               />
             </View>
           </View>
 
-          <View className="bg-white border-b border-slate-300 pt-5 mx-3 pb-1 flex-row items-center">
+          <View className="bg-white border-b border-gray-200 mt-5 mx-3 pb-1 flex-row items-center">
             <Image
               source={icons.lesson}
               tintColor="#253048"

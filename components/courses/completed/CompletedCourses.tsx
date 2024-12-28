@@ -1,38 +1,36 @@
 import { Href, router } from "expo-router";
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, View, StyleSheet, Text } from "react-native";
 
 import { graphics, icons } from "@/constants";
-import { formatCourseName } from "@/lib/utils";
 import { OngoingCourse } from "@/types/type";
 
-import OngoingCourseCard from "./OngoingCourseCard";
-import EmptyState from "../EmptyState";
+import CompletedCourseCard from "./CompletedCourseCard";
+import EmptyState from "../../EmptyState";
 
-const OngoingCourses = ({
-  ongoingCourses,
+const CompletedCourses = ({
+  completedCourses,
 }: {
-  ongoingCourses: OngoingCourse[] | null;
+  completedCourses: OngoingCourse[];
 }) => {
   return (
     <FlatList
-      data={ongoingCourses}
+      data={completedCourses}
       renderItem={({ item }) => (
-        <OngoingCourseCard
+        <CompletedCourseCard
           courseId={item.course_id}
           courseName={item.course_name}
           lastLesson={item.updated_at}
           progress={item.progress}
-          quizzesUncompleted={item.quizzes_completed}
         />
       )}
       keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={() => <View className="ml-5" />}
       ListEmptyComponent={() => (
         <EmptyState
-          title="No ongoing courses"
-          description="Check out courses available"
-          imageSrc={graphics.ongoingCoursesEmpty}
+          title="No completed courses"
+          description="Continue learning or start a new course"
+          imageSrc={graphics.completedCoursesEmpty}
         />
       )}
       className="py-2 bg-white"
@@ -43,7 +41,7 @@ const OngoingCourses = ({
   );
 };
 
-export default OngoingCourses;
+export default CompletedCourses;
 
 const styles = StyleSheet.create({
   container: {

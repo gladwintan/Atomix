@@ -33,9 +33,9 @@ export const createLessonDetailsWithProgress = (
 export const getCourseLevelTagColour = (level: string): string => {
   switch (level) {
     case "H1":
-      return "bg-tag-h1";
+      return "bg-tag-castaway";
     case "H2":
-      return "bg-tag-h2";
+      return "bg-tag-caramel";
     default:
       return "bg-secondary-600";
   }

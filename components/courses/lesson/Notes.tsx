@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Notes } from "@/types/type";
-import CustomButton from "../CustomButton";
+import CustomButton from "../../CustomButton";
 
 const NotesCard = ({
   title,

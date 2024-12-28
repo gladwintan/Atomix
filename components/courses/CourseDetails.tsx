@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { Image, View, Text, FlatList, StyleSheet } from "react-native";
 
-import LessonCard from "@/components/courses/LessonCard";
+import LessonCard from "@/components/courses/lesson/LessonCard";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { startNewCourse } from "@/lib/courses";

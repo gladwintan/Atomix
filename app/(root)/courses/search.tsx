@@ -13,7 +13,7 @@ import EmptyState from "@/components/EmptyState";
 import { filterOptions, sortOptions } from "@/data/courses/dropdown-options";
 import { filterCourses, getAllCourses, sortCourses } from "@/lib/courses";
 import CourseListLoader from "@/components/loader/CourseListLoader";
-import ExploreCourseCard from "@/components/courses/ExploreCourseCard";
+import ExploreCourseCard from "@/components/courses/explore/ExploreCourseCard";
 
 const SearchPage = () => {
   const { user } = useUser();

@@ -20,11 +20,7 @@ import {
   updatePost,
 } from "@/lib/forum";
 import { PostReply, ReplyDetails } from "@/types/type";
-import {
-  createRepliesWithNestLevel,
-  formatPostTime,
-  getPostTopicTagColour,
-} from "@/lib/utils";
+import { createRepliesWithNestLevel, formatPostTime } from "@/lib/utils";
 import CustomButton from "../CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { graphics, icons } from "@/constants";
@@ -35,6 +31,7 @@ import ReplyMenu from "./ReplyMenu";
 import EditMenu from "./EditMenu";
 import ForumPostLoader from "../loader/ForumPostLoader";
 import EmptyState from "../EmptyState";
+import { getPostLevelTagColour, getPostTopicTagColour } from "@/lib/forumUtils";
 
 const Post = ({ postId }: { postId: string }) => {
   const { user } = useUser();
@@ -58,7 +55,7 @@ const Post = ({ postId }: { postId: string }) => {
 
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
-  const [postDifficulty, setPostDifficulty] = useState("");
+  const [postLevel, setPostLevel] = useState("");
   const [postTopic, setPostTopic] = useState("");
   const [postAuthor, setPostAuthor] = useState("");
   const [postLikeCount, setPostLikeCount] = useState(0);
@@ -83,7 +80,7 @@ const Post = ({ postId }: { postId: string }) => {
       setIsAuthor(postDetails.user_is_author);
       setPostTitle(postDetails.title);
       setPostDescription(postDetails.description);
-      setPostDifficulty(postDetails.difficulty);
+      setPostLevel(postDetails.difficulty);
       setPostTopic(postDetails.topic);
       setPostAuthor(postDetails.name);
       setPostLikeCount(parseInt(postDetails.like_count));
@@ -182,8 +179,10 @@ const Post = ({ postId }: { postId: string }) => {
           )}
 
           <View className="flex-row items-center space-x-2.5 mb-2.5">
-            <Text className="font-openSans-semibold text-xs bg-primary-700 text-white p-1 rounded-full">
-              {postDifficulty}
+            <Text
+              className={`font-openSans-semibold text-xs text-white p-1 rounded-full ${getPostLevelTagColour(postLevel)}`}
+            >
+              {postLevel}
             </Text>
             <Text
               className={`font-openSans-semibold text-xs text-white p-1 rounded-md ${getPostTopicTagColour(postTopic)}`}
@@ -226,7 +225,7 @@ const Post = ({ postId }: { postId: string }) => {
           />
 
           <View className="flex-row items-end justify-between mr-2 mt-4">
-            <Text className="font-openSans-light text-3xs">
+            <Text className="font-openSans-light text-dark-base text-3xs">
               {postCreationDate != postLastUpdatedDate &&
                 "edited " + formatPostTime(postLastUpdatedDate) + " ago"}
             </Text>

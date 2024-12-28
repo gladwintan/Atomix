@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { createContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import LessonHeader from "@/components/courses/LessonHeader";
+import LessonHeader from "@/components/courses/lesson/LessonHeader";
 
 export const ProgressContext = createContext<
   React.Dispatch<React.SetStateAction<number>> | undefined

@@ -16,7 +16,7 @@ const topics = [
   { label: "Atomic Structure", value: "Atomic Structure" },
   { label: "Chemical Bonding", value: "Chemical Bonding" },
   { label: "Acid-Base Equilibrium", value: "Acid-Base Equilibrium" },
-  { label: "Intro to Organic Chem", value: "Intro to Organic Chem" },
+  { label: "Intro to Organic Chemistry", value: "Intro to Organic Chemistry" },
 ];
 
 const difficulties = [
@@ -73,9 +73,10 @@ const CreatePostMenu = ({ onPostCreated }: { onPostCreated: () => void }) => {
   return (
     <>
       <CustomButton
-        title="new post"
+        title="New Post"
         type="transparent"
         textVariant="white"
+        textClassName="font-openSans-semibold"
         IconLeft={() => (
           <Image
             source={icons.add}
