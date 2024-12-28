@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FlatListProps } from "react-native";
 import {
   View,
@@ -47,9 +47,35 @@ const Carousel = <T,>({
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef<FlatList>(null);
 
+  const [itemWidths, setItemWidths] = useState<number[]>([]);
+  const [cumulativeOffsets, setCumulativeOffsets] = useState<number[]>([]);
+
+  const onLayout = (event: any, index: number) => {
+    const { width } = event.nativeEvent.layout;
+    setItemWidths((prevWidths) => {
+      const newWidths = [...prevWidths];
+      newWidths[index] = width;
+      return newWidths;
+    });
+  };
+
+  useEffect(() => {
+    const offsets = itemWidths.reduce<number[]>(
+      (acc, width) => {
+        acc.push(acc[acc.length - 1] + width);
+        return acc;
+      },
+      [0]
+    );
+    setCumulativeOffsets(offsets);
+  }, [itemWidths]);
+
   // Scroll to a specific index when a dot is pressed
   const scrollToIndex = (index: number) => {
-    flatListRef.current?.scrollToIndex({ index, animated: true });
+    const offset = itemWidths
+      .slice(0, index)
+      .reduce((sum, width) => sum + width, 0);
+    flatListRef.current?.scrollToOffset({ offset, animated: true });
   };
 
   const { width } = Dimensions.get("window");
@@ -60,7 +86,11 @@ const Carousel = <T,>({
       <FlatList
         ref={flatListRef}
         data={data}
-        renderItem={renderItem}
+        renderItem={(info) => (
+          <View onLayout={(event) => onLayout(event, info.index)}>
+            {renderItem(info)}
+          </View>
+        )}
         keyExtractor={keyExtractor}
         ListEmptyComponent={() => (
           <View className="p-3 h-32 w-[100vw] border">
@@ -85,21 +115,21 @@ const Carousel = <T,>({
       {/* Sliding Indicator */}
       <View className="flex-row justify-center">
         {data.map((_: unknown, index: number) => {
-          const inputRange = [
-            (index - 1) * width,
-            index * width,
-            (index + 1) * width,
-          ];
+          if (cumulativeOffsets.length < 2) return null;
+
+          const inputRange = cumulativeOffsets.map(
+            (_, i) => cumulativeOffsets[i]
+          );
 
           const scale = scrollX.interpolate({
             inputRange,
-            outputRange: [1, 1.4, 1],
+            outputRange: inputRange.map((_, i) => (i === index ? 1.4 : 1)),
             extrapolate: "clamp",
           });
 
           const opacity = scrollX.interpolate({
             inputRange,
-            outputRange: [0.5, 1, 0.5],
+            outputRange: inputRange.map((_, i) => (i === index ? 1 : 0.5)),
             extrapolate: "clamp",
           });
 
