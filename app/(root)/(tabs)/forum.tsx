@@ -122,7 +122,7 @@ const Forum = () => {
                 <View className="bg-secondary-50 p-2 rounded-full">
                   <Image
                     source={item.icon}
-                    tintColor="#364463"
+                    tintColor="#253048"
                     className="w-3.5 h-3.5"
                   />
                 </View>
