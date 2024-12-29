@@ -5,8 +5,13 @@ Atomix is an innovative educational platform that transforms learning into an en
 ## Table of Contents
 
 - [Features](#features)
+  - [Forum](#1-star2-forum)
+  - [Courses](#2-books-courses)
+  - [Quizzes](#3-dart-quizzes)
+  - [Progress Tracking](#4-bar_chart-progress-tracking)
 - [Tech Stack](#tech-stack)
 - [Project Roadmap](#project-roadmap)
+- [Design Overview](#design-overview)
 - [Contributors](#contributors)
 
 ## Features
@@ -18,12 +23,20 @@ Atomix is an innovative educational platform that transforms learning into an en
 - Posts are categorized by topics and level for easier discovery.
 - **My Activity** section organises all the posts you created, replied and liked.
 
+| ![Forum tab](./docs/images/forum-tab.png) | ![My Activity in Forum](./docs/images/forum-my-activity.png) | ![Forum post](./docs/images/forum-post.png) |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| Forum tab                                 | My Activity                                                  | Post details                                |
+
 ### 2. :books: Courses
 
 - Explore a variety of courses designed for effective learning.
 - Courses are broken down into lessons with clear learning objectives.
 - Track your progress through each course and lesson.
 - Engaging lessons designed to enhance learning effectiveness.
+
+| ![Course tab](./docs/images/course-tab.png) | ![Course details](./docs/images/course-details.png) |
+| ------------------------------------------- | --------------------------------------------------- |
+| Course tab                                  | Course details                                      |
 
 ### 3. :dart: Quizzes
 
@@ -46,6 +59,10 @@ Atomix is an innovative educational platform that transforms learning into an en
 ## Project Roadmap
 
 ### In Progress
+
+#### Homepage
+
+- Home navigation tab and content
 
 #### Quiz
 
@@ -70,6 +87,16 @@ Atomix is an innovative educational platform that transforms learning into an en
 - AI chatbot for students to clarify quetions
 - Support for videos in lesson content
 - Add support for course content of other subjects
+
+## Design Overview
+
+Explore the comprehensive design assets for this project, including:
+
+- Mockups for Screens: Visual representations of the app's layout and structure.
+- UI Designs for Components: Detailed designs for individual elements like buttons, forms, and navigation bars.
+- Interactive Prototype: Simulates user journeys and showcases the app's flow and functionality.
+
+[View the Design on Figma](https://www.figma.com/design/KxGzLPcXkkJBJhIxbAgBOC/Atomix?node-id=195-14&t=AeIBEodyyp2sk9PO-1)
 
 ## Contributors
 
