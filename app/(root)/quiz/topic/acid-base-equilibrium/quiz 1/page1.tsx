@@ -5,13 +5,13 @@ import { router } from 'expo-router'
 import * as Progress from 'react-native-progress'
 import { useEffect } from 'react'
 
-import { QuizType, UserProgress, QuizAnswer } from '@/types/type'
+import { QuestionType, UserProgress, QuizAnswer } from '@/types/type'
 import { quiz } from '@/courses/AcidBaseQuiz'
-import MultipleResponseQuestion from '@/components/quiz/questions/MultipleResponseQuestion'
+import MultipleResponseQuestion from '@/components/quiz/questions/MultipleChoice'
 
 const page1= () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentQuestion: QuizType = quiz[currentIndex]
+  const currentQuestion: QuestionType = quiz[currentIndex]
 
   const initialProgress = (): UserProgress => {
     return {

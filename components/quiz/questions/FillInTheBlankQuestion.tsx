@@ -8,23 +8,16 @@ import { router } from 'expo-router'
 const FillInTheBlankQuestion = ({
   options,
   questionWithBlanks,
-  answer,
   nextPageUrl,
   imageSrc
 } : {
   options: string[],
   questionWithBlanks: { text: string, index: number }[],
-  answer: string[],
   nextPageUrl: string,
   imageSrc?: ImageSourcePropType
 }) => {
   const [remainingOptions, setRemainingOptions] = useState(options)
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([])
-
-  const checkAnswer = () => {
-    const arr = selectedAnswer.filter((selection, index) => selection == answer[index])
-    return arr.length == answer.length
-  }
 
   return (
     <View className='bg-white p-3'>
@@ -81,28 +74,6 @@ const FillInTheBlankQuestion = ({
           />
         ))}
       </View>
-      {selectedAnswer.length == answer.length && 
-        (checkAnswer() ?
-          <AnswerVerification 
-            correctAnswer={true}
-            message='Yay! you are correct'
-            onPress={() => {
-              setSelectedAnswer([]);
-              //@ts-ignore
-              router.push(nextPageUrl)
-            }}
-          />
-          :
-          <AnswerVerification 
-            correctAnswer={false}
-            message='Please try again!'
-            onPress={() => {
-              setSelectedAnswer([]);
-              setRemainingOptions(options)
-            }}
-          />
-        )
-      }
     </View>
   )
 }

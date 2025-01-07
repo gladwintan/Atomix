@@ -76,13 +76,13 @@ declare interface OngoingQuiz extends Quiz {
   updated_at: string;
 }
 
-declare interface QuizType extends Quiz {
-  id: number;
+declare interface QuestionType extends Quiz {
+  question_id: number,
   text: string;
   options: string[];
   correctAnswer: string;
   explanation: string;
-  questionType: "Multiple Choice" | "True/False" | "Short Answer";
+  questionType: "Multiple Choice" | "Binary" | "Fill in the blank";
 }
 
 declare interface UserProgress {

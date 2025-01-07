@@ -1,0 +1,27 @@
+{selectedAnswer.length == answer.length && 
+  (checkAnswer() ?
+    <AnswerVerification 
+      correctAnswer={true}
+      message='Yay! you are correct'
+      onPress={() => {
+        setSelectedAnswer([]);
+        //@ts-ignore
+        router.push(nextPageUrl)
+      }}
+    />
+    :
+    <AnswerVerification 
+      correctAnswer={false}
+      message='Please try again!'
+      onPress={() => {
+        setSelectedAnswer([]);
+        setRemainingOptions(options)
+      }}
+    />
+  )
+}
+
+const checkAnswer = () => {
+  const arr = selectedAnswer.filter((selection, index) => selection == answer[index])
+  return arr.length == answer.length
+}
