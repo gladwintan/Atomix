@@ -72,7 +72,7 @@ const ResetPassword = () => {
           setActive({ session: result.createdSessionId })
           router.replace("/(root)/(tabs)/home");
         } else {
-          console.log(result)
+          (result)
         }
       })
       .catch((err) => {

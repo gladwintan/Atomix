@@ -20,14 +20,11 @@ export async function POST(request: Request) {
       )
       SELECT 
         users.id,
-        quiz.quiz_id 
+        quiz.quiz_id
       FROM 
-        users,
-        quiz
+        users
       WHERE 
-        users.clerk_id = ${clerkId} 
-        AND
-        quiz.quiz_topic = ${quizTopic}  
+        users.clerk_id = ${clerkId}        
     `;
 
     return Response.json({ data: response }, { status: 201 });

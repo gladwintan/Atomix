@@ -1,0 +1,58 @@
+imageRef {"_location": 
+{
+  "bucket": "atomix-f7f13.firebasestorage.app", 
+  "path_": "images/2024-12-13T11:01:45.247Z"
+}, 
+"_service": 
+{
+  "_appCheckProvider": 
+  {
+    "component": null, 
+    "container": [ComponentContainer], 
+    "instances": [Map], 
+    "instancesDeferred": [Map], 
+    "instancesOptions": [Map], 
+    "name": "app-check-internal", 
+    "onInitCallbacks": [Map]}, 
+    "_appId": null, 
+    "_authProvider": 
+    {
+      "component": null, 
+      "container": [ComponentContainer], 
+      "instances": [Map], 
+      "instancesDeferred": [Map], 
+      "instancesOptions": [Map], 
+      "name": "auth-internal", 
+      "onInitCallbacks": [Map]}, 
+      "_bucket": 
+      {
+        "bucket": "atomix-f7f13.firebasestorage.app", 
+        "path_": ""
+      }, 
+      "_deleted": false, 
+      "_firebaseVersion": "11.0.2", 
+      "_host": "firebasestorage.googleapis.com", 
+      "_maxOperationRetryTime": 120000,
+      "_maxUploadRetryTime": 600000, 
+      "_protocol": "https", 
+      "_requests": Set {}, 
+      "_url": undefined, 
+      "app": 
+      {
+        "_automaticDataCollectionEnabled": false, 
+        "_config": [Object], 
+        "_container": [ComponentContainer], 
+        "_isDeleted": false, 
+        "_name": "[DEFAULT]", 
+        "_options": [Object]
+      }
+}
+}
+
+ERROR  Error uploading image: [FirebaseError: Firebase Storage: The operation 'uploadBytes' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png'). (storage/invalid-root-operation)]
+ERROR  Firebase Error Code: storage/invalid-root-operation
+ERROR  Firebase Error Message: Firebase Storage: The operation 'uploadBytes' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png'). (storage/invalid-root-operation)
+ERROR  Firebase Error Details: undefined
+ERROR  Firebase Error Stack FirebaseError: Firebase Storage: The operation 'uploadBytes' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png'). (storage/invalid-root-operation)
+ERROR  Error uploading image: [FirebaseError: Firebase Storage: The operation 'getDownloadURL' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png'). (storage/invalid-root-operation)]
+

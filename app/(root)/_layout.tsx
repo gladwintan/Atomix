@@ -1,4 +1,3 @@
-import { SelectionProvider } from '@/trash/Usercontext';
 import { Stack } from 'expo-router';
 
 const Layout = () => {

@@ -57,23 +57,26 @@ declare interface LessonCardProps {
 }
 
 declare interface Quiz {
-  id?: number;
-  quiz_topic: string;
+  quiz_id: number;
+  course_name: string;
 }
 
 declare interface ExploreQuizType extends Quiz {
   description: string;
-  total_question: number;
+  quizzes: number;
   completionStatus: "uncompleted" | "completed" | "ongoing"
+}
+declare interface SelectQuizType extends Quiz {
+  course_id: number;
+  questions: number
 }
 
 declare interface OngoingQuiz extends Quiz {
-  progress: string;
+  progress: number;
   updated_at: string;
-  lessons_completed: number;
 }
 
-declare interface QuizType extends Quiz{
+declare interface QuizType extends Quiz {
   id: number;
   text: string;
   options: string[];

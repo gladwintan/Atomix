@@ -6,9 +6,6 @@ import { getQuizByCompletionStatus, getUserName } from '@/lib/quiz'
 import { OngoingQuiz } from '@/types/type'
 import { userName } from '@/types/type'
 
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
-
 interface Avatar {
   URL: string;
 }
@@ -18,20 +15,6 @@ const leaderboard = () => {
   const userClerkId = user?.id  
 
   const [data, setData] = useState<Avatar[]>([])
-
-  useEffect(() => {
-    const fetchData = async() => {
-      try{
-        const queryavatar = await getDocs(collection(db, "users"));
-        const avatar:Avatar[] = queryavatar.docs.map(doc => doc.data() as Avatar);
-        setData(avatar);
-      } catch (error) {
-        console.log("Error fetching avatar: ", error)
-      }
-    };
-    fetchData(
-    )
-  },[]);
 
   const [loading, setLoading] = useState(true)
   const [completedQuiz, setCompletedQuiz] = useState<OngoingQuiz[] | null>(null)
@@ -57,7 +40,6 @@ const leaderboard = () => {
       fetchUser()
     }
   }, [userClerkId])
-  console.log("userName", userNames)
   return (
     <View>
       {data.map((item, index) => (

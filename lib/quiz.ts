@@ -18,17 +18,18 @@ export const getQuizByCompletionStatus = async (userClerkId: string | undefined)
 
     const allQuiz = fetchData1?.data
     const startedQuiz = fetchData2?.data
+  
+    const noQuizStarted = startedQuiz.filter((quiz:OngoingQuiz) => quiz.progress == 0.0 )
+    const ongoingQuiz = startedQuiz.filter((quiz: OngoingQuiz) => quiz.progress !== 1.0)
+    const completedQuiz = startedQuiz.filter((quiz: OngoingQuiz) => quiz.progress == 1.0)
     
-    const ongoingQuiz = startedQuiz.filter((quiz: OngoingQuiz) => !(parseFloat(quiz.progress) == 1.0))
-    const completedQuiz = startedQuiz.filter((quiz: OngoingQuiz) => (parseFloat(quiz.progress) == 1.0))
-
-    const ongoingQuizNames = ongoingQuiz.map((quiz: OngoingQuiz) => quiz.quiz_topic)
-    const completedQuizNames = completedQuiz.map((quiz: OngoingQuiz) => quiz.quiz_topic)
+    const ongoingQuizNames = ongoingQuiz.map((quiz: OngoingQuiz) => quiz.course_name)
+    const completedQuizNames = completedQuiz.map((quiz: OngoingQuiz) => quiz.course_name)
 
     const exploreQuiz = allQuiz?.map((quiz: ExploreQuizType) => {
-      if (ongoingQuizNames.includes(quiz.quiz_topic)) {
+      if (ongoingQuizNames.includes(quiz.course_name)) {
         return { ...quiz, completionStatus: "ongoing" }
-      } else if (completedQuizNames.includes(quiz.quiz_topic)) {
+      } else if (completedQuizNames.includes(quiz.course_name)) {
         return { ...quiz, completionStatus: "completed" }
       }
       return { ...quiz, completionStatus: "uncompleted" }
@@ -37,13 +38,36 @@ export const getQuizByCompletionStatus = async (userClerkId: string | undefined)
     return {
       completedQuiz: completedQuiz.length == 0 ? null : completedQuiz,
       ongoingQuiz: ongoingQuiz.length == 0 ? null : ongoingQuiz,
-      exploreQuiz: exploreQuiz
+      exploreQuiz: exploreQuiz,
+      noQuizStarted : noQuizStarted.length == 0 ? true : false
     }
   } catch (error) {
     console.error(error)
     console.error("Error while retrieving quiz progress from database")
   }
   
+}
+
+export const selectQuiz = async(userClerkId: string | undefined) => {
+  if (!userClerkId) {
+    console.error("User not authenticated")
+    return
+  }
+
+  try {
+    const fetchData1 = await fetchAPI(`/(api)/quiz/get1`, {
+      method:"GET"
+    })
+
+  const selectQuiz = fetchData1?.data
+
+  return{
+    selectQuiz: selectQuiz
+  }
+  } catch(error) {
+    console.log(error)
+    console.error("Error while retrieving quiz progress from database")
+  }
 }
 
 export const getOngoingQuiz = async (userClerkId: string | undefined) => {
@@ -56,7 +80,7 @@ export const getOngoingQuiz = async (userClerkId: string | undefined) => {
     method: "GET"
   })
   const ongoingQuiz = fetchData?.data
-  return ongoingQuiz?.filter((quiz: OngoingQuiz) => !(parseFloat(quiz.progress) == 1.0))
+  return ongoingQuiz?.filter((quiz: OngoingQuiz) => quiz.progress == 1.0)
 }
 
 export const getQuizProgress = async (quizName: string, userClerkId: string | undefined) => {

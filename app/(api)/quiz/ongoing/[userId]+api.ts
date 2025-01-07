@@ -15,9 +15,7 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
       SELECT 
         quizprogress.progress,
         quizprogress.updated_at,
-        quizprogress.score,
-        quiz.quiz_topic,
-        quiz.quiz_completed
+        course_id
       FROM 
         quizprogress
       JOIN quiz ON quizprogress.quiz_id = quiz.quiz_id

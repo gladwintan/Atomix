@@ -6,12 +6,12 @@ export async function GET(request: Request) {
     
     const response = await sql`
       SELECT 
-        courses.course_name,
-        courses.description,
-        courses.quizzes,
-        courses.course_id
+        courses.course_id,
+        quiz.quiz_id,
+        quiz.questions
       FROM 
-        courses
+        courses,
+        quiz
       ORDER BY
         courses.course_id ASC`  
     return Response.json({ data: response }, { status: 201 });

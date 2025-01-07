@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 import { QuizType, UserProgress, QuizAnswer } from '@/types/type'
 import { quiz } from '@/courses/AcidBaseQuiz'
-import MultipleResponseQuestion from '@/components/quiz/MultipleResponseQuestion'
+import MultipleResponseQuestion from '@/components/quiz/questions/MultipleResponseQuestion'
 
 const page1= () => {
   const [currentIndex, setCurrentIndex] = useState(0);

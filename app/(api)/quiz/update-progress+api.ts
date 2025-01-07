@@ -12,7 +12,6 @@ export async function PUT(request: Request) {
         { status: 400 },
       );
     }
-    console.log({totalquestion, score, clerkId})
     const response = await sql`
       UPDATE
         quizprogress 
