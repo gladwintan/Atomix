@@ -78,7 +78,7 @@ declare interface OngoingQuiz extends Quiz {
 
 declare interface QuestionType extends Quiz {
   question_id: number,
-  text: string;
+  question: string;
   options: string[];
   correctAnswer: string;
   explanation: string;
