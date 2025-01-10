@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 import React, { useState } from 'react'
 
 import { QuestionType } from '@/types/type'
@@ -6,26 +6,17 @@ import CustomButton from '@/components/CustomButton'
 
 const FillInTheBlankQuestion = ({currentQuestion}:{currentQuestion: QuestionType}) => {
     
-  const [remainingOptions, setRemainingOptions] = useState(currentQuestion.options)
-  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([])
+  const [userAnswer, setUserAnswer] = useState('');
 
   return (
     <View >
       <Text>{currentQuestion.question}</Text>
-      <CustomButton
-          title={currentQuestion.question}
-          type='answer'
-          textVariant='answer'
-          onPress={() => {
-            setSelectedAnswer(
-              selectedAnswer.filter(question => question != currentQuestion.question)
-            )
-            setRemainingOptions([
-              ...remainingOptions,
-              currentQuestion.question
-            ])
-          }}
-        />
+      <TextInput 
+        className='h-[40px] outline-1 outline-gray w-4/5 mb-20 pl-10'
+        placeholder="Type your answer here"
+        value={userAnswer}
+        onChangeText={setUserAnswer}
+      />
     </View>
   )
 }

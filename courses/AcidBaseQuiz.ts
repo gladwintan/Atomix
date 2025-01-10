@@ -40,5 +40,16 @@ export const quiz: QuestionType[] = [
     "correctAnswer": "H⁺",
     "explanation": "The pH of a solution is calculated using the concentration of hydrogen ions [H⁺]. The formula pH = -log[H⁺] is used to determine the acidity or alkalinity of the solution.",
     "questionType": "Fill in the blank"
-  } 
+  },
+  {
+    "quiz_id": 1,
+    "question_id": 5,
+    "course_name": "Acid-Base Equilibrium",
+    "question": "Acid strength increases as the bond strength of the acid's hydrogen atom decreases.",
+    "options": ["True", "False"],
+    "correctAnswer": "True",
+    "explanation": "The weaker the bond between the hydrogen atom and the rest of the molecule, the easier it is for the acid to lose the proton (H⁺), making the acid stronger. For example, in hydrohalic acids (e.g., HF, HCl), the strength of the acid increases as the bond strength between the hydrogen and halogen decreases.",
+    "questionType": "Binary"
+  }
+  
 ];

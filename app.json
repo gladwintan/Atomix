@@ -13,14 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.Atomix"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.Atomix"
+      "package": "com.anonymous.Atomix",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +37,7 @@
         {
           "origin": "https://atomix.dev/"
         }
-      ], 
+      ],
       [
         "expo-image-picker",
         {

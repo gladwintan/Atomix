@@ -29,7 +29,7 @@ declare interface InputFieldProps extends TextInputProps {
 }
 
 declare interface Course {
-  id?: number;
+  id: number;
   course_name: string;
 }
 

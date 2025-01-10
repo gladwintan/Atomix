@@ -60,7 +60,7 @@ export const selectQuiz = async(userClerkId: string | undefined) => {
     })
 
   const selectQuiz = fetchData1?.data
-
+  
   return{
     selectQuiz: selectQuiz
   }

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useMemo } from 'react'
 import { useUser } from '@clerk/clerk-expo'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -41,22 +41,23 @@ const quiz = () => {
   const scrollHandler = useAnimatedScrollHandler((event) => {
     scrollY.value = event.contentOffset.y
   });
+  console.log(scrollY.value)
   const headerStyle = useAnimatedStyle(() => {
     const headerHeight = interpolate(
       scrollY.value,
-      [0,200],
-      [200,100],
+      [0,150],
+      [200, 50],
       'clamp'
     );
     return{
       height: headerHeight,
     }
-  })
+  });
 
   const textStyle = useAnimatedStyle(() => {
     const fontSize = interpolate(
       scrollY.value,
-      [0,200],
+      [0,76],
       [76,38],
       'clamp'
     );
@@ -67,9 +68,11 @@ const quiz = () => {
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const filteredQuizzes = exploreQuiz.filter((item) =>
-    item.course_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredQuizzes = useMemo(() => {
+    return exploreQuiz.filter((item) =>
+      item.course_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [exploreQuiz, searchQuery]);
 
   return (
     <SafeAreaView >
@@ -96,6 +99,8 @@ const quiz = () => {
                 <SearchBar value={searchQuery} onChangeText={setSearchQuery}/>
               </>
             }
+          initialNumToRender={10}
+          maxToRenderPerBatch={5}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
         />}

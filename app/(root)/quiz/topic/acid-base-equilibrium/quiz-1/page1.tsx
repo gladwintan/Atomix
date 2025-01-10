@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import { QuestionType, UserProgress, QuizAnswer } from '@/types/type'
 import { quiz } from '@/courses/AcidBaseQuiz'
 import MultipleResponseQuestion from '@/components/quiz/questions/MultipleChoice'
+import FillInTheBlankQuestion from '@/components/quiz/questions/FillInTheBlankQuestion'
+import BinaryQuestion from '@/components/quiz/questions/BinaryQuestion'
 
 const page1= () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,18 +24,19 @@ const page1= () => {
   }
 
   const [userprogress, setuserprogress] = useState<UserProgress>(initialProgress)
+
   const handleAnswer = (userAnswer:string) => {
     const isCorrect = userAnswer === currentQuestion.correctAnswer;
     
     const newAnswer = {
-      questionId: currentQuestion.id,
+      questionId: currentQuestion.question_id,
       userAnswer: userAnswer,
       isCorrect,
     };
 
     setuserprogress((prevstate) => {
       const existingAnswerIndex = prevstate.answers.findIndex(
-        (answer) => answer.questionId === currentQuestion.id
+        (answer) => answer.questionId === currentQuestion.question_id
       );
 
       if (existingAnswerIndex >= 0) {
@@ -42,13 +45,13 @@ const page1= () => {
         return { 
           ...prevstate, 
           answers: updatedAnswers, 
-          topic:currentQuestion.quiz_topic, 
+          topic:currentQuestion.course_name, 
           score: isCorrect ? prevstate.score : prevstate.score};
       } else {
         return { 
           ...prevstate, 
           answers: [...prevstate.answers, newAnswer], 
-          topic:currentQuestion.quiz_topic, 
+          topic:currentQuestion.course_name, 
           score: isCorrect ? prevstate.score + 1 : prevstate.score };
       }
     });
@@ -97,7 +100,7 @@ const page1= () => {
       <View className='w-full h-full'>
 
           <View className='bg-[#91B0F2] w-full h-[172px] rounded-bl-[20px] rounded-br-[20px] items-center'>
-            <Text className='font-bold text-[25px] mt-3'>{currentQuestion.quiz_topic}</Text>
+            <Text className='font-bold text-[25px] mt-3'>{currentQuestion.course_name}</Text>
             <View className='w-[332px] mt-6'>
               <Text className='self-end text-[25px]'>{progress1} %</Text>
               <Progress.Bar progress={progress} height={28} width={332} unfilledColor="#e2e8f0" borderWidth={1} color="#93E2FF" animationType='timing' borderColor='black' borderRadius={10}/>
@@ -105,9 +108,13 @@ const page1= () => {
           </View> 
 
           <View>
-            <Text className='font-medium ml-3 mt-3 text-lg'>{currentQuestion.text}</Text>
-            <MultipleResponseQuestion currentquestion={currentQuestion} onPress={handleAnswer}/>
-        </View>
+            {currentQuestion.questionType == 'Multiple Choice' 
+            ? <MultipleResponseQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
+            : currentQuestion.questionType == 'Fill in the blank'
+              ? <FillInTheBlankQuestion currentQuestion={currentQuestion}/> 
+              : <BinaryQuestion currentQuestion={currentQuestion}/>
+            }
+          </View>
 
         <View className='flex-row items-center flex-1'>
           <TouchableOpacity onPress={handleBack} className='w-[176px] h-[69px] flex-row rounded-l-[10px] bg-[#A8C4FF] items-center justify-center ml-[25px] '>

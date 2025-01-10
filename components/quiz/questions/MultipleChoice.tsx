@@ -6,9 +6,9 @@ import { QuestionType, UserProgress } from '@/types/type';
 import { quiz } from '@/courses/AcidBaseQuiz';
 
 const MultipleResponseQuestion = (
-{ currentquestion, onPress } 
+{ currentQuestion, onPress } 
 : 
-{ currentquestion: QuestionType, onPress: (selectedAnswer: string) => void }
+{ currentQuestion: QuestionType, onPress: (selectedAnswer: string) => void }
 ) => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null); 
   const handleAnswerSelection = (id: number) => {
@@ -17,11 +17,12 @@ const MultipleResponseQuestion = (
 
   useEffect(() => {
     setSelectedAnswer(null)
-  }, [currentquestion])
+  }, [currentQuestion])
 
   return (
     <View className='items-center'>
-      {currentquestion.options.map((options, index) => ( 
+      <Text>{currentQuestion.question}</Text>
+      {currentQuestion.options.map((options, index) => ( 
         <TouchableOpacity
           key={index}
           className={selectedAnswer == index ?  'w-11/12 h-[47px] rounded-[10px] items-center border-2 flex-row mt-3 border-[#AFC6F6]' :  'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3'}

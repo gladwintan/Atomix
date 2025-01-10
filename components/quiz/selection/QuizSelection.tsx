@@ -2,24 +2,36 @@ import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 import { router } from 'expo-router'
 
-import { SelectQuizType } from '@/types/type'
+import { ExploreCourse, ExploreQuizType, SelectQuizType } from '@/types/type'
 import QuizSelectionCard from './QuizSelectionCard'
+import { quiz } from '@/courses/AcidBaseQuiz'
 
-const QuizSelection = ({quizSelection}: {quizSelection: SelectQuizType[]}) => {
+const QuizSelection = ({quizSelection, exploreCourse}: {quizSelection: SelectQuizType[], exploreCourse: ExploreCourse[]}) => {
+
+  const getQuizRoute = (quizId: number) => {
+    const selectedQuiz = quizSelection.find(quiz => quiz.quiz_id === quizId);
+    if (selectedQuiz) {
+      return `/quiz/topic/${selectedQuiz.course_name.split(' ').join('-').toLowerCase()}/quiz-${quizId}`;
+    }
+    return '';
+  };
+
+  const filteredQuizSelection = quizSelection.filter(item => 
+    exploreCourse.some(course => course.id === item.course_id)
+  );
+
   return (
     <View>
       <FlatList 
-      data={quizSelection}
+      data={filteredQuizSelection}
       renderItem={({item}) => {
-        if(!item?.quiz_id){
-          return null;
-        }
-        return(
+        const quizRoute = getQuizRoute(item.quiz_id);
+
+        return(       
           <QuizSelectionCard item={item} onPress={() => {
-            if(item.quiz_id){
-              router.push('/quiz/topic/acid-base-equilibrium/quiz 1')
-            }
-          }}/>
+            if (quizRoute) {
+              router.push(quizRoute); // Navigate using dynamic route
+            }}}/>
         )
       }}
        
