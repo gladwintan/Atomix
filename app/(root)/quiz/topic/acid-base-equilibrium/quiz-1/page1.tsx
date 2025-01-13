@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 import { QuestionType, UserProgress, QuizAnswer } from '@/types/type'
 import { quiz } from '@/courses/AcidBaseQuiz'
-import MultipleResponseQuestion from '@/components/quiz/questions/MultipleChoice'
+import MultipleResponseQuestion from '@/components/quiz/questions/MultipleChoiceQuestion'
 import FillInTheBlankQuestion from '@/components/quiz/questions/FillInTheBlankQuestion'
 import BinaryQuestion from '@/components/quiz/questions/BinaryQuestion'
 
@@ -23,7 +23,7 @@ const page1= () => {
     }
   }
 
-  const [userprogress, setuserprogress] = useState<UserProgress>(initialProgress)
+  const [userProgress, setUserProgress] = useState<UserProgress>(initialProgress)
 
   const handleAnswer = (userAnswer:string) => {
     const isCorrect = userAnswer === currentQuestion.correctAnswer;
@@ -34,7 +34,7 @@ const page1= () => {
       isCorrect,
     };
 
-    setuserprogress((prevstate) => {
+    setUserProgress((prevstate) => {
       const existingAnswerIndex = prevstate.answers.findIndex(
         (answer) => answer.questionId === currentQuestion.question_id
       );
@@ -79,7 +79,7 @@ const page1= () => {
           onPress: () => {
             router.push({
               pathname: '/quiz/results',
-              params: { Score: userprogress.score, Topic: userprogress.topic, Answer: JSON.stringify(userprogress.answers), Totalquestions: quiz.length},
+              params: { score: userProgress.score, topic: userProgress.topic, answer: JSON.stringify(userProgress.answers), totalQuestions: quiz.length},
             });},},]);};
 
   const handleQuit = () => {
@@ -93,40 +93,37 @@ const page1= () => {
             });},},]);}
 
   const progress = (currentIndex / quiz.length) 
-  const progress1 = (currentIndex / quiz.length) * 100
   
   return(
     <SafeAreaView>
       <View className='w-full h-full'>
 
-          <View className='bg-[#91B0F2] w-full h-[172px] rounded-bl-[20px] rounded-br-[20px] items-center'>
-            <Text className='font-bold text-[25px] mt-3'>{currentQuestion.course_name}</Text>
-            <View className='w-[332px] mt-6'>
-              <Text className='self-end text-[25px]'>{progress1} %</Text>
-              <Progress.Bar progress={progress} height={28} width={332} unfilledColor="#e2e8f0" borderWidth={1} color="#93E2FF" animationType='timing' borderColor='black' borderRadius={10}/>
-            </View>
-          </View> 
-
-          <View>
-            {currentQuestion.questionType == 'Multiple Choice' 
-            ? <MultipleResponseQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
-            : currentQuestion.questionType == 'Fill in the blank'
-              ? <FillInTheBlankQuestion currentQuestion={currentQuestion}/> 
-              : <BinaryQuestion currentQuestion={currentQuestion}/>
-            }
+        <View className='bg-[#91B0F2] w-full h-1/5 rounded-bl-[20px] rounded-br-[20px] items-center'>
+          <Text className='font-bold text-[25px] mt-3'>{currentQuestion.course_name}</Text>
+          <View className='w-[332px] mt-6'>
+            <Text className='self-end text-[25px]'>{progress*100} %</Text>
+            <Progress.Bar progress={progress} height={28} width={332} unfilledColor="#e2e8f0" borderWidth={1} color="#93E2FF" animationType='timing' borderColor='black' borderRadius={10}/>
           </View>
+        </View> 
 
-        <View className='flex-row items-center flex-1'>
-          <TouchableOpacity onPress={handleBack} className='w-[176px] h-[69px] flex-row rounded-l-[10px] bg-[#A8C4FF] items-center justify-center ml-[25px] '>
-            <Image source={require('@/assets/icons/chevron-left.png')}/>
+        {currentQuestion.questionType == 'Multiple Choice' 
+        ? <MultipleResponseQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
+        : currentQuestion.questionType == 'Fill in the blank'
+          ? <FillInTheBlankQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/> 
+          : <BinaryQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
+        }
+        
+        <View className='flex-row mt-5 justify-center'>
+          <TouchableOpacity onPress={handleBack} className='w-[176px] h-[69px] flex-row rounded-l-[10px] bg-[#A8C4FF] items-center justify-center mr-3'>
+            <Image className='w-[32px] h-[32px]' source={require('@/assets/icons/chevron-left.png')}/>
             <Text>{currentIndex == 0 ? 'Quit' : 'Back'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleNext} className='w-[176px] h-[69px] flex-row rounded-r-[10px] bg-[#A8C4FF] items-center justify-center ml-3'>
+          <TouchableOpacity onPress={handleNext} className='w-[176px] h-[69px] flex-row rounded-r-[10px] bg-[#A8C4FF] items-center justify-center'>
             <Text>{currentIndex !== quiz.length - 1 ? 'Next' : 'Submit'}</Text>
-            <Image source={require('@/assets/icons/chevron-right.png')}/>
+            <Image className='w-[32px] h-[32px]' source={require('@/assets/icons/chevron-right.png')}/>
           </TouchableOpacity>
         </View>
-
+ 
       </View>
     </SafeAreaView>
   )

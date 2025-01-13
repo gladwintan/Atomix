@@ -21,7 +21,7 @@ const MultipleResponseQuestion = (
 
   return (
     <View className='items-center'>
-      <Text>{currentQuestion.question}</Text>
+      <Text className='justify-center text-[18px] font-sans p-3'>{currentQuestion.question}</Text>
       {currentQuestion.options.map((options, index) => ( 
         <TouchableOpacity
           key={index}

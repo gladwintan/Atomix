@@ -6,8 +6,8 @@ const _layout = () => {
   return (
       <Stack>
         <Stack.Screen name='index' options={{headerShown: false}}/>
-        <Stack.Screen name='quiz 1' options={{headerShown: false}}/>
-        <Stack.Screen name='quiz 2' options={{headerShown: false}}/>
+        <Stack.Screen name='quiz-1' options={{headerShown: false}}/>
+        <Stack.Screen name='quiz-2' options={{headerShown: false}}/>
       </Stack>
   )
 }

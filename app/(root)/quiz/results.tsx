@@ -1,59 +1,84 @@
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 import React from 'react'
 import { useGlobalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
-import { useUser } from '@clerk/clerk-expo'
 
+import { useUser } from '@clerk/clerk-expo'
 import { quiz } from '@/courses/AcidBaseQuiz'
 import { updateQuizProgress } from '@/lib/quiz'
 
 const results = () => {
-  const { Score, Topic, Answer, Totalquestions } = useGlobalSearchParams();
-  const Score1 = Score ? parseInt(Score as string, 10) : 0;
-  const Totalquestions1 = Totalquestions ? parseInt(Totalquestions as string, 10): 0;
-
+  const { score, topic, answer, totalQuestions } = useGlobalSearchParams();
+  const scoreInt = score ? parseInt(score as string, 10) : 0;
+  const totalQuestionsInt = totalQuestions ? parseInt(totalQuestions as string, 10): 0;
+  console.log(score,topic,answer,totalQuestions)
+  console.log(typeof answer)
   const { user } = useUser()
   const userClerkId = user?.id
 
-  let Answer1: any = null;
-    if (typeof Answer === 'string') {
-        Answer1 = JSON.parse(Answer);
-    } else if (Array.isArray(Answer)) {
-        Answer1 = JSON.parse(Answer[0]);
+  let answerArray: any = null;
+    if (typeof answer === 'string') {
+      answerArray = JSON.parse(answer);
+    } else if (Array.isArray(answer)) {
+      answerArray = JSON.parse(answer[0]);
     }
+  console.log(typeof answerArray)
+  console.log(answerArray)
     return (
     <SafeAreaView>
-      <Text className='text-[25px] font-bold self-center'>You scored {Score1} out of {Totalquestions1}</Text>
+      <ScrollView>
 
-      {quiz.map((question, index) => {
-        const userAnswer = Answer1 ? Answer1[index] : [];
+      <Text className='text-[25px] font-bold self-center'>You scored {scoreInt} out of {totalQuestionsInt}</Text>
+
+      {quiz.map((question, questionindex) => {
+        const userAnswer = answerArray ? answerArray[questionindex] : [];
+        const answerStyle = 'p-3 font-light text-md'
 
         return(
-          <View key={index} className='items-center mt-3'>
-            <Text key={index} className='font-medium ml-3 mt-3 text-lg'>{question.text}</Text>
+          question.questionType === 'Multiple Choice' || question.questionType === 'Binary'
+          ? (<View key={questionindex} className='items-center mt-3'>
+            <Text className='font-medium ml-3 mt-3 text-lg'>{question.question}</Text>
 
-            {question.options.map((options, optionsindex) => { 
+            {question.options.map((option, optionindex) => { 
+              const isSelected = userAnswer.userAnswer === option;
+              const isCorrect = userAnswer.userAnswer === question.correctAnswer && isSelected;
+              const isIncorrect = userAnswer.userAnswer !== question.correctAnswer && isSelected
+              
+              
               return(
-                <View key={optionsindex} className={userAnswer.userAnswer == options && userAnswer.userAnswer == question.correctAnswer 
-                  ? 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 bg-[#95f671]' 
-                  : userAnswer.userAnswer == options && userAnswer.userAnswer != question.correctAnswer 
-                    ? 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 bg-[#f68181]' 
-                    : question.correctAnswer == options 
-                      ? 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 bg-[#95f671]'
-                      : 'w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3'}>
-                  <Text key={optionsindex} className='text-lg font-light ml-6'>{options}</Text>
+                <View key={optionindex} className={`w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 ${
+                  isCorrect
+                  ? 'bg-[#95f671]'
+                  : isIncorrect 
+                    ? 'bg-[#f68181]'
+                    : 'bg-transparent'
+                }`}>
+                  <Text className='text-lg font-light ml-6'>{option}</Text>
                 </View>
               )
             })}
-          </View>
+            <Text className={`${answerStyle}`}>Answer: {question.correctAnswer}</Text>
+            <Text className={`${answerStyle}`}>Explaination: {question.explanation}</Text>
+          </View>)
+          : (
+            <View key={questionindex} className='items-center mt-3'>
+              <Text className='font-light text-lg p-3'>{question.question}</Text>
+              <Text className='text-2xl font-medium p-3'>Your Answer: {userAnswer.userAnswer}</Text>
+              <Text className={`${answerStyle}`}>Answer: {question.correctAnswer} </Text>
+              <Text className={`${answerStyle}`}>Explaination: {question.explanation}</Text>
+            </View>
+          )
         )
       })}
+
       <TouchableOpacity 
         className='w-11/12 h-[47px] rounded-[10px] self-center items-center justify-center mt-3 bg-[#A8C4FF]' 
-        onPress={() => {updateQuizProgress(Totalquestions1, Score1, userClerkId); router.replace('/quiz/leaderboard') }}>
+        onPress={() => {updateQuizProgress(totalQuestionsInt, scoreInt, userClerkId); router.replace('/quiz') }}>
         <Text>Finish</Text>
       </TouchableOpacity>
+
+      </ScrollView>
     </SafeAreaView>
   ) 
 }

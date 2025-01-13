@@ -1,22 +1,24 @@
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
 import { QuestionType } from '@/types/type'
-import CustomButton from '@/components/CustomButton'
 
-const FillInTheBlankQuestion = ({currentQuestion}:{currentQuestion: QuestionType}) => {
+const FillInTheBlankQuestion = ({currentQuestion, onPress}:{currentQuestion: QuestionType, onPress: (userAnswer:string) => void}) => {
     
   const [userAnswer, setUserAnswer] = useState('');
 
   return (
     <View >
-      <Text>{currentQuestion.question}</Text>
+      <Text className='justify-center text-[18px] font-sans p-3'>{currentQuestion.question}</Text>
       <TextInput 
-        className='h-[40px] outline-1 outline-gray w-4/5 mb-20 pl-10'
+        className='outline outline-1 bg-gray-200 p-3 m-3 rounded-[10px]'
         placeholder="Type your answer here"
         value={userAnswer}
         onChangeText={setUserAnswer}
-      />
+     />
+      <TouchableOpacity className='items-center' onPress={() => onPress(userAnswer.trim().toLowerCase())}>
+        <Text>Submit Answer</Text>
+      </TouchableOpacity>
     </View>
   )
 }

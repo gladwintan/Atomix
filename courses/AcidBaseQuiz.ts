@@ -37,7 +37,7 @@ export const quiz: QuestionType[] = [
     "course_name": "Acid-Base Equilibrium",
     "question": "The pH of a solution is calculated using the formula pH = -log[_________].",
     "options": [],
-    "correctAnswer": "H⁺",
+    "correctAnswer": "h+",
     "explanation": "The pH of a solution is calculated using the concentration of hydrogen ions [H⁺]. The formula pH = -log[H⁺] is used to determine the acidity or alkalinity of the solution.",
     "questionType": "Fill in the blank"
   },

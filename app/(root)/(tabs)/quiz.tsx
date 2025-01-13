@@ -41,7 +41,7 @@ const quiz = () => {
   const scrollHandler = useAnimatedScrollHandler((event) => {
     scrollY.value = event.contentOffset.y
   });
-  console.log(scrollY.value)
+  
   const headerStyle = useAnimatedStyle(() => {
     const headerHeight = interpolate(
       scrollY.value,
