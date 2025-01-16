@@ -9,13 +9,13 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
         { error: "Missing required fields" },
         { status: 400 },
       );
-    }
-
+    } 
+    
     const response = await sql`
       SELECT 
         quizprogress.progress,
         quizprogress.updated_at,
-        course_id
+        quiz.quiz_name
       FROM 
         quizprogress
       JOIN quiz ON quizprogress.quiz_id = quiz.quiz_id

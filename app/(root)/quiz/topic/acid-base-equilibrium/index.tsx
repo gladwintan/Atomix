@@ -40,7 +40,7 @@ const index = () => {
     }, [userClerkId])
   
   return (
-    <SafeAreaView>
+    <SafeAreaView> 
       <CarouselList />
       <Text className='mt-16 mb-3 ml-10'>Start Quiz</Text>
       <View className='items-center'>

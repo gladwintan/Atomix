@@ -24,16 +24,18 @@ const page1= () => {
   }
 
   const [userProgress, setUserProgress] = useState<UserProgress>(initialProgress)
-
-  const handleAnswer = (userAnswer:string) => {
-    const isCorrect = userAnswer === currentQuestion.correctAnswer;
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  
+  const handleAnswer = () => {
+    const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
+    const finalAnswer = selectedAnswer ?? ''
     
     const newAnswer = {
       questionId: currentQuestion.question_id,
-      userAnswer: userAnswer,
+      userAnswer: finalAnswer,
       isCorrect,
     };
-
+       
     setUserProgress((prevstate) => {
       const existingAnswerIndex = prevstate.answers.findIndex(
         (answer) => answer.questionId === currentQuestion.question_id
@@ -57,7 +59,18 @@ const page1= () => {
     });
   };
 
+  useEffect(() => {
+    if (currentIndex === quiz.length - 1) {
+      handleAnswer();
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    setSelectedAnswer(null)
+  }, [currentIndex])
+
   const handleNext = () => {
+    handleAnswer();
     if (currentIndex < quiz.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -72,15 +85,29 @@ const page1= () => {
     }}; 
 
   const handleSubmit = () => {
+    handleAnswer();
+
     Alert.alert(
       "Confirm Submission?",
       `Have you answered all questions?`,
-      [{text: "OK",
+        [{text: "OK",
           onPress: () => {
             router.push({
               pathname: '/quiz/results',
-              params: { score: userProgress.score, topic: userProgress.topic, answer: JSON.stringify(userProgress.answers), totalQuestions: quiz.length},
-            });},},]);};
+              params: { 
+                score: userProgress.score, 
+                topic: userProgress.topic,
+                answer: JSON.stringify(userProgress.answers), 
+                totalQuestions: quiz.length, 
+                questionType: currentQuestion.questionType,
+                quizId: currentQuestion.quiz_id,
+                progress: progress
+              }});},},
+          {text: "Back",
+          onPress: () => {
+            setCurrentIndex(quiz.length - 1)
+          }
+        },]);};
 
   const handleQuit = () => {
     Alert.alert(
@@ -90,9 +117,22 @@ const page1= () => {
           onPress: () => {
             router.push({
               pathname: '/quiz',
-            });},},]);}
+            });},},
+          {text: "Back",
+            onPress: () => {
+              setCurrentIndex(0)
+            }
+          }]);}
 
-  const progress = (currentIndex / quiz.length) 
+  const progress = (currentIndex + 1) / quiz.length
+  
+  const QuestionComponent = {
+    'Multiple Choice': MultipleResponseQuestion,
+    'Fill in the blank': FillInTheBlankQuestion,
+    'Binary': BinaryQuestion,
+  };
+
+  const CurrentQuestionComponent = QuestionComponent[currentQuestion.questionType] || null;
   
   return(
     <SafeAreaView>
@@ -106,11 +146,9 @@ const page1= () => {
           </View>
         </View> 
 
-        {currentQuestion.questionType == 'Multiple Choice' 
-        ? <MultipleResponseQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
-        : currentQuestion.questionType == 'Fill in the blank'
-          ? <FillInTheBlankQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/> 
-          : <BinaryQuestion currentQuestion={currentQuestion} onPress={handleAnswer}/>
+        {CurrentQuestionComponent 
+        ? (<CurrentQuestionComponent currentQuestion={currentQuestion} onPress={(choice) => {setSelectedAnswer(choice)}}/>)
+        : (<Text>Question Not Found</Text>)
         }
         
         <View className='flex-row mt-5 justify-center'>

@@ -1,5 +1,6 @@
 import { ExploreQuizType, OngoingQuiz } from "@/types/type";
 import { fetchAPI } from "./fetch";
+import { quiz } from "@/courses/AcidBaseQuiz";
 
 export const getQuizByCompletionStatus = async (userClerkId: string | undefined) => {
   if (!userClerkId) {
@@ -101,7 +102,7 @@ export const getQuizProgress = async (quizName: string, userClerkId: string | un
   return Quiz?.filter((quiz: any ) => quiz.quiz_topic == quizName)
 }
 
-export const startNewQuiz = async (quizTopic : string, userClerkId: string | undefined) => {
+export const startNewQuiz = async (quizId : number, userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated")
     return;
@@ -111,8 +112,8 @@ export const startNewQuiz = async (quizTopic : string, userClerkId: string | und
     await fetchAPI("/(api)/quiz/start", {
       method: "POST",
       body: JSON.stringify({
-        quizTopic: quizTopic,
-        clerkId: userClerkId,
+        quizId: quizId,
+        clerkId: userClerkId
       }),
     });
     
@@ -122,7 +123,7 @@ export const startNewQuiz = async (quizTopic : string, userClerkId: string | und
     return { success: false }
   }
 }
-export const updateQuizProgress = async (totalquestion: number, score:number, userClerkId: string | undefined) => {
+export const updateQuizProgress = async (score:number, progress:number, quizId:number, userClerkId: string | undefined) => {
   if (!userClerkId) {
     console.error("User not authenticated")
     return;
@@ -132,9 +133,10 @@ export const updateQuizProgress = async (totalquestion: number, score:number, us
     await fetchAPI("/(api)/quiz/update-progress", {
       method: "PUT",
       body: JSON.stringify({
-        totalquestion: totalquestion,
         score: score,
-        clerkId: userClerkId,
+        progress: progress, 
+        quizId: quizId,
+        clerkId: userClerkId
       }),
     });
     

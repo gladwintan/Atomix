@@ -59,6 +59,7 @@ declare interface LessonCardProps {
 declare interface Quiz {
   quiz_id: number;
   course_name: string;
+  quiz_name
 }
 
 declare interface ExploreQuizType extends Quiz {
@@ -88,7 +89,7 @@ declare interface QuestionType extends Quiz {
 declare interface UserProgress {
   score: number;
   topic: string;
-  answers: {questionId:number, userAnswer:string, isCorrect:boolean}[];
+  answers: {questionId:number, userAnswer:string | null, isCorrect:boolean}[];
 }
 
 declare interface QuizAnswer {

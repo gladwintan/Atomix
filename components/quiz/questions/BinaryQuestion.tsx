@@ -20,7 +20,7 @@ const BinaryQuestion = ({currentQuestion, onPress}:{currentQuestion: QuestionTyp
       ? `${baseStyle} bg-[#E7336C] opacity-50`
       : `${baseStyle} bg-[#E7336C]`;
     }
-
+    
     return baseStyle;   
   };
 

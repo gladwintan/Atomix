@@ -4,18 +4,22 @@ import { ExploreQuizType, OngoingQuiz } from "@/types/type"
 
 const CarouselCard = ({item}: {item: OngoingQuiz})  => {
   return(
-    <View>
-      <Text>{item.course_name}</Text>
-      <Text>Quiz {item.quiz_id} in progress</Text>
+    <View className="items-center">
 
-      <View>
-        <Text>{item.progress}</Text>
-        <Progress.Bar progress={item.progress} className='w-[254px] h-[21px] rounded-[10px]'/>
+      <View >
+        <Text className="text-[26px] font-bold">{item.quiz_name}</Text>
+        <Text className="text-[18px]">Quiz {item.quiz_id} in progress</Text>
       </View>
+      
 
-      <TouchableOpacity className='bg-[#93b5ff]'>
+      <View className="justify-end p-3">
+        <Text className="ml-auto">{item.progress}</Text>
+        <Progress.Bar progress={item.progress} className='w-[254px] h-[21px] rounded-[10px]'/>
+
+        <TouchableOpacity className='bg-[#93b5ff] rounded-[10px] ml-auto p-3 mt-3'>
         <Text>Continue Quiz</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   )
   

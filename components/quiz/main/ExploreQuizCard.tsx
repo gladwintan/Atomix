@@ -53,7 +53,7 @@ const ExploreQuizCard = ({
             ? (<Text className='text-[12px]'>Ongoing</Text>)
             : (<Text className='text-[12px]'>Start</Text>)
         }
-        <Image source={require('@/assets/icons/chevron-right.png')} className='w-[41px] h-[62px]'/>
+        <Image source={require('@/assets/icons/chevron-right.png')} className='w-[48px] h-[48px]'/>
       </TouchableOpacity>
     </View>
     

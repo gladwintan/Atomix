@@ -8,7 +8,8 @@ export async function GET(request: Request) {
       SELECT 
         courses.course_id,
         quiz.quiz_id,
-        quiz.questions
+        quiz.questions,
+        quiz.quiz_name
       FROM 
         courses,
         quiz

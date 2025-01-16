@@ -1,18 +1,19 @@
+import { quiz } from '@/courses/AcidBaseQuiz';
 import { neon } from '@neondatabase/serverless';
 
 export async function POST(request: Request) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
-    const { quizTopic, clerkId } = await request.json();
+    const { quizId, clerkId } = await request.json();
 
-    if (!quizTopic || !clerkId) {
+    if ( !quizId || !clerkId) {
       return Response.json(
         { error: "Missing required fields" },
         { status: 400 },
       );
     }
-
+    console.log(quizId, clerkId)
     const response = await sql`
       INSERT INTO quizprogress (
         user_id, 
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
       )
       SELECT 
         users.id,
-        quiz.quiz_id
+        ${quizId}
       FROM 
         users
       WHERE 

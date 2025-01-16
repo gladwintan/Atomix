@@ -35,7 +35,7 @@ const CarouselList = () => {
   const { width } = Dimensions.get('window');
 
   return (
-      <View className=']'>
+      <View className='items-center'>
         {onGoingQuiz && onGoingQuiz.length > 0 
         ? (<Animated.FlatList
           data={onGoingQuiz || []}
@@ -52,7 +52,7 @@ const CarouselList = () => {
             );
 
             return (
-              <Animated.View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center self-center' style={[{ transform: [{ scale }] }]}>
+              <Animated.View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center ' style={[{ transform: [{ scale }] }]}>
                 <CarouselCard item={item}/>
               </Animated.View>  
               );
@@ -63,7 +63,7 @@ const CarouselList = () => {
             decelerationRate="fast"
           />) 
         : (
-          <View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center self-center '>
+          <View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center'>
             <Text className='font-sans font-bold text-lg'>No Quiz started</Text>
           </View>
           )}

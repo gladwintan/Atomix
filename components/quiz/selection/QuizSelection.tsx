@@ -4,15 +4,20 @@ import { router } from 'expo-router'
 
 import { ExploreCourse, ExploreQuizType, SelectQuizType } from '@/types/type'
 import QuizSelectionCard from './QuizSelectionCard'
+import { startNewQuiz } from '@/lib/quiz'
+import { useUser } from '@clerk/clerk-expo'
 
 const QuizSelection = ({quizSelection, exploreCourse}: {quizSelection: SelectQuizType[], exploreCourse: ExploreCourse[]}) => {
+
+  const { user } = useUser()
+  const userClerkId = user?.id
 
   const [selectedTopic, setSelectedTopic] = useState<string>('Acid-Base Equilibrium')
   const filteredQuizzes = quizSelection.filter(quiz => {
     const course = exploreCourse.find(course => course.course_id === quiz.course_id);
     return course && course?.course_name === selectedTopic;
   })
-
+  
   return (
     <View>
       <FlatList 
@@ -21,7 +26,7 @@ const QuizSelection = ({quizSelection, exploreCourse}: {quizSelection: SelectQui
 
         return(       
           <QuizSelectionCard item={item} onPress={() => {     
-              router.push('/quiz/topic/acid-base-equilibrium/quiz-1'); // Navigate using dynamic route
+              router.push(`/(root)/quiz/topic/acid-base-equilibrium/quiz-${item.quiz_id}`); startNewQuiz(item.quiz_id, userClerkId) 
             }}/>
         )
       }}

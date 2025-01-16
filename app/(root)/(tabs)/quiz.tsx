@@ -86,7 +86,7 @@ const quiz = () => {
               totalquizzes={item.quizzes}
               completionStatus={item.completionStatus} 
               //@ts-ignore
-              onPress={() => {router.push(`/quiz/topic/${item.course_name.split(" ").join("-").toLowerCase()}`); startNewQuiz(item.quiz_id, userClerkId)}}
+              onPress={() => router.push(`/quiz/topic/${item.course_name.split(" ").join("-").toLowerCase()}`)}
             />
           }
           keyExtractor={(item, index) => index.toString()}
