@@ -15,13 +15,15 @@ export async function GET(request: Request, { userId }: Record<string, string>) 
       SELECT 
         quizprogress.progress,
         quizprogress.updated_at,
-        quiz.quiz_name
+        quiz.quiz_name      
       FROM 
         quizprogress
       JOIN quiz ON quizprogress.quiz_id = quiz.quiz_id
       JOIN users ON quizprogress.user_id = users.id
       WHERE 
         users.clerk_id = ${userId}
+      AND
+        quizprogress.progress != 1.00
       ORDER BY
         quizprogress.updated_at DESC`
       

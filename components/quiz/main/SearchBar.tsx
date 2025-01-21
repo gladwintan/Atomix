@@ -13,6 +13,7 @@ const SearchBar = ({value, onChangeText}: {value:string, onChangeText:(text:stri
       placeholder="  Search by course name"
       value={value}
       onChangeText={onChangeText}
+      textAlign='center'
       />      
     </View>
   );

@@ -25,7 +25,8 @@ const QuizSelection = ({quizSelection, exploreCourse}: {quizSelection: SelectQui
       renderItem={({item}) => {
 
         return(       
-          <QuizSelectionCard item={item} onPress={() => {     
+          <QuizSelectionCard item={item} onPress={() => { 
+              //@ts-ignore    
               router.push(`/(root)/quiz/topic/acid-base-equilibrium/quiz-${item.quiz_id}`); startNewQuiz(item.quiz_id, userClerkId) 
             }}/>
         )

@@ -45,7 +45,6 @@ const results = () => {
               const isCorrect = userAnswer.userAnswer === question.correctAnswer && isSelected;
               const isIncorrect = userAnswer.userAnswer !== question.correctAnswer && isSelected
               
-              
               return(
                 <View key={optionindex} className={`w-11/12 h-[47px] rounded-[10px] items-center border-2 border-black flex-row mt-3 ${
                   isCorrect

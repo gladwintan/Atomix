@@ -36,25 +36,23 @@ const CarouselList = () => {
 
   return (
       <View className='items-center'>
-        {onGoingQuiz && onGoingQuiz.length > 0 
+        {onGoingQuiz && onGoingQuiz.length > 0
         ? (<Animated.FlatList
           data={onGoingQuiz || []}
           horizontal
           renderItem={({ item, index }) => {
-
+            const distance = scrollX.value - index * width;
             const scale = interpolate(
-              scrollX.value, 
-              [(index - 1) * width,
-              index * width,
-              (index + 1) * width,], 
-              [0.9, 1, 0.9], 
+              distance,
+              [-width, 0, width], 
+              [0.8, 1.2, 0.8], 
               'clamp'
             );
 
             return (
-              <Animated.View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center ' style={[{ transform: [{ scale }] }]}>
-                <CarouselCard item={item}/>
-              </Animated.View>  
+                <Animated.View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center ' style={[{ transform: [{ scale }] }]}>
+                  <CarouselCard item={item}/>
+                </Animated.View> 
               );
             }}
             onScroll={scrollHandler}

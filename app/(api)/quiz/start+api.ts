@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-    console.log(quizId, clerkId)
+
     const response = await sql`
       INSERT INTO quizprogress (
         user_id, 

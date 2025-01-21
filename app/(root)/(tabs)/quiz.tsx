@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, FlatList } from 'react-native'
-import React, { useEffect, useState,useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { useUser } from '@clerk/clerk-expo'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -26,13 +26,19 @@ const quiz = () => {
   useEffect(() => {
     if (userClerkId) {
       const fetchQuiz = async () => {
-        const fetchData = await getQuizByCompletionStatus(userClerkId)
-        setExploreQuiz(fetchData?.exploreQuiz)
-        setLoading(false)
+        try {
+          const fetchData = await getQuizByCompletionStatus(userClerkId)
+          setExploreQuiz(fetchData?.exploreQuiz)
+          setLoading(false)
 
-        setOngoingQuiz(fetchData?.ongoingQuiz)  
-        setCompletedQuiz(fetchData?.completedQuiz)
-      }
+          setOngoingQuiz(fetchData?.ongoingQuiz)  
+          setCompletedQuiz(fetchData?.completedQuiz)
+        } catch (error) {
+          console.error('Error fetching quiz data', error)
+        } finally {
+          setLoading(false)
+        }  
+      };
       fetchQuiz()
     }
   }, [userClerkId])
@@ -47,7 +53,7 @@ const quiz = () => {
       scrollY.value,
       [0,150],
       [200, 50],
-      'clamp'
+      'extend'
     );
     return{
       height: headerHeight,
@@ -59,7 +65,7 @@ const quiz = () => {
       scrollY.value,
       [0,76],
       [76,38],
-      'clamp'
+      'extend'
     );
     return {
       fontSize: fontSize
@@ -67,20 +73,31 @@ const quiz = () => {
   });
 
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+  const delay = 500;
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, delay);
+      return () => clearTimeout(timer);
+  }, [searchQuery]);
+  
   const filteredQuizzes = useMemo(() => {
     return exploreQuiz.filter((item) =>
       item.course_name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [exploreQuiz, searchQuery]);
+  }, [exploreQuiz, debouncedSearchQuery])
+
+  const ExploreQuizCardMemo = React.memo(ExploreQuizCard)
 
   return (
-    <SafeAreaView >
+    <SafeAreaView className='flex-1 w-full h-full'>
       {loading == true ? <ActivityIndicator /> :  
         <Animated.FlatList 
           data={searchQuery === '' ? exploreQuiz : filteredQuizzes}
           renderItem={({ item }) => 
-            <ExploreQuizCard 
+            <ExploreQuizCardMemo 
               quizTopic={item.course_name}
               description={item.description}
               totalquizzes={item.quizzes}
@@ -99,8 +116,7 @@ const quiz = () => {
                 <SearchBar value={searchQuery} onChangeText={setSearchQuery}/>
               </>
             }
-          initialNumToRender={10}
-          maxToRenderPerBatch={5}
+          contentContainerStyle={{paddingBottom:100}}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
         />}
