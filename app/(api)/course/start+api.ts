@@ -1,20 +1,20 @@
-import { neon } from '@neondatabase/serverless';
+import { neon } from "@neondatabase/serverless";
 
 export async function POST(request: Request) {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
-    const { courseName, clerkId } = await request.json();
+    const { courseId, clerkId } = await request.json();
 
-    if (!courseName || !clerkId) {
+    if (!courseId || !clerkId) {
       return Response.json(
         { error: "Missing required fields" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const response = await sql`
-      INSERT INTO progress (
+      INSERT INTO course_progress (
         user_id, 
         course_id
       )
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       WHERE 
         users.clerk_id = ${clerkId} 
         AND
-        courses.course_name = ${courseName}  
+        courses.course_id = ${courseId}  
     `;
 
     return Response.json({ data: response }, { status: 201 });

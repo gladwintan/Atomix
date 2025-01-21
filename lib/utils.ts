@@ -1,124 +1,129 @@
-import { OngoingCourse, Course, ExploreCourse } from "@/types/type";
-import { fetchAPI } from "./fetch";
+import { PostReply } from "@/types/type";
 
-export const getCoursesByCompletionStatus = async (userClerkId: string | undefined) => {
-  if (!userClerkId) {
-    console.error("User not authenticated")
-    return
-  }
+export const formatDate = (date: string) => {
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "short",
+    year: "2-digit",
+  };
 
-  try {
-    const fetchData1 = await fetchAPI(`/(api)/course/get`, {
-      method: "GET"
-    })
+  const newDate = new Date(date);
+  const formattedDate = newDate.toLocaleDateString("en-GB", options);
+  return formattedDate.replace(/(\d{2})$/, "'$1");
+};
 
-    const fetchData2 = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-      method: "GET"
-    })
+export const formatPostTime = (date: string): string => {
+  const currentDate = new Date();
+  const pastDate = new Date(date);
+  const diff = currentDate.getTime() - pastDate.getTime(); // Difference in milliseconds
 
-    const allCourses = fetchData1?.data
-    const startedCourses = fetchData2?.data
-    
-    const ongoingCourses = startedCourses.filter((course: OngoingCourse) => !(parseFloat(course.progress) == 1.0))
-    const completedCourses = startedCourses.filter((course: OngoingCourse) => (parseFloat(course.progress) == 1.0))
+  const units: [string, number][] = [
+    ["y", Math.floor(diff / (1000 * 60 * 60 * 24 * 365))],
+    ["mon", Math.floor(diff / (1000 * 60 * 60 * 24 * 30))],
+    ["w", Math.floor(diff / (1000 * 60 * 60 * 24 * 7))],
+    ["d", Math.floor(diff / (1000 * 60 * 60 * 24))],
+    ["h", Math.floor(diff / (1000 * 60 * 60))],
+    ["min", Math.floor(diff / (1000 * 60))],
+    ["s", Math.floor(diff / 1000)],
+  ];
 
-    const ongoingCourseNames = ongoingCourses.map((course: OngoingCourse) => course.course_name)
-    const completedCourseNames = completedCourses.map((course: OngoingCourse) => course.course_name)
-
-    const exploreCourses = allCourses?.map((course: ExploreCourse) => {
-      if (ongoingCourseNames.includes(course.course_name)) {
-        return { ...course, completionStatus: "ongoing" }
-      } else if (completedCourseNames.includes(course.course_name)) {
-        return { ...course, completionStatus: "completed" }
-      }
-      return { ...course, completionStatus: "uncompleted" }
-    })
-
-    return {
-      completedCourses: completedCourses.length == 0 ? null : completedCourses,
-      ongoingCourses: ongoingCourses.length == 0 ? null : ongoingCourses,
-      exploreCourses: exploreCourses
+  for (const [unit, value] of units) {
+    if (value == 1 && unit == "years") {
+      return "last yr";
     }
-  } catch (error) {
-    console.error(error)
-    console.error("Error while retrieving course progress from database")
-  }
-  
-}
-
-export const getOngoingCourses = async (userClerkId: string | undefined) => {
-  if (!userClerkId) {
-    console.error("User not authenticated")
-    return null;
-  }
-
-  const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-    method: "GET"
-  })
-  const ongoingCourses = fetchData?.data
-  return ongoingCourses?.filter((course: OngoingCourse) => !(parseFloat(course.progress) == 1.0))
-}
-
-export const getCourseProgress = async (courseName: string, userClerkId: string | undefined) => {
-  if (!userClerkId) {
-    console.error("User not authenticated")
-    return;
+    if (value == 1 && unit == "months") {
+      return "last mon";
+    }
+    if (value == 1 && unit == "weeks") {
+      return "last wk";
+    }
+    if (value == 1 && unit == "days") {
+      return "yesterday";
+    }
+    if (value >= 1) {
+      return value + unit;
+    }
   }
 
-  if (!courseName) {
-    console.error("Course name missing")
-    return;
+  return "just now";
+};
+
+export const createRepliesWithNestLevel = (
+  replies: (PostReply & { nestLevel: never })[]
+): PostReply[] => {
+  replies.sort(
+    (a, b) =>
+      new Date(a.creationDate).getTime() - new Date(b.creationDate).getTime()
+  );
+
+  // Map replies by ID for quick lookup
+  const replyMap = new Map();
+  replies.forEach((reply) => replyMap.set(reply.replyId, reply));
+
+  const flattenedReplies: PostReply[] = [];
+
+  // Recursive function to compute nest level
+  function addReplyWithNestLevel(reply: PostReply, nestLevel: number) {
+    flattenedReplies.push({ ...reply, nestLevel }); // Add reply with nest level
+
+    replies
+      .filter((r) => r.parentReplyId === reply.replyId) // Find children of this reply
+      .forEach((child) => addReplyWithNestLevel(child, nestLevel + 1)); // Recursive call for children
   }
 
-  const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
-    method: "GET"
-  })
-  const courses = fetchData?.data
-  return courses?.filter((course: any ) => course.course_name == courseName)
-}
+  // Start building array from top-level replies
+  replies
+    .filter((reply) => !reply.parentReplyId) // Top-level replies have no parentReplyId
+    .forEach((reply) => addReplyWithNestLevel(reply, 0)); // Start nest level at 0
 
-export const startNewCourse = async (courseName : string, userClerkId: string | undefined) => {
-  if (!userClerkId) {
-    console.error("User not authenticated")
-    return;
+  return flattenedReplies;
+};
+
+export const appendNewReply = (
+  replies: PostReply[],
+  newReply: PostReply & { nestLevel: never }
+): PostReply[] => {
+  const parentReplyId = newReply.parentReplyId;
+  const parentIndex = replies.findIndex(
+    (reply) => reply.replyId === parentReplyId
+  );
+
+  if (parentIndex === -1) {
+    const newReplyWithNestLevel = { ...newReply, nestLevel: 0 };
+    return [...replies, newReplyWithNestLevel];
+  }
+  const parentNestLevel = replies[parentIndex].nestLevel;
+  const newReplyWithNestLevel = { ...newReply, nestLevel: parentNestLevel + 1 };
+
+  let insertionIndex = parentIndex + 1;
+  while (
+    insertionIndex < replies.length &&
+    replies[insertionIndex].nestLevel > parentNestLevel
+  ) {
+    insertionIndex++;
   }
 
-  try {
-    await fetchAPI("/(api)/course/start", {
-      method: "POST",
-      body: JSON.stringify({
-        courseName: courseName,
-        clerkId: userClerkId,
-      }),
-    });
-    
-    return { success: true }
-  } catch(error) {
-    console.error("Error adding new course to database")
-    return { success: false }
-  }
-}
+  const updatedReplies = [...replies];
+  updatedReplies.splice(insertionIndex, 0, newReplyWithNestLevel);
 
-export const updateCourseProgress = async (courseName: string, lessonCompleted: number, userClerkId: string | undefined) => {
-  if (!userClerkId) {
-    console.error("User not authenticated")
-    return;
+  return updatedReplies;
+};
+
+export const removeReplyTree = (
+  replies: PostReply[],
+  deletedReplyId: string
+): PostReply[] => {
+  const idsToRemove = new Set<string>();
+
+  // Recursive function to collect all descendants of a reply
+  function collectDescendants(id: string) {
+    idsToRemove.add(id);
+    replies
+      .filter((reply) => reply.parentReplyId === id) // Find direct children
+      .forEach((child) => collectDescendants(child.replyId)); // Recursively collect their descendants
   }
 
-  try {
-    await fetchAPI("/(api)/course/update-progress", {
-      method: "PUT",
-      body: JSON.stringify({
-        courseName: courseName,
-        lessonCompleted: lessonCompleted,
-        clerkId: userClerkId,
-      }),
-    });
-    
-    return { success: true }
-  } catch(error) {
-    console.error("Error saving progress to database")
-    return { success: false }
-  }
+  collectDescendants(deletedReplyId);
 
-}
+  return replies.filter((reply) => !idsToRemove.has(reply.replyId));
+};

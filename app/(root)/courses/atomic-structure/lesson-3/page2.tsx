@@ -1,12 +1,12 @@
-import { View, Text, SafeAreaView } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View, Text, SafeAreaView } from "react-native";
 
 const page1 = () => {
   return (
     <SafeAreaView>
       <Text>page2</Text>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default page1
+export default page1;

@@ -1,163 +1,159 @@
-import { FlatList, Image, Text, StyleSheet, View, Animated, LayoutChangeEvent, TouchableOpacity } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import {
+  Image,
+  Text,
+  StyleSheet,
+  View,
+  RefreshControl,
+  ScrollView,
+} from "react-native";
 
-import CourseLoader from "@/components/CourseLoader";
-
-import { ExploreCourse, OngoingCourse } from "@/types/type";
-import { getCoursesByCompletionStatus } from "@/lib/utils";
+import CourseMainPageLoader from "@/components/loader/CourseMainPageLoader";
+import CompletedCourses from "@/components/courses/completed/CompletedCourses";
+import ExploreCourses from "@/components/courses/explore/ExploreCourses";
+import OngoingCourses from "@/components/courses/ongoing/OngoingCourses";
 import { icons } from "@/constants";
-import OngoingCourses from "@/components/courses/OngoingCourses";
-import CompletedCourses from "@/components/courses/CompletedCourses";
-import ExploreCourses from "@/components/courses/ExploreCourses";
+import { getCoursesByCompletionStatus } from "@/lib/courses";
+import { ExploreCourse, OngoingCourse } from "@/types/type";
+import SearchBar from "@/components/SearchBar";
+import { router } from "expo-router";
+import CustomButton from "@/components/CustomButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-const CoursePage = () => {
-  const { user } = useUser()
-  const userClerkId = user?.id
+const Course = () => {
+  const { user } = useUser();
+  const userClerkId = user?.id;
 
-  const [loading, setLoading] = useState(true)
-  const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[] | null>(null)
-  const [exploreCourses, setExploreCourses] = useState<ExploreCourse[]>([])
-  const [completedCourses, setCompletedCourses] = useState<OngoingCourse[] | null>(null)
-  const [showCompletedCourses, setShowCompletedCourses] = useState(false)
-  
-  const [elementHeight, setElementHeight] = useState(1)
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState({ error: "" });
+
+  const [ongoingCourses, setOngoingCourses] = useState<OngoingCourse[]>([]);
+  const [exploreCourses, setExploreCourses] = useState<ExploreCourse[]>([]);
+  const [completedCourses, setCompletedCourses] = useState<OngoingCourse[]>([]);
+  const [showCompletedCourses, setShowCompletedCourses] = useState(false);
+
+  const fetchCourses = useCallback(async () => {
+    setLoading(true);
+    setLoadError({ error: "" });
+
+    const { ongoingCourses, exploreCourses, completedCourses, error, success } =
+      await getCoursesByCompletionStatus(userClerkId);
+
+    if (error) {
+      setLoadError({ error: error });
+      return;
+    }
+
+    if (ongoingCourses) {
+      setOngoingCourses(ongoingCourses);
+    }
+    if (completedCourses) {
+      setCompletedCourses(completedCourses);
+    }
+    if (exploreCourses) {
+      setExploreCourses(exploreCourses);
+    }
+
+    setTimeout(() => setLoading(false), 500);
+  }, [userClerkId]);
 
   useEffect(() => {
     if (userClerkId) {
-      const fetchCourses = async () => {
-        const fetchData = await getCoursesByCompletionStatus(userClerkId)
-        setExploreCourses(fetchData?.exploreCourses)
-        setOngoingCourses(fetchData?.ongoingCourses)
-        setCompletedCourses(fetchData?.completedCourses)
-        setLoading(false)
-      }
-      fetchCourses()
+      fetchCourses();
     }
-  }, [userClerkId])
-
-  const handleLayout = (event : LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout
-    setElementHeight(height)
-  }
-
-  const HEADER_MAX_HEIGHT = 140;
-  const HEADER_MIN_HEIGHT = 0;
-  const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-  const scrollY = useRef(new Animated.Value(0)).current;
-
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    extrapolate: 'clamp',
-  });
-
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
+  }, [userClerkId]);
 
   return (
-    <View className="h-full bg-white">
-      <Animated.View className="bg-[#93b5ff] overflow-hidden" style={{}}>
-        <Text className={`px-5 pb-2 text-2xl text-white font-bold ${elementHeight != 0.0 && "self-center"}`}>Courses</Text>
-        <View className="mt-3 h-10 bg-white rounded-t-3xl absolute w-full -bottom-5 right-0"/>
-        <Animated.View className="overflow-hidden mb-5" style={{ height: headerHeight, opacity: headerOpacity }} onLayout={handleLayout}>  
-          <View className='w-7/12 h-[125px] self-center mb-8 p-3 shadow-md rounded-lg bg-white'>
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <Text className="text-[#161d2e] font-medium">Ongoing</Text>
-                <View className="bg-[#93b5ff] p-1 ml-1.5 rounded-full">
-                  <Image source={icons.completed} className="w-4 h-4"/>
-                </View>
-              </View>
-              <View className="bg-[#E9F0FF] p-1 px-2 rounded-md flex-row">
-                <Text className="font-semibold">{ongoingCourses ? ongoingCourses.length : 0}</Text>
-                <Text className="font-light">&nbsp; course</Text>
-              </View>
-            </View>
+    <SafeAreaView>
+      {/* Summary stats */}
+      <View className="items-end h-14 border-b border-neutral-100 justify-center">
+        <View className="absolute left-3 top-0">
+          <Text className="font-openSans-bold text-lg text-dark-base">
+            Course
+          </Text>
+          <Text className="font-openSans text-xs text-dark-light">
+            Learn something new today!
+          </Text>
+        </View>
 
-            <View className="flex-row mt-2 items-center space-x-1.5">
-              <Text className="text-xs">Recent</Text>
-              <Text className="text-xs font-semibold">•</Text>
-              <Text className="text-xs font-light">{ongoingCourses ? ongoingCourses[0].course_name : "None"}</Text>
-            </View>
-
-            <View className="h-[0.5px] my-3 border-b-2 border-[#C8DAFF]"/>
-
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <Text className="text-[#161d2e] font-medium">Completed</Text>
-                <View className="bg-[#7f9dde] p-1 ml-1.5 rounded-full">
-                  <Image source={icons.completed} className="w-4 h-4"/>
-                </View>
-              </View>
-              <View className="bg-[#E9F0FF] p-1 px-2 rounded-md flex-row">
-                <Text className="font-semibold">{completedCourses ? completedCourses.length : 0}</Text>
-                <Text className="font-light">&nbsp; course</Text>
-              </View>
-            </View>  
-          </View>
-        </Animated.View>  
-      </Animated.View>
-      
-      {loading ? 
-        <CourseLoader />
-        :
-        <Animated.ScrollView 
-          className="mb-24" 
-          showsVerticalScrollIndicator={false} 
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }
-          )}
-          scrollEventThrottle={16}
-        >
-          <View className="mx-4 mt-4 mb-4 flex-row items-center justify-between">
-            <View className="flex-row items-center">
-              <TouchableOpacity 
-                onPress={() => setShowCompletedCourses(false)}
-                className={`${!showCompletedCourses ? "bg-[#91b0f2]" : "bg-[#e9f0ff]"} p-2 px-3.5 rounded-full`}
-              >
-                <Text className={`${!showCompletedCourses ? "text-white font-bold" : "text-[#253048] font-medium"} text-xs`}>
-                  Ongoing
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
-                onPress={() => setShowCompletedCourses(true)}
-                className={`${showCompletedCourses ? "bg-[#91b0f2]" : "bg-[#e9f0ff]"} ml-4 p-2 px-3.5 rounded-full`}
-              >
-                <Text className={`${showCompletedCourses ? "text-white font-bold" : "text-[#253048] font-medium"} text-xs`}>
-                  Completed
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
-          </View>
-        
-          {!showCompletedCourses ?
-            <OngoingCourses ongoingCourses={ongoingCourses} />
-            :
-            <CompletedCourses completedCourses={completedCourses} />
+        <SearchBar
+          handleSearch={(searchQuery) =>
+            router.push(`/(root)/courses/search?query=${searchQuery}`)
           }
+          searchBarStyle="rounded-full"
+        />
+      </View>
 
-          <View className="mx-4 my-2 flex-row items-center justify-between">
-            <Text className="text-base font-semibold text-[#161d2e]">Explore</Text>
-            <Text className="text-xs font-light text-[#161d2e]">All shown</Text>
+      {loading ? (
+        <View className="h-full bg-white pt-5 rounded-t-3xl">
+          <CourseMainPageLoader
+            fetchError={loadError.error}
+            fetchCourses={fetchCourses}
+          />
+        </View>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={fetchCourses}
+              colors={["#9Bd35A", "#689F38"]}
+              progressBackgroundColor="#ffffff"
+            />
+          }
+        >
+          <View className="ml-4 my-6 space-x-4 flex-row items-center">
+            {/* Ongoing courses button */}
+            <CustomButton
+              title="Ongoing"
+              textClassName={`${!showCompletedCourses ? "text-white font-openSans-semibold" : "text-dark-lighter font-openSans-medium"} text-xs`}
+              IconRight={() => (
+                <Image
+                  source={icons.pending}
+                  tintColor={`${!showCompletedCourses ? "white" : "#253048"}`}
+                  className="w-4 h-4 ml-1"
+                />
+              )}
+              className={`${!showCompletedCourses ? "bg-primary-500" : "bg-primary-100"} p-1.5 px-3`}
+              onPress={() => setShowCompletedCourses(false)}
+            />
+
+            {/* Completed courses button */}
+            <CustomButton
+              title="Completed"
+              textClassName={`${showCompletedCourses ? "text-white font-openSans-bold" : "text-dark-lighter font-openSans-medium"} text-xs`}
+              IconRight={() => (
+                <Image
+                  source={icons.completed}
+                  tintColor={`${showCompletedCourses ? "white" : "#253048"}`}
+                  className="w-4 h-4 ml-1"
+                />
+              )}
+              className={`${showCompletedCourses ? "bg-primary-500" : "bg-primary-100"} py-1.5 px-3`}
+              onPress={() => setShowCompletedCourses(true)}
+            />
+          </View>
+
+          <View className="h-40">
+            {!showCompletedCourses ? (
+              <OngoingCourses ongoingCourses={ongoingCourses} />
+            ) : (
+              <CompletedCourses completedCourses={completedCourses} />
+            )}
           </View>
 
           <ExploreCourses exploreCourses={exploreCourses} />
-        </Animated.ScrollView>
-      }
-    </View> 
+        </ScrollView>
+      )}
+    </SafeAreaView>
   );
-}
+};
 
-export default CoursePage
+export default Course;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20
-  }
-})
+    paddingHorizontal: 20,
+  },
+});

@@ -1,6 +1,7 @@
+import { useClerk, useUser } from "@clerk/clerk-expo";
+import { router } from "expo-router";
 import { Text, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useClerk, useUser } from '@clerk/clerk-expo'
 import { useState } from "react";
 import { Button } from 'react-native'
 
@@ -9,11 +10,10 @@ import { Client, Account, ID, Storage } from 'react-native-appwrite';
 import { storage } from '@/appwrite'
 
 import CustomButton from "@/components/CustomButton";
-import { router } from "expo-router";
 
 const Profile = () => {
-  const { user } = useUser()
-  const { signOut } = useClerk()
+  const { user } = useUser();
+  const { signOut } = useClerk();
 
   const [imageUri, setImageUri] = useState<string|null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -49,5 +49,3 @@ return (
   </SafeAreaView>  
 );
 }
-
-export default Profile
