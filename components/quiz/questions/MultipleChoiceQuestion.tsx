@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import BouncyCheckbox  from 'react-native-bouncy-checkbox'
 
 import { QuestionType, UserProgress } from '@/types/type';
-import { quiz } from '@/courses/AcidBaseQuiz';
+import { quiz } from '@/data/quiz/AcidBaseQuiz';
 
 const MultipleResponseQuestion = (
 { currentQuestion, onPress } 

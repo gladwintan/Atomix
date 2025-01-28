@@ -6,7 +6,7 @@ import * as Progress from 'react-native-progress'
 import { useEffect } from 'react'
 
 import { QuestionType, UserProgress, QuizAnswer } from '@/types/type'
-import { quiz } from '@/courses/AcidBaseQuiz'
+import { quiz } from '@/data/quiz/AcidBaseQuiz'
 import MultipleResponseQuestion from '@/components/quiz/questions/MultipleChoiceQuestion'
 import FillInTheBlankQuestion from '@/components/quiz/questions/FillInTheBlankQuestion'
 import BinaryQuestion from '@/components/quiz/questions/BinaryQuestion'

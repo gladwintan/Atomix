@@ -1,6 +1,6 @@
 import { ExploreQuizType, OngoingQuiz } from "@/types/type";
 import { fetchAPI } from "./fetch";
-import { quiz } from "@/courses/AcidBaseQuiz";
+import { quiz } from "@/data/quiz/AcidBaseQuiz";
 
 export const getQuizByCompletionStatus = async (userClerkId: string | undefined) => {
   if (!userClerkId) {

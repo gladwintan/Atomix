@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 
 import { useUser } from '@clerk/clerk-expo'
-import { quiz } from '@/courses/AcidBaseQuiz'
+import { quiz } from '@/data/quiz/AcidBaseQuiz'
 import { updateQuizProgress } from '@/lib/quiz'
 
 const results = () => {

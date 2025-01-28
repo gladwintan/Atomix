@@ -1,4 +1,4 @@
-import { quiz } from '@/courses/AcidBaseQuiz';
+import { quiz } from '@/data/quiz/AcidBaseQuiz';
 import { Clerk } from '@clerk/clerk-expo';
 import { neon } from '@neondatabase/serverless';
 

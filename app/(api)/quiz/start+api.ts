@@ -1,4 +1,4 @@
-import { quiz } from '@/courses/AcidBaseQuiz';
+import { quiz } from '@/data/quiz/AcidBaseQuiz';
 import { neon } from '@neondatabase/serverless';
 
 export async function POST(request: Request) {

@@ -1,4 +1,4 @@
-import { quiz } from "@/courses/AcidBaseQuiz";
+import { quiz } from "@/data/quiz/AcidBaseQuiz";
 import { TextInputProps, TouchableOpacityProps } from "react-native";
 
 declare interface userName {
