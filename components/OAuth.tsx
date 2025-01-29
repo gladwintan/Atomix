@@ -37,7 +37,7 @@ const OAuth = () => {
             className="w-5 h-5 mr-5"
           />
         )}
-        bgVariant="outline"
+        type="outline"
         textVariant="primary"
         onPress={handleGoogleSignIn}
       />

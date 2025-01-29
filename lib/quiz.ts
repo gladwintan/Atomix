@@ -10,11 +10,17 @@ export const getQuizByCompletionStatus = async (userClerkId: string | undefined)
 
   try {
     const fetchData1 = await fetchAPI(`/(api)/quiz/get`, {
-      method: "GET"
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
 
     const fetchData2 = await fetchAPI(`/(api)/quiz/ongoing/${userClerkId}`, {
-      method: "GET"
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
 
     const allQuiz = fetchData1?.data
@@ -57,7 +63,10 @@ export const selectQuiz = async(userClerkId: string | undefined) => {
 
   try {
     const fetchData1 = await fetchAPI(`/(api)/quiz/get1`, {
-      method:"GET"
+      method:"GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
 
   const selectQuiz = fetchData1?.data
@@ -78,7 +87,10 @@ export const getOngoingQuiz = async (userClerkId: string | undefined) => {
   }
 
   const fetchData = await fetchAPI(`/(api)/quiz/ongoing/${userClerkId}`, {
-    method: "GET"
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
   const ongoingQuiz = fetchData?.data
   return ongoingQuiz?.filter((quiz: OngoingQuiz) => quiz.progress == 1.0)
@@ -96,7 +108,10 @@ export const getQuizProgress = async (quizName: string, userClerkId: string | un
   }
 
   const fetchData = await fetchAPI(`/(api)/quiz/ongoing/${userClerkId}`, {
-    method: "GET"
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
   const Quiz = fetchData?.data
   return Quiz?.filter((quiz: any ) => quiz.quiz_topic == quizName)
@@ -156,7 +171,10 @@ export const getUserName = async (userClerkId: string | undefined) => {
 
   try {
     const fetchuser = await fetchAPI(`/(api)/quiz/${userClerkId}`, {
-      method: "GET"
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
     
     const allUser = fetchuser?.data

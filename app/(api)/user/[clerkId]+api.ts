@@ -1,7 +1,10 @@
-import { neon } from '@neondatabase/serverless';
+import { neon } from "@neondatabase/serverless";
 
-export async function GET(request: Request, { clerkId }: Record<string, string>) {
-  try { 
+export async function GET(
+  request: Request,
+  { clerkId }: Record<string, string>,
+) {
+  try {
     const sql = neon(`${process.env.DATABASE_URL}`);
 
     if (!clerkId) {
@@ -11,7 +14,8 @@ export async function GET(request: Request, { clerkId }: Record<string, string>)
       );
     }
 
-    const response = await sql`SELECT id, name FROM users WHERE clerk_id = ${clerkId}`
+    const response =
+      await sql`SELECT id, name FROM users WHERE clerk_id = ${clerkId}`;
 
     return Response.json({ data: response }, { status: 201 });
   } catch (error) {

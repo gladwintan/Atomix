@@ -1,91 +1,41 @@
-import { Stack, router } from 'expo-router';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack } from "expo-router";
+import { createContext, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import CustomButton from '@/components/CustomButton';
-import { atomicStructureImages, icons } from '@/constants';
+import LessonHeader from "@/components/courses/lesson/LessonHeader";
+
+export const ProgressContext = createContext<
+  React.Dispatch<React.SetStateAction<number>> | undefined
+>(undefined);
 
 const Layout = () => {
-  return (
-    
-    <SafeAreaView className='h-full bg-white'>
-      <View className='p-2 flex-row items-center justify-center'>
-        <Text className='font-medium text-base'>Atomic Orbitals</Text>
-        <TouchableOpacity
-          onPress={() => router.replace('/(root)/courses/atomic-structure')}
-          className='absolute right-4'
-        >
-          <Image source={icons.close} tintColor="gray" className='w-6 h-6'/>
-        </TouchableOpacity>
-      </View>
+  const [progress, setProgress] = useState(0);
 
-      <Stack screenOptions={{ contentStyle: { backgroundColor: "transparent" }}}>
-        <Stack.Screen 
-          name="index" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            }
-          }} 
-        />
-        <Stack.Screen 
-          name="page1" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            } 
-          }} 
-        />
-        <Stack.Screen 
-          name="page2" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            } 
-          }} 
-        />
-        <Stack.Screen 
-          name="page3" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            } 
-          }} 
-        />
-        <Stack.Screen 
-          name="page4" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            } 
-          }} 
-        />
-        <Stack.Screen 
-          name="completed" 
-          options={{ 
-            headerShown: false, 
-            gestureEnabled: false, 
-            contentStyle: { 
-              backgroundColor: "transparent"
-            } 
-          }} 
-        />
-      </Stack>
-    </SafeAreaView>
-      
-    
-      
+  return (
+    <ProgressContext.Provider value={setProgress}>
+      <SafeAreaView className="h-full bg-white">
+        <LessonHeader progress={progress} courseName="atomic-structure" />
+
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false,
+            animation: "none",
+            contentStyle: {
+              backgroundColor: "transparent",
+            },
+          }}
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="question1" />
+          <Stack.Screen name="question2" />
+          <Stack.Screen name="question3" />
+          <Stack.Screen name="question4" />
+          <Stack.Screen name="completed" />
+        </Stack>
+      </SafeAreaView>
+    </ProgressContext.Provider>
   );
-}
+};
 
 export default Layout;

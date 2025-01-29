@@ -1,50 +1,103 @@
-# Welcome to your Expo app 👋
+# Atomix
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Atomix is an innovative educational platform that transforms learning into an engaging and collaborative journey. Featuring interactive forums for meaningful discussions, well-structured courses, and dynamic quizzes, Atomix inspires students to connect, share knowledge, and unlock their full potential.
 
-## Get started
+## Table of Contents
 
-1. Install dependencies
+- [Features](#features)
+  - [Forum](#1-star2-forum)
+  - [Courses](#2-books-courses)
+  - [Quizzes](#3-dart-quizzes)
+  - [Progress Tracking](#4-bar_chart-progress-tracking)
+- [Tech Stack](#tech-stack)
+- [Project Roadmap](#project-roadmap)
+- [Design Overview](#design-overview)
+- [Contributors](#contributors)
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+### 1. :star2: Forum
 
-   ```bash
-    npx expo start
-   ```
+- Engage in meaningful discussions and share insights with peers.
+- Create new posts or reply to existing ones to discuss questions or share insights.
+- Posts are categorized by topics and level for easier discovery.
+- **My Activity** section organises all the posts you created, replied and liked.
 
-In the output, you'll find options to open the app in a
+| ![Forum tab](./docs/images/forum-tab.png) | ![My Activity in Forum](./docs/images/forum-my-activity.png) | ![Forum post](./docs/images/forum-post.png) |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| Forum tab                                 | My Activity                                                  | Post details                                |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 2. :books: Courses
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Explore a variety of courses designed for effective learning.
+- Courses are broken down into lessons with clear learning objectives.
+- Track your progress through each course and lesson.
+- Engaging lessons designed to enhance learning effectiveness.
 
-## Get a fresh project
+| ![Course tab](./docs/images/course-tab.png) | ![Course details](./docs/images/course-details.png) |
+| ------------------------------------------- | --------------------------------------------------- |
+| Course tab                                  | Course details                                      |
 
-When you're ready, run:
+### 3. :dart: Quizzes
 
-```bash
-npm run reset-project
-```
+- Test your knowledge with interactive quizzes and track your progress.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 4. :bar_chart: Progress Tracking
 
-## Learn more
+- Monitor your learning journey with personalized dashboards.
+- View your completed lessons, quizzes, and overall performance.
+- Progress is synced across devices, allowing you to continue learning anytime, anywhere.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Tech Stack
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- React Native
+- Expo
+- Neon PostgreSQL
+- Clerk
+- Tailwind CSS (NativeWind)
 
-## Join the community
+## Project Roadmap
 
-Join our community of developers creating universal apps.
+### In Progress
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### Homepage
+
+- Home navigation tab and content
+
+#### Quiz
+
+- Quiz navigation tab and content
+- Dedicated quizzes for each course
+
+#### User Profile
+
+- User profile navigation tab and content
+- Allow users to upload images for their profiles
+
+#### Forum
+
+- Improve post tagging system to provide support for other subjects and levels
+
+#### Course
+
+- Add course content for various topics
+
+### Future Enhancements
+
+- AI chatbot for students to clarify quetions
+- Support for videos in lesson content
+- Add support for course content of other subjects
+
+## Design Overview
+
+Explore the comprehensive design assets for this project, including:
+
+- Mockups for Screens: Visual representations of the app's layout and structure.
+- UI Designs for Components: Detailed designs for individual elements like buttons, forms, and navigation bars.
+- Interactive Prototype: Simulates user journeys and showcases the app's flow and functionality.
+
+[View the Design on Figma](https://www.figma.com/design/KxGzLPcXkkJBJhIxbAgBOC/Atomix?node-id=195-14&t=AeIBEodyyp2sk9PO-1)
+
+## Contributors
+
+[@gladwintan](https://github.com/gladwintan)

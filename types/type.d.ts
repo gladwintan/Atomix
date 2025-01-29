@@ -1,5 +1,8 @@
-import { quiz } from "@/data/quiz/AcidBaseQuiz";
-import { TextInputProps, TouchableOpacityProps } from "react-native";
+import {
+  ImageSourcePropType,
+  TextInputProps,
+  TouchableOpacityProps,
+} from "react-native";
 
 declare interface userName {
   id?: number,
@@ -8,13 +11,32 @@ declare interface userName {
 }
 
 declare interface ButtonProps extends TouchableOpacityProps {
-  title: string;
-  bgVariant?: "primary" | "secondary" | "danger" | "outline" | "success";
-  textVariant?: "primary" | "default" | "secondary" | "danger" | "success" | "boolean" | "answer";
-  type?: "continue" | "boolean" | "answer";
+  title?: string;
+  textVariant?:
+    | "primary"
+    | "default"
+    | "secondary"
+    | "white"
+    | "danger"
+    | "success"
+    | "answerSuccess"
+    | "answer"
+    | "back";
+  type?:
+    | "outline"
+    | "continue"
+    | "boolean"
+    | "booleanSuccess"
+    | "answer"
+    | "answerSuccess"
+    | "back"
+    | "transparent"
+    | "cancel"
+    | "confirm";
   IconLeft?: React.ComponentType<any>;
   IconRight?: React.ComponentType<any>;
   className?: string;
+  textClassName?: string;
 }
 
 declare interface InputFieldProps extends TextInputProps {
@@ -37,24 +59,116 @@ declare interface OngoingCourse extends Course {
   progress: string;
   updated_at: string;
   lessons_completed: number;
+  quizzes_completed: number;
 }
 
 declare interface ExploreCourse extends Course {
   description: string;
-  total_lessons: number;
-  completionStatus: "uncompleted" | "completed" | "ongoing"
+  difficulty: string;
+  lessons: number;
+  quizzes: number;
+  level: string;
+  subject: string;
+  completionStatus: "uncompleted" | "completed" | "ongoing";
 }
 
-declare interface LessonCardProps {
-  id: number,
-  title: string,
-  description: string,
-  time: string,
-  difficulty: number,
-  lessonsCompleted: number,
-  lastLesson?: boolean
-  onPress: () => void
+declare interface Lesson {
+  id: number;
+  title: string;
+  description: string;
+  time: string;
+  difficulty: number;
+  contents: Content[];
 }
+
+declare interface LessonWithProgress extends Lesson {
+  status: "uncompleted" | "ongoing" | "completed";
+  progress: number;
+  lastCompletedAt: string | null;
+}
+
+declare interface Question {
+  question: string;
+  imageSrc?: ImageSourcePropType;
+  incorrectAnswerMessage: string;
+  correctAnswerMessage: string;
+}
+
+declare interface BinaryQuestion extends Question {
+  answer: boolean;
+}
+
+declare interface FillInTheBlankQuestion extends Question {
+  options: string[];
+  questionWithBlanks: { text: string; index: number }[];
+  answer: string[];
+}
+
+declare interface MultipleResponseQuestion extends Question {
+  options: { option: string; selected: boolean }[];
+  answer: string[];
+}
+
+declare interface Notes {
+  title: string;
+  description: string;
+  imageSrc?: ImageSourcePropType;
+}
+
+declare type Content =
+  | (BinaryQuestion & { type: "Binary Question" })
+  | (FillInTheBlankQuestion & { type: "Fill In The Blank Question" })
+  | (MultipleResponseQuestion & { type: "Multiple Response Question" })
+  | (Notes & { type: "Notes" });
+
+declare interface Post {
+  id: number;
+  title: string;
+  description: string;
+  difficulty: string;
+  topic: string;
+  like_count: string;
+  reply_count: string;
+  created_at: string;
+  last_updated: string;
+  author: string;
+  user_is_author: boolean;
+  user_liked_post: boolean;
+  user_replied_post?: boolean;
+  replies?: PostReply[];
+}
+
+declare interface PostReply {
+  replyId: string;
+  parentReplyId: string | null;
+  postId: string;
+  content: string;
+  author: string;
+  isAuthor: boolean;
+  creationDate: string;
+  lastUpdatedDate: string;
+  likeCount: number;
+  replyCount: number;
+  userLiked: boolean;
+  nestLevel: number;
+}
+
+declare interface ReplyDetails {
+  parentReplyId: string | null;
+  author: string;
+}
+
+declare interface FilterOption {
+  label: string;
+  value: { type: string; option: string };
+}
+
+declare interface SortOption {
+  label: string;
+  value: string;
+  descending: boolean;
+}
+
 
 declare interface Quiz {
   quiz_id: number;
