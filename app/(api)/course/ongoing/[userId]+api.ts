@@ -19,9 +19,8 @@ export async function GET(
         course_progress.course_id,
         course_progress.progress,
         course_progress.updated_at,
-        courses.course_name,
         course_progress.lessons_completed,
-        1 AS quizzes_completed
+        courses.course_name
       FROM 
         course_progress
       JOIN

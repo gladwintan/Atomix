@@ -49,6 +49,15 @@ import trending from "@/assets/icons/trending.png";
 import onboarding1 from "@/assets/images/onboarding1.jpg";
 import onboarding2 from "@/assets/images/onboarding2.jpg";
 import verified from "@/assets/images/verified.png";
+import dOrbitals from "@/assets/images/atomic-structure/d-orbitals.png"
+
+
+import chevronRight from "@/assets/icons/chevron-right.png"
+import chevronLeft from "@/assets/icons/chevron-left.png"
+import completedEmpty from "@/assets/icons/completed-empty.png"
+import ongoingEmpty from "@/assets/icons/ongoing-empty.png"
+import circle from "@/assets/icons/circle.png"
+
 
 export const onboarding = [
   {
@@ -76,6 +85,7 @@ export const icons = {
   checkbox,
   checkboxBlank,
   chemistry,
+  chevronLeft,
   close,
   code,
   course,
@@ -107,6 +117,7 @@ export const icons = {
   sort,
   start,
   time,
+  circle,
   trending,
 };
 

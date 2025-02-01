@@ -10,13 +10,10 @@ const TabIcon = ({
   source: ImageSourcePropType;
   focused: boolean;
 }) => (
-  <View className={`h-12 w-12 items-center justify-center bg-white`}>
-    {focused && (
-      <View className="absolute top-0 h-[5px] rounded-b-md bg-primary-600 w-full"></View>
-    )}
+  <View className={`h-12 w-12 items-center bg-white`}>
     <Image
       source={source}
-      className="w-6 h-6"
+      className="w-6 h-6 absolute"
       tintColor={focused ? "#8FABE5" : "#737373"}
     />
   </View>
@@ -37,9 +34,9 @@ const Layout = () => {
         },
         tabBarStyle: {
           backgroundColor: "white",
-          paddingBottom: 65, // ios only
+          paddingBottom: 0, // ios only
           overflow: "hidden",
-          height: 85,
+          height: 100,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -48,7 +45,6 @@ const Layout = () => {
         },
         tabBarActiveTintColor: "#8FABE5",
         tabBarInactiveTintColor: "#737373",
-        sceneStyle: { backgroundColor: "white" },
         headerShown: false,
       }}
     >

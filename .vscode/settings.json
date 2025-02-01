@@ -1,5 +1,6 @@
 {
   "editor.tabSize": 2,
+  "editor.semanticHighlighting.enabled": false,
   "files.autoSave": "onFocusChange",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

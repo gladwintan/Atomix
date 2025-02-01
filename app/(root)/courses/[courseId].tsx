@@ -61,7 +61,7 @@ const CourseDetails = () => {
     }
 
     const course = courses.find((course) => course.id === parseInt(courseId));
-
+    
     if (!course) {
       setLoadError("Course not found");
       return;

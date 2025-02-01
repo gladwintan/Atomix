@@ -4,6 +4,12 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 
+declare interface userName {
+  id?: number,
+  name: string,
+  email: string
+}
+
 declare interface ButtonProps extends TouchableOpacityProps {
   title?: string;
   textVariant?:
@@ -162,3 +168,47 @@ declare interface SortOption {
   value: string;
   descending: boolean;
 }
+
+
+declare interface Quiz {
+  quiz_id: number;
+  course_name: string;
+  quiz_name
+}
+
+declare interface ExploreQuizType extends Quiz {
+  description: string;
+  quizzes: number;
+  completionStatus: "uncompleted" | "completed" | "ongoing"
+}
+declare interface SelectQuizType extends Quiz {
+  course_id: number;
+  questions: number
+}
+
+declare interface OngoingQuiz extends Quiz {
+  progress: number;
+  updated_at: string;
+}
+
+declare interface QuestionType extends Quiz {
+  question_id: number,
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+  questionType: "Multiple Choice" | "Binary" | "Fill in the blank";
+}
+
+declare interface UserProgress {
+  score: number;
+  topic: string;
+  answers: {questionId:number, userAnswer:string | null, isCorrect:boolean}[];
+}
+
+declare interface QuizAnswer {
+  questionId: number; 
+  userAnswer: string;
+  isCorrect: boolean
+}
+

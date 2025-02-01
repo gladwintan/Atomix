@@ -67,6 +67,9 @@ export const getAllCourses = async (userClerkId: string | undefined) => {
   try {
     const fetchData = await fetchAPI(`/(api)/course/get`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
 
     return { success: "Successfully loaded courses", courses: fetchData?.data };
@@ -84,6 +87,9 @@ export const getOngoingCourses = async (userClerkId: string | undefined) => {
 
   const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
   });
   const ongoingCourses = fetchData?.data;
   return ongoingCourses?.filter(
@@ -103,6 +109,9 @@ export const getCourseProgress = async (
   try {
     const fetchData = await fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     const course = fetchData?.data.filter(
       (course: any) => course.course_id == courseId
@@ -133,6 +142,9 @@ export const getLessonProgressses = async (
       `/(api)/course/lesson/${userClerkId}?course=${courseId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
 

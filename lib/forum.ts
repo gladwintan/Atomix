@@ -10,6 +10,9 @@ export const getPosts = async (userClerkId: string | undefined) => {
   try {
     const fetchData = await fetchAPI(`/(api)/forum/post/${userClerkId}`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     return { success: "Succesfully fetched posts", posts: fetchData?.data };
   } catch (error) {
@@ -29,6 +32,9 @@ export const getTrendingPosts = async (userClerkId: string | undefined) => {
       `/(api)/forum/post/trending/${userClerkId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     return { success: "Succesfully fetched posts", posts: fetchData?.data };
@@ -49,6 +55,9 @@ export const getMyPosts = async (userClerkId: string | undefined) => {
       `/(api)/forum/post/my-posts/${userClerkId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     return { success: "Succesfully fetched posts", posts: fetchData?.data };
@@ -69,6 +78,9 @@ export const getRepliedPosts = async (userClerkId: string | undefined) => {
       `/(api)/forum/post/replied-posts/${userClerkId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     return { success: "Succesfully fetched posts", posts: fetchData?.data };
@@ -89,6 +101,9 @@ export const getLikedPosts = async (userClerkId: string | undefined) => {
       `/(api)/forum/post/liked-posts/${userClerkId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     return { success: "Succesfully fetched posts", posts: fetchData?.data };
@@ -223,6 +238,9 @@ export const getLikeForPost = async (
     `/(api)/forum/likes-post/${userClerkId}?post=${postId}`,
     {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
   );
 
@@ -305,6 +323,9 @@ export const getPostDetailsWithReplies = async (
       `/(api)/forum/post/with-replies/${userClerkId}?post=${postId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
 
@@ -441,6 +462,9 @@ export const getLikeForReply = async (
     `/(api)/forum/likes-reply/${userClerkId}?reply=${replyId}`,
     {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
   );
 

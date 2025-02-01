@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "87125540879",
+    "project_id": "atomix-f7f13",
+    "storage_bucket": "atomix-f7f13.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87125540879:android:e8fd7e9ee99db10d29e37a",
+        "android_client_info": {
+          "package_name": "com.anonymous.Atomix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxbxY-5SkyDiyYemWEE8jrF2lO7dOcYzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
