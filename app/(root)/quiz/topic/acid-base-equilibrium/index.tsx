@@ -7,9 +7,8 @@ import CarouselList from '@/components/quiz/selection/CarouselList'
 import QuizSelection from '@/components/quiz/selection/QuizSelection'
 
 import { ExploreCourse, OngoingQuiz, SelectQuizType } from '@/types/type'
-import { ExploreQuizType } from '@/types/type'
 import { selectQuiz } from '@/lib/quiz'
-import { getCoursesByCompletionStatus } from '@/lib/utils'
+import { getCoursesByCompletionStatus } from '@/lib/courses'
 
 
 const index = () => {

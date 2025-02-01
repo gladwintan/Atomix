@@ -11,9 +11,6 @@ const TabIcon = ({
   focused: boolean;
 }) => (
   <View className={`h-12 w-12 items-center bg-white`}>
-    {focused && (
-      <View className="h-[5px] rounded-b-md bg-primary-600 w-full top-0 absolute"></View>
-    )}
     <Image
       source={source}
       className="w-6 h-6 absolute"

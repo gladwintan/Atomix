@@ -11,6 +11,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "components/quiz/results/BinaryResults.tsx"
+    "components/quiz/results/BinaryResults.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }

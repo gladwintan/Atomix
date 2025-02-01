@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, useAnimatedValue, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, useAnimatedValue, SafeAreaView, FlatList } from 'react-native';
 import Animated, { Easing, interpolate, useAnimatedScrollHandler, useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 
 import { OngoingQuiz } from '@/types/type';
@@ -7,6 +7,7 @@ import { getQuizByCompletionStatus } from '@/lib/quiz';
 
 import CarouselCard from './CarouselCard';
 import { useUser } from '@clerk/clerk-expo';
+import Carousel from 'react-native-snap-carousel';
 
 
 const CarouselList = () => {
@@ -28,38 +29,22 @@ const CarouselList = () => {
     }
   }, [userClerkId]);
 
-  const scrollX = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler((event) => {
-    scrollX.value = event.contentOffset.x;
-  });
-  const { width } = Dimensions.get('window');
-
   return (
       <View className='items-center'>
         {onGoingQuiz && onGoingQuiz.length > 0
-        ? (<Animated.FlatList
-          data={onGoingQuiz || []}
-          horizontal
-          renderItem={({ item, index }) => {
-            const distance = scrollX.value - index * width;
-            const scale = interpolate(
-              distance,
-              [-width, 0, width], 
-              [0.8, 1.2, 0.8], 
-              'clamp'
-            );
-
-            return (
-                <Animated.View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center ' style={[{ transform: [{ scale }] }]}>
-                  <CarouselCard item={item}/>
-                </Animated.View> 
-              );
-            }}
-            onScroll={scrollHandler}
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            decelerationRate="fast"
-          />) 
+        ? (<Carousel 
+          data={onGoingQuiz}
+          layout={'default'}
+          renderItem={(item) => {
+            return(
+              <CarouselCard item={item.item}/>
+            )}}
+          sliderWidth={450}
+          sliderHeight={450}
+          itemWidth={350}
+          itemHeight={350}
+          />
+        ) 
         : (
           <View className='bg-[#C8DAFF] h-[200px] w-[375px] rounded-[20px] mt-3 items-center justify-center'>
             <Text className='font-sans font-bold text-lg'>No Quiz started</Text>

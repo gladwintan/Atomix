@@ -4,11 +4,11 @@
     "slug": "Atomix",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "./assets/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,26 +18,27 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.Atomix",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
-      }
     },
     "web": {
       "bundler": "metro",
       "output": "server",
-      "favicon": ""
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      ["expo-router",
-        {"origin": "https://atomix.dev/"}
+      [
+        "expo-router",
+        { "origin": "" }
       ],
-      ["expo-image-picker",
-        {"photosPermission": "The app accesses your photos to let you share them with your friends."}
+      [
+        "expo-image-picker",
+        { "photosPermission": "The app accesses your photos to let you share them with your friends." }
       ],
       "expo-font",
       "expo-secure-store"
@@ -46,3 +47,4 @@
       "typedRoutes": true
     }
   }
+}

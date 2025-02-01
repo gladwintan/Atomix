@@ -3,18 +3,9 @@ import { useState, useEffect, useCallback } from "react";
 export const fetchAPI = async (url: string, options?: RequestInit) => {
   try {
     const response = await fetch(url, options);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const text = await response.text();
-    console.log(text)
-
-    console.log('Content-Type:', response.headers.get('Content-Type'))
-    console.log('Response Status:', response.status)
-    const contentType = response.headers.get('Content-Type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error('Response is not JSON');
     }
 
     return await response.json();

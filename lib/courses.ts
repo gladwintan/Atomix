@@ -14,21 +14,15 @@ export const getCoursesByCompletionStatus = async (
     const [fetchData1, fetchData2] = await Promise.all([
       fetchAPI(`/(api)/course/get`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
       }),
       fetchAPI(`/(api)/course/ongoing/${userClerkId}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
       }),
     ]);
 
     const allCourses = fetchData1?.data;
     const startedCourses = fetchData2?.data;
-    console.log(allCourses, startedCourses)
+
     const ongoingCourses = startedCourses.filter(
       (course: OngoingCourse) => !(parseFloat(course.progress) == 1.0)
     );
